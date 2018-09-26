@@ -1,0 +1,30 @@
+{% extends 'app/base_site.html' %}{% load static %}
+{% block content %}
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="dashboard_graph">
+
+
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+          </div>
+<div align="center">
+    <form method="post">{% csrf_token %}
+<p>
+   {{ add_worker_form.worker_name }} <label>إسم الموظف </label><br><br>
+       {{ add_worker_form.worker_id }} <label> الرقم القومى </label><br><br>
+           {{ add_worker_form.worker_address }} <label> العنوان </label><br><br>
+       {{ add_worker_form.worker_phone }} <label> رقم الهاتف </label><br><br>
+       {{ add_worker_form.worker_job }} <label> الوظيفة </label><br><br>
+           {{ add_worker_form.worker_farm }} <label> المزرعة </label><br><br>
+
+<br>
+</p>
+        <button class="btn btn-primary"type="submit" >إضافة </button>
+        </form>
+    </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,8 @@
+<div align="center">
+    <form method="post">
+        {% csrf_token %}
+    <h3>إسم الشركة</h3>
+{{ add_company_form.company_name }}<br>
+    <button type="submit">إضافة</button>
+</form>
+</div>

@@ -29,7 +29,7 @@ class Job(models.Model):
     job_company = models.ForeignKey(Company, on_delete=CASCADE)
 
     def __str__(self):
-        return self.job_name
+        return unicode(self.job_name, 'utf-8')
 
 
 class Worker(models.Model):

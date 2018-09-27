@@ -25,5 +25,7 @@ urlpatterns = [
                   url(r'^worker/(?P<pk>[0-9]+)/details/$', views.worker_details, name="worker_details"),
                   url(r'^worker/(?P<pk>[0-9]+)/delete/$', views.worker_delete, name="worker_delete"),
                   url(r'^worker/(?P<pk>[0-9]+)/update/$', views.WorkerUpdate.as_view(), name="worker_update"),
+                  url(r'^worker/(?P<pk>[0-9]+)/archive/$', views.worker_archive, name="worker_archive"),
+
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

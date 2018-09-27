@@ -46,6 +46,8 @@ class Worker(models.Model):
                                        format='JPEG',
                                        options={'quality': 60},
                                        blank=True)
+    worker_deleted = models.BooleanField(default=False)
+    worker_end_time = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.worker_name

@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm
 from app.models import Company, Farm, Job, Worker
+from datetime import date, datetime
 
 
 @login_required
@@ -20,7 +21,7 @@ def index(request):
 
 @login_required
 def workers(request):
-    all_workers = Worker.objects.all()
+    all_workers = Worker.objects.filter(worker_deleted=False)
     context = {
         'all_workers': all_workers,
     }
@@ -160,3 +161,11 @@ class WorkerUpdate(UpdateView):
     fields = ['worker_name', 'worker_phone', 'worker_id', 'worker_address', 'worker_job', 'worker_farm',
               'worker_salary', 'worker_work_date', 'worker_image']
     template_name_suffix = '_update_form'
+
+
+def worker_archive(request, pk):
+    current_worker = get_object_or_404(Worker, pk=pk)
+    current_worker.worker_end_time = date.today()
+    current_worker.worker_deleted = True
+    current_worker.save()
+    return redirect('workers')

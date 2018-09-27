@@ -32,11 +32,15 @@
                     </p>
                     <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">مسح العامل
                     </button>
-                <a href="{% url 'worker_archive' current_worker.pk%}"></a>
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterendtime">إنهاء عمل العامل ( سيتم إضافته إلى العاملين السابقين)</button>
-                    <a href="{% url 'worker_update' current_worker.pk %}">
-                        <button class="btn btn-primary" >تعديل بيانات العامل</button>
-                    </a>
+                    {% if not current_worker.worker_deleted %}
+                        <a href="{% url 'worker_archive' current_worker.pk %}"></a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenterendtime">
+                            إنهاء عمل العامل ( سيتم إضافته إلى العاملين السابقين)
+                        </button>
+                        <a href="{% url 'worker_update' current_worker.pk %}">
+                            <button class="btn btn-primary">تعديل بيانات العامل</button>
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -59,13 +63,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء المسح</button>
+                    <a href="{% url 'worker_delete' current_worker.pk %}">
                         <button type="button" class="btn btn-danger">تأكيد المسح</button>
+                    </a>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-        <!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="exampleModalCenterendtime" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -77,11 +83,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    هل انت متأكد من إنهاء العمل مع  <br>
+                    هل انت متأكد من إنهاء العمل مع <br>
                     {{ current_worker.worker_name }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
                     <a href="{% url 'worker_archive' current_worker.pk %}">
                         <button type="button" class="btn btn-danger">تأكيد إنهاء العمل</button>
                     </a>

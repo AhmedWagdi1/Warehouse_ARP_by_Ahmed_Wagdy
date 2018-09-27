@@ -1,0 +1,33 @@
+{% extends 'app/base_site.html' %}{% load static %}
+{% block content %}
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="dashboard_graph">
+
+
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+          </div>
+<div align="right" dir="rtl">
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">إسم العامل</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for worker in old_worker %}
+    <tr>
+      <td><a href="{% url 'worker_details' worker.pk%}"> {{ worker.worker_name }}</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+    </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

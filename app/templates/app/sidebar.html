@@ -1,6 +1,8 @@
 <div class="left_col scroll-view">
   <div class="navbar nav_title" style="border: 0;">
     <a href="{% url 'index' %}" class="site_title"><i class="fa fa-spinner"></i> <span>{{ company_title }}</span></a>
+                    {{ now }}
+
   </div>
 
   <div class="clearfix"></div>
@@ -26,8 +28,9 @@
                 <ul class="nav side-menu">
                 <li><a><i class="fa fa-user"></i> إدارة العمال <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-            <li><a href="{% url 'workers' %}"> استعراض العمال</a></li>
             <li><a href="{% url 'workers_add' %}">إضافة عامل جديد</a></li>
+            <li><a href="{% url 'workers' %}"> عرض العمال الحاليين</a></li>
+            <li><a href="{% url 'old_workers' %}"> عرض العمال السابقين</a></li>
 
           </ul>
 

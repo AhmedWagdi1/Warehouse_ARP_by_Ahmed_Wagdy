@@ -169,3 +169,11 @@ def worker_archive(request, pk):
     current_worker.worker_deleted = True
     current_worker.save()
     return redirect('workers')
+
+
+def old_workers(request):
+    old_worker = Worker.objects.filter(worker_deleted=True)
+    context = {
+        'old_worker': old_worker,
+    }
+    return render(request, 'app/old_workers.html', context)

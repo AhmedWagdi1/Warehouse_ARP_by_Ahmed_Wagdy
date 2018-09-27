@@ -25,52 +25,16 @@
     </tr>
   </thead>
   <tbody>
+  {% for worker in all_workers %}
     <tr>
-      <th scope="row">1</th>
-      <td>أحمد إبراهيم</td>
-              <td>إسم المزرعة التى يعمل بها العامل</td>
-      <td>1/1/2018</td>
+      <th scope="row">{{ worker.id }}</th>
+        <td><a href="{% url 'worker_details' worker.pk%}">{{ worker.worker_name }}</a></td>
+              <td>{{ worker.worker_farm }}</td>
+      <td>{{ worker.worker_work_date }}</td>
     </tr>
-  <tr>
-      <th scope="row">2</th>
-      <td>أحمد إبراهيم</td>
-                    <td>إسم المزرعة التى يعمل بها العامل</td>
-      <td>1/1/2018</td>
-    </tr>
-  <tr>
-      <th scope="row">3</th>
-      <td>أحمد إبراهيم</td>
-                    <td>إسم المزرعة التى يعمل بها العامل</td>
-      <td>1/1/2018</td>
-    </tr>
-  <tr>
-      <th scope="row">4</th>
-      <td>أحمد إبراهيم</td>
-                    <td>إسم المزرعة التى يعمل بها العامل</td>
-      <td>1/1/2018</td>
-    </tr>
-  <tr>
-      <th scope="row">5</th>
-      <td>أحمد إبراهيم</td>
-                    <td>إسم المزرعة التى يعمل بها العامل</td>
-      <td>1/1/2018</td>
-    </tr>
-  <tr>
-      <th scope="row">6</th>
-      <td>أحمد إبراهيم</td>
-                    <td>إسم المزرعة التى يعمل بها العامل</td>
-      <td>1/1/2018</td>
-    </tr>
-  <tr>
-      <th scope="row">7</th>
-      <td>أحمد إبراهيم</td>
-                    <td>إسم المزرعة التى يعمل بها العامل</td>
-      <td>1/1/2018</td>
-    </tr>
+  {% endfor %}
   </tbody>
 </table>
-
-
 
           <div class="clearfix"></div>
         </div>

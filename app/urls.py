@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^job/(?P<pk>[0-9]+)/update/$', views.JobUpdate.as_view(success_url="/jobs/add"), name="job_update"),
     #workers
     url(r'^workers/add$', views.workers_add, name="workers_add"),
+    url(r'^worker/(?P<pk>[0-9]+)/details/$', views.worker_details, name="worker_details"),
 ]

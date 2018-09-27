@@ -87,13 +87,14 @@ def workers_add(request):
     if request.method == 'POST':
         if add_worker_form.is_valid():
             add_worker_form.save()
+            return redirect('index')
     else:
         add_worker_form = AddWorkerForm()
     context = {
         'add_worker_form':add_worker_form,
     }
 
-    return render(request, 'app/woerks_add.html', context)
+    return render(request, 'app/workers_add.html', context)
 
 
 def jobs_add(request):

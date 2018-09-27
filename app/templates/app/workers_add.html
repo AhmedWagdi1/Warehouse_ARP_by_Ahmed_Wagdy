@@ -10,13 +10,15 @@
           </div>
 <div align="center">
     <form method="post">{% csrf_token %}
-<p>
+<p align="right">
    {{ add_worker_form.worker_name }} <label>إسم الموظف </label><br><br>
        {{ add_worker_form.worker_id }} <label> الرقم القومى </label><br><br>
            {{ add_worker_form.worker_address }} <label> العنوان </label><br><br>
        {{ add_worker_form.worker_phone }} <label> رقم الهاتف </label><br><br>
        {{ add_worker_form.worker_job }} <label> الوظيفة </label><br><br>
            {{ add_worker_form.worker_farm }} <label> المزرعة </label><br><br>
+               {{ add_worker_form.worker_salary }} <label> المرتب الشهرى </label><br><br>
+               {{ add_worker_form.worker_work_date }} <label> تاريخ التعيين</label><br><br>
 
 <br>
 </p>

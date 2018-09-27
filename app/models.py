@@ -39,6 +39,8 @@ class Worker(models.Model):
     worker_address = models.CharField(max_length=500)
     worker_job = models.ForeignKey(Job, on_delete=CASCADE)
     worker_farm = models.ForeignKey(Farm, on_delete=CASCADE)
+    worker_salary = models.IntegerField()
+    worker_work_date = models.DateField()
 
 
     def __str__(self):

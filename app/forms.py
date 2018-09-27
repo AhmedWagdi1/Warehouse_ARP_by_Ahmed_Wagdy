@@ -22,6 +22,11 @@ class AddJobForm(forms.ModelForm):
 
 
 class AddWorkerForm(forms.ModelForm):
+    worker_work_date = forms.DateField(widget=forms.DateInput(attrs=
+                                {
+                                    'type':'date'
+                                }))
+
     class Meta:
         model = Worker
-        fields = ['worker_name', 'worker_phone', 'worker_id', 'worker_address', 'worker_job', 'worker_farm']
+        fields = ['worker_name', 'worker_phone', 'worker_id', 'worker_address', 'worker_job', 'worker_farm', 'worker_salary', 'worker_work_date']

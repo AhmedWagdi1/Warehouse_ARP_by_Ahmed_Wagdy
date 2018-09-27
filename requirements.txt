@@ -3,3 +3,4 @@ Pillow
 django-imagekit
 gunicorn
 dj-database-url
+whitenoise

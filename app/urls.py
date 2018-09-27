@@ -20,4 +20,6 @@ urlpatterns = [
     #workers
     url(r'^workers/add$', views.workers_add, name="workers_add"),
     url(r'^worker/(?P<pk>[0-9]+)/details/$', views.worker_details, name="worker_details"),
+    url(r'^worker/(?P<pk>[0-9]+)/delete/$', views.worker_delete, name="worker_delete"),
+
 ]

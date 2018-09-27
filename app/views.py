@@ -147,3 +147,10 @@ def worker_details(request, pk):
         'current_worker': current_worker,
     }
     return render(request, 'app/worker_details.html', context)
+
+
+def worker_delete(request, pk):
+    current_worker = get_object_or_404(Worker, pk=pk)
+    current_worker.delete()
+    return redirect('workers')
+

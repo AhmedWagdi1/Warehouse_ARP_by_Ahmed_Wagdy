@@ -9,7 +9,7 @@ from imagekit.processors import ResizeToFill
 class Company(models.Model):
     company_name = models.CharField(max_length=250)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.company_name
 
 
@@ -17,7 +17,7 @@ class Farm(models.Model):
     farm_name = models.CharField(max_length=250)
     farm_company = models.ForeignKey(Company, on_delete=CASCADE)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.farm_name
 
     def get_absolute_url(self):
@@ -49,7 +49,7 @@ class Worker(models.Model):
     worker_deleted = models.BooleanField(default=False)
     worker_end_time = models.DateField(blank=True, null=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.worker_name
 
     def get_absolute_url(self):

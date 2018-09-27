@@ -71,7 +71,7 @@ def add_farm(request):
 @login_required
 def farm_details(request, pk):
     current_farm = get_object_or_404(Farm, pk=pk)
-    farm_workers = Worker.objects.filter(worker_farm=current_farm)
+    farm_workers = Worker.objects.filter(worker_farm=current_farm, worker_deleted=False)
     context = {
         'current_farm': current_farm,
         'farm_workers': farm_workers,

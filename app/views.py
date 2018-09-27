@@ -14,7 +14,7 @@ from datetime import date, datetime
 @login_required
 def index(request):
     companys = Company.objects.all()
-    all_workers = Worker.objects.all()
+    all_workers = Worker.objects.filter(worker_deleted=False)
     if not companys:
         return redirect('nocomp')
     else:

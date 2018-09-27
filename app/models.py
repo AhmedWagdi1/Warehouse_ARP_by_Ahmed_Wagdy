@@ -1,8 +1,9 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.urls import reverse
-# Create your models here.
 from django.db.models import CASCADE
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 class Company(models.Model):
@@ -31,7 +32,6 @@ class Job(models.Model):
         return self.job_name
 
 
-
 class Worker(models.Model):
     worker_name = models.CharField(max_length=250)
     worker_phone = models.IntegerField()
@@ -41,7 +41,14 @@ class Worker(models.Model):
     worker_farm = models.ForeignKey(Farm, on_delete=CASCADE)
     worker_salary = models.IntegerField()
     worker_work_date = models.DateField()
-
+    worker_image = ProcessedImageField(upload_to='media',
+                                       processors=[ResizeToFill(256, 256)],
+                                       format='JPEG',
+                                       options={'quality': 60},
+                                       blank=True)
 
     def __str__(self):
         return self.worker_name
+
+    def get_absolute_url(self):
+        return reverse('worker_details', args=[str(self.id)])

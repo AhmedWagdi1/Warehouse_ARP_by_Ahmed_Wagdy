@@ -154,3 +154,9 @@ def worker_delete(request, pk):
     current_worker.delete()
     return redirect('workers')
 
+
+class WorkerUpdate(UpdateView):
+    model = Worker
+    fields = ['worker_name', 'worker_phone', 'worker_id', 'worker_address', 'worker_job', 'worker_farm',
+              'worker_salary', 'worker_work_date', 'worker_image']
+    template_name_suffix = '_update_form'

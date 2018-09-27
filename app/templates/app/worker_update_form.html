@@ -1,0 +1,37 @@
+{% extends 'app/base_site.html' %}{% load static %}
+{% block content %}
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="dashboard_graph">
+
+
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+          </div>
+<div align="center">
+<form method="post" enctype='multipart/form-data' >{% csrf_token %}
+    <p align="right">
+    {{ form.worker_name}} إسم العامل<br><br>
+    {{ form.worker_phone}} هاتف العامل<br><br>
+    {{ form.worker_id}} الرقم القومى<br><br>
+    {{ form.worker_address}} عنوان العامل<br><br>
+    {{ form.worker_job}} الوظيفة<br><br>
+    {{ form.worker_farm}} المزرعة<br><br>
+    {{ form.worker_salary}} المرتب الشهرى الحالى<br><br>
+    {{ form.worker_work_date}} تاريخ التعيين<br><br>
+            {{ form.worker_image}}صورة العامل<br><br>
+
+    <br><input type="submit" value="Update"><br><br>
+                    {% if current_worker.worker_image %}
+                        <img src="{{ current_worker.worker_image.url }}">
+
+                    {% else %}
+                        <img src="{% static 'images/user.png' %}">
+                    {% endif %}    </p>
+</form>
+    </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -29,4 +29,5 @@ class AddWorkerForm(forms.ModelForm):
 
     class Meta:
         model = Worker
-        fields = ['worker_name', 'worker_phone', 'worker_id', 'worker_address', 'worker_job', 'worker_farm', 'worker_salary', 'worker_work_date']
+        fields = ['worker_name', 'worker_phone', 'worker_id', 'worker_address', 'worker_job', 'worker_farm',
+                  'worker_salary', 'worker_work_date']

@@ -1,55 +1,68 @@
 {% extends 'app/base_site.html' %}{% load static %}
 {% block content %}
     <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="dashboard_graph">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="dashboard_graph">
 
 
-          <div class="col-md-9 col-sm-9 col-xs-12">
-            <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
-          </div>
-<div align="center" dir="rtl">
-<h3>{{ current_worker.worker_name }}</h3>
-    <img src="https://www.jamf.com/jamf-nation/img/default-avatars/generic-user.png">
-    <p>
-        <b>إسم العامل :</b>{{ current_worker.worker_name }}<br><br>
-        <b>الرقم القومى : </b>{{ current_worker.worker_id }}<br><br>
-        <B>رقم الهاتف : </b>{{ current_worker.worker_phone }}<br><br>
-        <b>العنوان : </b>{{ current_worker.worker_address }}<br><br>
-        <b>الوظيفة : </b>{{ current_worker.worker_job }}<br><br>
-        <b>المزرعة : </b>{{ current_worker.worker_farm }}<br><br>
-        <b>المرتب الشهرى : </b>{{ current_worker.worker_salary }}<br><br>
-        <b>تاريخ التعيين : </b>{{ current_worker.worker_work_date }}<br><br>
-    </p>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">مسح العامل </button>
-<button class="btn btn-warning">إنهاء عمل العامل ( سيتم إضافته إلى العاملين السابقين)</button>
-    <button class="btn btn-primary">تعديل بيانات العامل</button>
-    </div>
-          <div class="clearfix"></div>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+                </div>
+                <div align="center" dir="rtl">
+                    <h3>{{ current_worker.worker_name }}</h3>
+                    {% if current_worker.worker_image %}
+                        <img src="{{ current_worker.worker_image.url }}">
+
+                    {% else %}
+                        <img src="{% static 'images/user.png' %}">
+                        <a href="{% url 'worker_update' current_worker.pk %}">
+                            <button class="btn btn-primary">تغيير الصورة</button>
+                        </a>
+                    {% endif %}
+                    <br>
+                    <p>
+                        <b>إسم العامل :</b>{{ current_worker.worker_name }}<br><br>
+                        <b>الرقم القومى : </b>{{ current_worker.worker_id }}<br><br>
+                        <B>رقم الهاتف : </b>{{ current_worker.worker_phone }}<br><br>
+                        <b>العنوان : </b>{{ current_worker.worker_address }}<br><br>
+                        <b>الوظيفة : </b>{{ current_worker.worker_job }}<br><br>
+                        <b>المزرعة : </b>{{ current_worker.worker_farm }}<br><br>
+                        <b>المرتب الشهرى : </b>{{ current_worker.worker_salary }}<br><br>
+                        <b>تاريخ التعيين : </b>{{ current_worker.worker_work_date }}<br><br>
+                    </p>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">مسح العامل
+                    </button>
+                    <button class="btn btn-warning">إنهاء عمل العامل ( سيتم إضافته إلى العاملين السابقين)</button>
+                    <a href="{% url 'worker_update' current_worker.pk %}">
+                        <button class="btn btn-primary">تعديل بيانات العامل</button>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
         </div>
-      </div>
     </div>
     <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">تأكيد المسح </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        هل انت متأكد من مسح <br>
-          {{ current_worker.worker_name }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء المسح</button>
-          <a href="{% url 'worker_delete' current_worker.pk%}">
-        <button type="button" class="btn btn-danger">تأكيد المسح</button>
-              </a>
-      </div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">تأكيد المسح </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    هل انت متأكد من مسح <br>
+                    {{ current_worker.worker_name }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء المسح</button>
+                    <a href="{% url 'worker_delete' current_worker.pk %}">
+                        <button type="button" class="btn btn-danger">تأكيد المسح</button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 {% endblock %}

@@ -14,10 +14,11 @@ from datetime import date, datetime
 @login_required
 def index(request):
     companys = Company.objects.all()
+    all_workers = Worker.objects.all()
     if not companys:
         return redirect('nocomp')
     else:
-        return render(request, 'app/index.html')
+        return render(request, 'app/index.html', {'all_workers':all_workers})
 
 
 @login_required

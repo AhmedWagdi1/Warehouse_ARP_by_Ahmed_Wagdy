@@ -28,8 +28,8 @@ class Job(models.Model):
     job_name = models.CharField(max_length=250)
     job_company = models.ForeignKey(Company, on_delete=CASCADE)
 
-    def __str__(self):
-        return unicode(self.job_name, 'utf-8')
+    def __unicode__(self):
+        return self.job_name
 
 
 class Worker(models.Model):

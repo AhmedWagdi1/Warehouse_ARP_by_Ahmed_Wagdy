@@ -223,3 +223,9 @@ def clients_add(request):
         'add_client_form':add_client_form,
     }
     return render(request, 'app/clients_add.html', context)
+
+
+def supplier_delete(request, pk):
+    current_supply = get_object_or_404(Supplier, pk=pk)
+    current_supply.delete()
+    return redirect('supplier')

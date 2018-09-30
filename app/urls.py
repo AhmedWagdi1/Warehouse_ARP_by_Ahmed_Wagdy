@@ -30,6 +30,7 @@ urlpatterns = [
                   # supplier
                   url(r'^supplier/$', views.supplier, name="supplier"),
                   url(r'^supplier/add/$', views.supplier_add, name="supplier_add"),
+                  url(r'supplier/delete/(?P<pk>[0-9]+)/', views.supplier_delete, name="supplier_delete"),
                   #                 clients
                   url(r'^clients/$', views.clients, name="clients"),
                   url(r'^clients/add/$', views.clients_add, name="clients_add"),

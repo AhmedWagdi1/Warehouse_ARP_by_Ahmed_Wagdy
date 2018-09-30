@@ -15,7 +15,34 @@
 
 <ul class="list-group">
         {% for person in all_supply %}
-  <li class="list-group-item">{{ person.supplier_name }}</li>
+  <li class="list-group-item" dir="rtl">
+      {{ person.supplier_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <a href="#"><font color="#00008b">تعديل</font></a>
+      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter_{{ person.supplier_name }}"><font color="red">مسح</font> </a>
+        </li>
+            <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter_{{ person.supplier_name }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">تأكيد المسح</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        هل انت متأكد من مسح المورد <br>
+          {{ person.supplier_name }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
+          <a href="{% url 'supplier_delete' person.pk%}">
+        <button type="button" class="btn btn-danger">تأكيد المسح</button>
+              </a>
+      </div>
+    </div>
+  </div>
+</div>
         {% endfor %}
 
 </ul>

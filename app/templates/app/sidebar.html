@@ -25,8 +25,7 @@
               </li>
           </ul>
         </li>
-                <ul class="nav side-menu">
-                <li><a><i class="fa fa-user"></i> إدارة العمال <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-user"></i>  العمال <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="{% url 'workers_add' %}">إضافة عامل جديد</a></li>
             <li><a href="{% url 'workers' %}"> عرض العمال الحاليين</a></li>
@@ -35,13 +34,33 @@
           </ul>
 
         </li>
-                                    <ul class="nav side-menu">
-                <li><a><i class="fa fa-list"></i> إدارة الوظائف <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-list"></i>  الوظائف <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="{% url 'jobs_add' %}"> إضافة\تعديل الوظائف</a></li>
 
           </ul>
+                <li><a><i class="fa fa-suitcase"></i>  الموردين و العملاء <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
+            <li><a href="{% url 'supplier' %}">عرض الموردين</a></li>
+            <li><a href="{% url 'workers' %}"> عرض العملاء</a></li>
 
+          </ul>
+
+        </li>
+                        <li><a><i class="fa fa-list"></i> الفواتير <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
+            <li><a href="{% url 'workers_add' %}">قائمة الفواتير</a></li>
+            <li><a href="{% url 'workers' %}"> إنشاء فاتورة</a></li>
+
+          </ul>
+                <li><a><i class="fa fa-home"></i> المخازن <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
+            <li><a href="{% url 'workers_add' %}">المخزن الرئيسى</a></li>
+
+
+          </ul>
+
+        </li>
         </li>
                     <br>
                     <!--

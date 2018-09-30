@@ -89,7 +89,6 @@ DATABASES = {
     }
 }
 
-
 DATABASES['default'] = dj_database_url.config()
 
 # Password validation
@@ -143,6 +142,6 @@ LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     pass

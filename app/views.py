@@ -1,4 +1,4 @@
-    # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
@@ -6,8 +6,8 @@ from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
-from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm
-from app.models import Company, Farm, Job, Worker
+from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm
+from app.models import Company, Farm, Job, Worker, Supplier
 from datetime import date, datetime
 
 
@@ -18,7 +18,7 @@ def index(request):
     if not companys:
         return redirect('nocomp')
     else:
-        return render(request, 'app/index.html', {'all_workers':all_workers})
+        return render(request, 'app/index.html', {'all_workers': all_workers})
 
 
 @login_required
@@ -179,3 +179,25 @@ def old_workers(request):
         'old_worker': old_worker,
     }
     return render(request, 'app/old_workers.html', context)
+
+
+def supplier(request):
+    all_supply = Supplier.objects.all()
+    context = {
+        'all_supply': all_supply,
+    }
+    return render(request, 'app/supplier.html', context)
+
+
+def supplier_add(request):
+    add_supplier_form = AddSupplierForm(request.POST)
+    if request.method == 'POST':
+        if add_supplier_form.is_valid():
+            add_supplier_form.save()
+            return redirect('supplier')
+    else:
+        add_supplier_form = AddSupplierForm()
+    context = {
+        'add_supplier_form': add_supplier_form,
+    }
+    return render(request, 'app/add_supplier.html', context)

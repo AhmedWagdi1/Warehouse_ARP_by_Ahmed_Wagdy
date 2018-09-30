@@ -1,0 +1,23 @@
+{% extends 'app/base_site.html' %}{% load static %}
+{% block content %}
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="dashboard_graph">
+
+
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+          </div>
+<div align="center">
+    <form method="post">{% csrf_token %}
+        <b>إسم المورد</b><br>
+         {{ add_supplier_form.supplier_name }}<br>
+        <button class="btn btn-success">إضافة المورد </button>
+
+    </form>
+    </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

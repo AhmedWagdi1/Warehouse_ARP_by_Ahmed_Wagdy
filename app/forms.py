@@ -1,10 +1,12 @@
-    # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from django import forms
 
-from app.models import Company, Farm, Job, Worker
+from app.models import Company, Farm, Job, Worker, Supplier
 
 
 class AddCompanyForm(forms.ModelForm):
+
+
     class Meta:
         model = Company
         fields = ['company_name']
@@ -24,11 +26,17 @@ class AddJobForm(forms.ModelForm):
 
 class AddWorkerForm(forms.ModelForm):
     worker_work_date = forms.DateField(widget=forms.DateInput(attrs=
-                                {
-                                    'type':'date'
-                                }))
+    {
+        'type': 'date'
+    }))
 
     class Meta:
         model = Worker
         fields = ['worker_name', 'worker_phone', 'worker_id', 'worker_address', 'worker_job', 'worker_farm',
                   'worker_salary', 'worker_work_date']
+
+
+class AddSupplierForm(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        fields = ['supplier_name']

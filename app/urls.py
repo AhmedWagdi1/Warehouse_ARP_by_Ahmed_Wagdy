@@ -30,5 +30,8 @@ urlpatterns = [
                   # supplier
                   url(r'^supplier/$', views.supplier, name="supplier"),
                   url(r'^supplier/add/$', views.supplier_add, name="supplier_add"),
+                  #                 clients
+                  url(r'^clients/$', views.clients, name="clients"),
+                  url(r'^clients/add/$', views.clients_add, name="clients_add"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

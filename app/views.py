@@ -6,8 +6,8 @@ from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
-from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm
-from app.models import Company, Farm, Job, Worker, Supplier
+from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm
+from app.models import Company, Farm, Job, Worker, Supplier, Client
 from datetime import date, datetime
 
 
@@ -201,3 +201,25 @@ def supplier_add(request):
         'add_supplier_form': add_supplier_form,
     }
     return render(request, 'app/add_supplier.html', context)
+
+
+def clients(request):
+    all_clients = Client.objects.all()
+    context = {
+        'all_clients': all_clients,
+    }
+    return render(request, 'app/clients.html', context)
+
+
+def clients_add(request):
+    add_client_form = AddClientForm(request.POST)
+    if request.method == 'POST':
+        if add_client_form.is_valid():
+            add_client_form.save()
+            return redirect('clients')
+    else:
+        add_client_form = AddClientForm()
+    context = {
+        'add_client_form':add_client_form,
+    }
+    return render(request, 'app/clients_add.html', context)

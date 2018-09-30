@@ -62,12 +62,18 @@ class Supplier(models.Model):
     def __unicode__(self):
         return self.supplier_name
 
+    def get_absolute_url(self):
+        return reverse('supplier_details', args=[str(self.id)])
+
 
 class Client(models.Model):
     client_name = models.CharField(max_length=85)
 
     def __unicode__(self):
         return self.client_name
+
+    def get_absolute_url(self):
+        return reverse('client_details', args=[str(self.id)])
 
 
 class InvoiceType(models.Model):

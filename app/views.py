@@ -229,3 +229,37 @@ def supplier_delete(request, pk):
     current_supply = get_object_or_404(Supplier, pk=pk)
     current_supply.delete()
     return redirect('supplier')
+
+
+class SupplierUpdate(UpdateView):
+    model = Supplier
+    fields = ['supplier_name']
+    template_name_suffix = '_update_form'
+
+
+def supplier_details(request, pk):
+    current_supply = get_object_or_404(Supplier, pk=pk)
+    context = {
+        'current_supply':current_supply,
+    }
+    return render(request, 'app/supplier_details.html', context)
+
+
+def client_details(request, pk):
+    current_client = get_object_or_404(Client, pk=pk)
+    context = {
+        'current_client':current_client,
+    }
+    return render(request, 'app/client_details.html', context)
+
+
+def client_delete(request, pk):
+    current_client = get_object_or_404(Client, pk=pk)
+    current_client.delete()
+    return redirect('clients')
+
+
+class ClientUpdate(UpdateView):
+    model = Client
+    fields = ['client_name']
+    template_name_suffix = '_update_form'

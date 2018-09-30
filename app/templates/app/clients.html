@@ -15,7 +15,9 @@
 
 <ul class="list-group">
         {% for person in all_clients %}
+            <a href="{% url 'client_details' person.pk%}">
   <li class="list-group-item">{{ person.client_name }}</li>
+            </a>
         {% endfor %}
 
 </ul>

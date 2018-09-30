@@ -30,9 +30,15 @@ urlpatterns = [
                   # supplier
                   url(r'^supplier/$', views.supplier, name="supplier"),
                   url(r'^supplier/add/$', views.supplier_add, name="supplier_add"),
-                  url(r'supplier/delete/(?P<pk>[0-9]+)/', views.supplier_delete, name="supplier_delete"),
+                  url(r'^supplier/delete/(?P<pk>[0-9]+)/', views.supplier_delete, name="supplier_delete"),
+                  url(r'^supplier/update/(?P<pk>[0-9]+)/', views.SupplierUpdate.as_view(), name="supplier_update"),
+                  url(r'^supplier/details/(?P<pk>[0-9]+)/$', views.supplier_details, name="supplier_details"),
+
                   #                 clients
                   url(r'^clients/$', views.clients, name="clients"),
                   url(r'^clients/add/$', views.clients_add, name="clients_add"),
+                  url(r'^clients/details/(?P<pk>[0-9]+)/$', views.client_details, name="client_details"),
+                  url(r'^client/delete/(?P<pk>[0-9]+)/', views.client_delete, name="client_delete"),
+                  url(r'^client/update/(?P<pk>[0-9]+)/', views.ClientUpdate.as_view(), name="client_update"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

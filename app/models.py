@@ -100,7 +100,6 @@ class BuyInvoice(models.Model):
 class Warehouse(models.Model):
     item_name = models.ForeignKey(Product, on_delete=CASCADE)
     item_quantity = models.IntegerField()
-    item_note = models.CharField(max_length=160)
 
     def __unicode__(self):
         return self.item_name

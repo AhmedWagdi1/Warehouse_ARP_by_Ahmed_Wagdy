@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from app.models import Company, Farm, Job, Worker, Supplier, Client, Product
+from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse
 
 
 class AddCompanyForm(forms.ModelForm):
-
-
     class Meta:
         model = Company
         fields = ['company_name']
@@ -52,3 +50,9 @@ class AddProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['product_name']
+
+
+class WarehouseEntryForm(forms.ModelForm):
+    class Meta:
+        model = Warehouse
+        fields = ['item_name', 'item_quantity']

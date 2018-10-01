@@ -42,6 +42,7 @@ urlpatterns = [
                   url(r'^client/update/(?P<pk>[0-9]+)/', views.ClientUpdate.as_view(), name="client_update"),
                   # storages
                   url(r'^warehouse/$', views.warehouse, name="warehouse"),
+                  url(r'^wharehouse/entry/$', views.warehouse_entry, name="warehouse_entry"),
                   # products
                   url(r'^products/$', views.product, name="product"),
                   url(r'^products/add/$', views.product_add, name="product_add"),

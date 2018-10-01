@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
-    AddProductForm
+    AddProductForm, WarehouseEntryForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product
 from datetime import date, datetime
 
@@ -318,3 +318,28 @@ class ProductUpdate(UpdateView):
 
 def invoices(request):
     return render(request, 'app/tables.html')
+
+
+def warehouse_entry(request):
+    warehouse_entry_form = WarehouseEntryForm(request.POST)
+    if request.method == 'POST':
+        if warehouse_entry_form.is_valid():
+            ada_entry = warehouse_entry_form.save(commit=False)
+            print (ada_entry.item_name)
+            current = Warehouse.objects.filter(item_name=ada_entry.item_name)
+            if current:
+                current1 = current[0]
+                current2 = current1.item_quantity
+                current3 = current2 + ada_entry.item_quantity
+                current1.item_quantity = current3
+                current1.save()
+                return redirect('warehouse')
+            else:
+                ada_entry.save()
+                return redirect('warehouse')
+    else:
+        warehouse_entry_form = WarehouseEntryForm()
+    context = {
+        'warehouse_entry_form':warehouse_entry_form,
+    }
+    return render(request, 'app/warehouse_entry.html', context)

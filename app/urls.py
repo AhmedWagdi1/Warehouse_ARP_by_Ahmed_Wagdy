@@ -43,12 +43,14 @@ urlpatterns = [
                   # storages
                   url(r'^warehouse/$', views.warehouse, name="warehouse"),
                   url(r'^wharehouse/entry/$', views.warehouse_entry, name="warehouse_entry"),
+                  url(r'^warehouse/(?P<pk>[0-9]+)/out/$', views.warehouse_out, name="warehouse_out"),
                   # products
                   url(r'^products/$', views.product, name="product"),
                   url(r'^products/add/$', views.product_add, name="product_add"),
                   url(r'^product/(?P<pk>[0-9]+)/details', views.product_details, name="product_details"),
                   url(r'^product/(?P<pk>[0-9]+)/delete', views.product_delete, name="product_delete"),
                   url(r'^product/update/(?P<pk>[0-9]+)/', views.ProductUpdate.as_view(), name="product_update"),
+
                   # invoices
                   url(r'^invoices/$', views.invoices, name="invoices"),
 

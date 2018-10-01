@@ -9,13 +9,13 @@
             <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
           </div>
 <div align="center">
-    <form method="post">{% csrf_token %}
-    <h3>إختار الصنف</h3><br>
-{{ warehouse_entry_form.item_name }}<br>
-        <h3>الكمية</h3><br>
-        {{ warehouse_entry_form.item_quantity }}<br>
-        <button class="btn btn-primary"type="submit" >إضافة </button>
-        </form>
+<form method="post">{% csrf_token %}
+    {{ current_item.item_name }}<br>
+   خروج من المخزن<br>
+    <b>الكمية</b><br>
+<input type="number" name="out_number" min="1" max="{{ current }}"><br>
+    <button type="submit" class="btn btn-warning">خروج</button>
+</form>
     </div>
           <div class="clearfix"></div>
         </div>

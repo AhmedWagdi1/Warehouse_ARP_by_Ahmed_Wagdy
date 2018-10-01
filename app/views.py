@@ -325,7 +325,6 @@ def warehouse_entry(request):
     if request.method == 'POST':
         if warehouse_entry_form.is_valid():
             ada_entry = warehouse_entry_form.save(commit=False)
-            print (ada_entry.item_name)
             current = Warehouse.objects.filter(item_name=ada_entry.item_name)
             if current:
                 current1 = current[0]
@@ -340,6 +339,22 @@ def warehouse_entry(request):
     else:
         warehouse_entry_form = WarehouseEntryForm()
     context = {
-        'warehouse_entry_form':warehouse_entry_form,
+        'warehouse_entry_form': warehouse_entry_form,
     }
     return render(request, 'app/warehouse_entry.html', context)
+
+
+def warehouse_out(request, pk):
+    current_item = get_object_or_404(Warehouse, pk=pk)
+    quantity = request.POST.get('out_number')
+    current = current_item.item_quantity
+    if request.method == 'POST':
+        new = int(current) - int(quantity)
+        current_item.item_quantity = new
+        current_item.save()
+        return redirect('warehouse')
+    context = {
+        'current_item': current_item,
+        'current': current,
+    }
+    return render(request, 'app/item_out.html', context)

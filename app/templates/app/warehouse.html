@@ -54,7 +54,11 @@
                                         <tr class="even pointer" align="center">
                                             <td class=" ">{{ item.item_name }}</td>
                                             <td class=" ">{{ item.item_quantity }}</td>
-                                            <td class=" "><button class="btn-danger">خروج من المخزن</button></td>
+                                            <td class=" ">
+                                                <A href="{% url 'warehouse_out' item.pk%}">
+                                                <button class="btn-danger">خروج من المخزن</button>
+                                            </A>
+                                            </td>
                                         </tr>
                                     {% endfor %}
 

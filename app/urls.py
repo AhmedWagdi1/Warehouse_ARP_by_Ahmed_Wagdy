@@ -40,5 +40,13 @@ urlpatterns = [
                   url(r'^clients/details/(?P<pk>[0-9]+)/$', views.client_details, name="client_details"),
                   url(r'^client/delete/(?P<pk>[0-9]+)/', views.client_delete, name="client_delete"),
                   url(r'^client/update/(?P<pk>[0-9]+)/', views.ClientUpdate.as_view(), name="client_update"),
+                  # storages
+                  url(r'^warehouse/$', views.warehouse, name="warehouse"),
+                  # products
+                  url(r'^products/$', views.product, name="product"),
+                  url(r'^products/add/$', views.product_add, name="product_add"),
+                  url(r'^product/(?P<pk>[0-9]+)/details', views.product_details, name="product_details"),
+                  url(r'^product/(?P<pk>[0-9]+)/delete', views.product_delete, name="product_delete"),
+                  url(r'^product/update/(?P<pk>[0-9]+)/', views.ProductUpdate.as_view(), name="product_update"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

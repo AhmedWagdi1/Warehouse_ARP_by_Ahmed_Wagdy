@@ -6,8 +6,9 @@ from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
-from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm
-from app.models import Company, Farm, Job, Worker, Supplier, Client
+from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
+    AddProductForm
+from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product
 from datetime import date, datetime
 
 
@@ -220,7 +221,7 @@ def clients_add(request):
     else:
         add_client_form = AddClientForm()
     context = {
-        'add_client_form':add_client_form,
+        'add_client_form': add_client_form,
     }
     return render(request, 'app/clients_add.html', context)
 
@@ -240,7 +241,7 @@ class SupplierUpdate(UpdateView):
 def supplier_details(request, pk):
     current_supply = get_object_or_404(Supplier, pk=pk)
     context = {
-        'current_supply':current_supply,
+        'current_supply': current_supply,
     }
     return render(request, 'app/supplier_details.html', context)
 
@@ -248,7 +249,7 @@ def supplier_details(request, pk):
 def client_details(request, pk):
     current_client = get_object_or_404(Client, pk=pk)
     context = {
-        'current_client':current_client,
+        'current_client': current_client,
     }
     return render(request, 'app/client_details.html', context)
 
@@ -262,4 +263,54 @@ def client_delete(request, pk):
 class ClientUpdate(UpdateView):
     model = Client
     fields = ['client_name']
+    template_name_suffix = '_update_form'
+
+
+def warehouse(request):
+    all_warehouse = Warehouse.objects.all()
+    context = {
+        'all_warehouse': all_warehouse,
+    }
+    return render(request, 'app/warehouse.html', context)
+
+
+def product(request):
+    all_products = Product.objects.all()
+    context = {
+        'all_products': all_products,
+    }
+    return render(request, 'app/product.html', context)
+
+
+def product_add(request):
+    add_product_form = AddProductForm(request.POST)
+    if request.method == 'POST':
+        if add_product_form.is_valid():
+            add_product_form.save()
+            return redirect('product')
+    else:
+        add_product_form = AddProductForm()
+    context = {
+        'add_product_form': add_product_form,
+    }
+    return render(request, 'app/product_add.html', context)
+
+
+def product_details(request, pk):
+    current_product = get_object_or_404(Product, pk=pk)
+    context = {
+        'current_product': current_product,
+    }
+    return render(request, 'app/product_details.html', context)
+
+
+def product_delete(request, pk):
+    current_product = get_object_or_404(Product, pk=pk)
+    current_product.delete()
+    return redirect('product')
+
+
+class ProductUpdate(UpdateView):
+    model = Product
+    fields = ['product_name']
     template_name_suffix = '_update_form'

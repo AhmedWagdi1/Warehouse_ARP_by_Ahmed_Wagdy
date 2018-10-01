@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from app.models import Company, Farm, Job, Worker, Supplier, Client
+from app.models import Company, Farm, Job, Worker, Supplier, Client, Product
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -46,3 +46,9 @@ class AddClientForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = ['client_name']
+
+
+class AddProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['product_name']

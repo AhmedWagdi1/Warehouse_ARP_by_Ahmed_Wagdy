@@ -75,26 +75,24 @@ class Client(models.Model):
     def get_absolute_url(self):
         return reverse('client_details', args=[str(self.id)])
 
-
-class InvoiceType(models.Model):
-    invoice_type = models.CharField(max_length=85)
-
-    def __unicode__(self):
-        return self.invoice_type
-
-
 class Product(models.Model):
     product_name = models.CharField(max_length=160)
 
     def __unicode__(self):
         return self.product_name
 
+    def get_absolute_url(self):
+        return reverse('product_details', args=[str(self.id)])
 
-class Invoice(models.Model):
+
+
+
+class BuyInvoice(models.Model):
     product = models.ForeignKey(Product, on_delete=DO_NOTHING)
     product_description = models.CharField(max_length=260)
     quantity = models.IntegerField()
     price = models.IntegerField()
+    supplier = models.ForeignKey(Supplier, on_delete=DO_NOTHING)
 
     def __unicode__(self):
         return self.product
@@ -106,3 +104,4 @@ class Warehouse(models.Model):
 
     def __unicode__(self):
         return self.item_name
+

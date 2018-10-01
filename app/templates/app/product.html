@@ -1,0 +1,30 @@
+{% extends 'app/base_site.html' %}{% load static %}
+{% block content %}
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="dashboard_graph">
+
+
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+          </div>
+<div align="right">
+<a href="{% url 'product_add' %}">
+<button class="btn btn-primary">إضافة منتج </button></a>
+<ul class="list-group">
+    <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;<b>إسم المنتج</b></li>
+
+      {% for item in all_products %}
+          <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'product_details' item.pk%}">{{ item.product_name }}</a></li>
+          {% endfor %}
+
+
+</ul>
+
+
+    </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -1,27 +1,78 @@
-{% extends 'app/base_site.html' %}{% load static %}
+{% extends "app/base_site.html" %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
 {% block content %}
-    <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="dashboard_graph">
+    <div class="right_col" role="main" dir="rtl">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>الوظائف
+                        <small>
+                            <br><br>
+                        </small>
+                    </h3>
+                </div>
+
+                <div class="title_right">
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                        <form method="post">{% csrf_token %}
+                            <h3>إسم الوظيفة</h3><br>
+                            {{ add_job_form.job_name }}<br>
+                            <button class="btn btn-primary" type="submit">إضافة</button>
+                        </form>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row" align="right" dir="rtl">
 
 
-          <div class="col-md-9 col-sm-9 col-xs-12">
-            <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
-          </div>
-<div align="center">
-    <form method="post">{% csrf_token %}
-    <h3>إسم الوظيفة</h3><br>
-{{ add_job_form.job_name }}<br>
-        <button class="btn btn-primary"type="submit" >إضافة </button>
-        </form>
-    <ul class="list-group">
-        {% for job in all_jobs %}
-  <li class="list-group-item">
-      <a href="{% url 'job_update' job.pk%}">
-      <button class=" btn-primary">تعديل الوظيفة</button>
-          </a>
-          <button class=" btn-danger" data-toggle="modal" data-target="#exampleModalCenter_{{ job.id }}">مسح الوظيفة</button> {{ job.job_name }}  </li>
-       <!-- Modal -->
+            <div class="clearfix"></div>
+
+
+            <div class="clearfix"></div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12" dir="rtl" align="right">
+                <div class="x_panel" dir="rtl" align="right">
+                    <div class="x_title" dir="rtl">
+                        <small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content" dir="rtl" align="right">
+
+                        <div class="table-responsive" align="right" dir="rtl">
+                            <table class="table table-striped jambo_table bulk_action" dir="rtl" align="right">
+                                <thead dir="rtl" align="right">
+                                <th class="column-title" align="right" dir="rtl">إسم الوظيفة</th>
+                                <th class="column-title" align="right" dir="rtl">تعديل</th>
+
+                                </thead>
+
+                                <tbody>
+                                {% for job in all_jobs %}
+                                    <tr class="even pointer" align="center">
+                                        <td class=" ">{{ job.job_name }}</td>
+                                        <td class=" "><a href="{% url 'job_update' job.pk %}">
+                                            <button class=" btn-primary">تعديل الوظيفة</button>
+                                        </a>
+                                            <button class=" btn-danger" data-toggle="modal"
+                                                    data-target="#exampleModalCenter_{{ job.id }}">مسح الوظيفة
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                           <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter_{{ job.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -45,13 +96,28 @@
   </div>
 </div>
     <!-- end of modal -->
-        {% endfor %}
-</ul>
-    </div>
-          <div class="clearfix"></div>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
     </div>
 
+{% endblock content %}
 
-{% endblock %}
+{% block javascripts %}
+    {{ block.super }}
+{% endblock javascripts %}
+
+
+
+
+
+

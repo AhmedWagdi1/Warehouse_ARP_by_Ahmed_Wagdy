@@ -1,29 +1,88 @@
-{% extends 'app/base_site.html' %}{% load static %}
+{% extends "app/base_site.html" %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
 {% block content %}
-    <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="dashboard_graph">
+    <div class="right_col" role="main" dir="rtl">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>العملاء
+                        <small>
+                            <br><br>
+                        </small>
+                    </h3>
+                </div>
 
-
-          <div class="col-md-9 col-sm-9 col-xs-12">
-            <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
-          </div>
-<div align="center">
+                <div class="title_right">
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
 <A href="{% url 'clients_add' %}">
 <button class="btn btn-primary">إضافة عميل جديد <span class="fa fa-plus"></span> </button>
 </A>
+                    </div>
+                </div>
+            </div>
 
-<ul class="list-group">
-        {% for person in all_clients %}
-            <a href="{% url 'client_details' person.pk%}">
-  <li class="list-group-item">{{ person.client_name }}</li>
-            </a>
-        {% endfor %}
+            <div class="clearfix"></div>
 
-</ul>
-    </div>
-          <div class="clearfix"></div>
+            <div class="row" align="right" dir="rtl">
+
+
+                <div class="clearfix"></div>
+
+
+                <div class="clearfix"></div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12" dir="rtl" align="right">
+                    <div class="x_panel" dir="rtl" align="right">
+                        <div class="x_title" dir="rtl">
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content" dir="rtl" align="right">
+
+                            <div class="table-responsive" align="right" dir="rtl">
+                                <table class="table table-striped jambo_table bulk_action" dir="rtl" align="right">
+                                    <thead dir="rtl" align="right">
+                                    <tr class="headings" dir="rtl" align="right">
+                                        <th class="column-title" align="right" dir="rtl"> إسم المورد</th>
+
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% for item in all_clients %}
+                                        <tr class="even pointer" align="center">
+                                            <td class=" "><a
+                                                    href="{% url 'client_details' item.pk %}"> {{ item.client_name }}</a>
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-{% endblock %}
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+{% endblock javascripts %}
+
+
+
+
+
+

@@ -314,3 +314,7 @@ class ProductUpdate(UpdateView):
     model = Product
     fields = ['product_name']
     template_name_suffix = '_update_form'
+
+
+def invoices(request):
+    return render(request, 'app/tables.html')

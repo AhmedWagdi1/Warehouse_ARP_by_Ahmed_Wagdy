@@ -1,24 +1,85 @@
 {% extends "app/base_site.html" %}
 
-{% block title %} Dashboard 1 {% endblock title %}
+{% block title %} Tables {% endblock title %}
 
 {% block stylesheets %}
   {{ block.super }}
 {% endblock stylesheets %}
 
 {% block content %}
-  <div class="right_col" role="main">
-  <h3 align="right">
-      {{ current_farm.farm_name }}<span class="fa fa-home"></span>
-      <br><Br>
-      <a href="{% url 'farm_update' current_farm.pk%}">
-      <button class="btn btn-primary">تعديل المزرعة</button>
-          </a>
-          <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">مسح المزرعة</button>
-</h3>
-    <!-- top tiles -->
-    <!-- /top tiles -->
-<!-- Modal -->
+  <div class="right_col" role="main" dir="rtl">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>{{ current_farm.farm_name }}<small>
+              <br><br>
+              <button class="btn btn-primary"><span class="fa fa-edit"></span> تعديل </button>
+          <button class="btn btn-danger"><span class="fa fa-trash"></span> مسح المزرعة</button>
+          </small></h3>
+        </div>
+
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <div class="row" align="right" dir="rtl">
+
+
+        <div class="clearfix"></div>
+
+
+
+        <div class="clearfix"></div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12" dir="rtl" align="right">
+          <div class="x_panel" dir="rtl" align="right">
+            <div class="x_title" dir="rtl">
+              <h2 align="right" dir="rtl">العاملين بالمزرعة <small> </small></h2>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content" dir="rtl" align="right">
+
+              <div class="table-responsive" align="right" dir="rtl">
+                <table class="table table-striped jambo_table bulk_action" dir="rtl" align="right">
+                  <thead dir="rtl" align="right">
+                    <tr class="headings" dir="rtl" align="right">
+                      <th class="column-title" align="right" dir="rtl"> إسم العامل </th>
+                      <th class="column-title" align="right" dir="rtl">تاريخ التعيين </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                  {% for worker in farm_workers %}
+                    <tr class="even pointer" align="center">
+                      <td class=" "><a href="{% url 'worker_details' worker.pk%}"> {{ worker.worker_name }}</a></td>
+                      <td class=" ">{{ worker.worker_work_date }} </td>
+                      </td>
+                    </tr>
+                  {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -41,94 +102,14 @@
   </div>
 </div>
       <!-- end of modal -->
-    <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="dashboard_graph">
-<h2 align="right">
-            العاملين فى المزرعة
-            </h2>
-        {% if not farm_workers %}
-            <h3 align="center" dir="rtl"> لا يوجد عاملين فى  {{ current_farm.farm_name }}</h3>
-        {% else %}
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">إسم العامل</th>
-      <th scope="col">تاريخ التعيين</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for worker in farm_workers %}
-    <tr>
-      <th scope="row">{{ worker.id }}</th>
-      <td><a href="{% url 'worker_details' worker.pk%}"> {{ worker.worker_name }}</a></td>
-      <td>{{ worker.worker_work_date }}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-{% endif %}
-
-
-          <div class="clearfix"></div>
-        </div>
-      </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-
-
-
-
-    </div>
-
-    <div class="row">
-
-
-
-        <div class="row">
-
-
-        </div>
-        <div class="row">
-
-
-          <!-- Start to do list -->
-          <!-- End to do list -->
-
-          <!-- start of weather widget -->
-          <!-- end of weather widget -->
-        </div>
-      </div>
-    </div>
-  </div>
 {% endblock content %}
 
 {% block javascripts %}
-  {{ block.super}}
-  <!-- Chart.js -->
-  <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
-  <!-- gauge.js -->
-  <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
-  <!-- Skycons -->
-  <script src="/static/vendors/skycons/skycons.js"></script>
-  <!-- Flot -->
-  <script src="/static/vendors/Flot/jquery.flot.js"></script>
-  <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
-  <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
-  <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
-  <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
-  <!-- Flot plugins -->
-  <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-  <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-  <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
-  <!-- DateJS -->
-  <script src="/static/vendors/DateJS/build/date.js"></script>
-  <!-- JQVMap -->
-  <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
-  <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-  <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+  {{ block.super }}
 {% endblock javascripts %}
+
+
+
+
+
+

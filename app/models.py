@@ -86,12 +86,14 @@ class Product(models.Model):
         return reverse('product_details', args=[str(self.id)])
 
 
-class BuyInvoice(models.Model):
+class SellInvoice(models.Model):
     product = models.ForeignKey(Product, on_delete=DO_NOTHING)
-    product_description = models.CharField(max_length=260)
+    invoice_description = models.CharField(max_length=260)
     quantity = models.IntegerField()
     price = models.IntegerField()
-    supplier = models.ForeignKey(Supplier, on_delete=DO_NOTHING)
+    client = models.ForeignKey(Supplier, on_delete=DO_NOTHING)
+    date = models.DateField(auto_now=True)
+    notes = models.TextField(max_length=1200, default='ملاحظات')
 
     def __unicode__(self):
         return self.product

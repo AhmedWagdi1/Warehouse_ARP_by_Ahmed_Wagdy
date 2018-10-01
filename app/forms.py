@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse
+from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, SellInvoice
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -56,3 +56,15 @@ class WarehouseEntryForm(forms.ModelForm):
     class Meta:
         model = Warehouse
         fields = ['item_name', 'item_quantity']
+
+
+class InvoiceForm(forms.ModelForm):
+    class Meta:
+        model = Warehouse
+        fields = ['item_name', 'item_quantity']
+
+
+class BuyInvoiceForm(forms.ModelForm):
+    class Meta:
+        mode = SellInvoice
+        fields = ['client']

@@ -52,6 +52,6 @@ urlpatterns = [
                   url(r'^product/update/(?P<pk>[0-9]+)/', views.ProductUpdate.as_view(), name="product_update"),
 
                   # invoices
-                  url(r'^invoices/$', views.invoices, name="invoices"),
+                  url(r'^invoices/sell/$', views.invoices_sell, name="invoices_sell"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

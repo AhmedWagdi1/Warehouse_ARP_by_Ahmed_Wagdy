@@ -316,8 +316,12 @@ class ProductUpdate(UpdateView):
     template_name_suffix = '_update_form'
 
 
-def invoices(request):
-    return render(request, 'app/tables.html')
+def invoices_sell(request):
+    company = Company.objects.all()[0]
+    context = {
+        'company':company,
+    }
+    return render(request, 'app/invoice_sell.html', context)
 
 
 def warehouse_entry(request):

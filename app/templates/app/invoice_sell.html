@@ -11,19 +11,8 @@
     <div class="">
       <div class="page-title">
         <div class="title_left">
-          <h3>Invoice <small>Some examples to get you started</small></h3>
         </div>
 
-        <div class="title_right">
-          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Go!</button>
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="clearfix"></div>
@@ -31,78 +20,41 @@
       <div class="row">
         <div class="col-md-12">
           <div class="x_panel">
-            <div class="x_title">
-              <h2>Invoice Design <small>Sample user invoice design</small></h2>
-              <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Settings 1</a>
-                    </li>
-                    <li><a href="#">Settings 2</a>
-                    </li>
-                  </ul>
-                </li>
-                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-              </ul>
-              <div class="clearfix"></div>
-            </div>
             <div class="x_content">
 
               <section class="content invoice">
                 <!-- title row -->
                 <div class="row">
-                  <div class="col-xs-12 invoice-header">
+                  <div class="col-xs-12 invoice-header" align="right">
                     <h1>
-                                    <i class="fa fa-globe"></i> Invoice.
-                                    <small class="pull-right">Date: 16/08/2016</small>
+                                     فاتورة بيع<i class="fa fa-globe"></i>
+                                    <small class="pull-left" dir="rtl">{% now "d-m-Y" %}</small>
                                 </h1>
                   </div>
                   <!-- /.col -->
                 </div>
                 <!-- info row -->
-                <div class="row invoice-info">
+                <div class="row invoice-info" dir="rtl">
                   <div class="col-sm-4 invoice-col">
-                    From
+إلــى
                     <address>
-                                    <strong>Iron Admin, Inc.</strong>
-                                    <br>795 Freedom Ave, Suite 600
-                                    <br>New York, CA 94107
-                                    <br>Phone: 1 (804) 123-9876
-                                    <br>Email: ironadmin.com
-                                </address>
+                                    <strong>{{ company.company_name }}</strong>
+                     </address>
                   </div>
                   <!-- /.col -->
                   <div class="col-sm-4 invoice-col">
                     To
                     <address>
                                     <strong>John Doe</strong>
-                                    <br>795 Freedom Ave, Suite 600
-                                    <br>New York, CA 94107
-                                    <br>Phone: 1 (804) 123-9876
-                                    <br>Email: jon@ironadmin.com
                                 </address>
                   </div>
                   <!-- /.col -->
-                  <div class="col-sm-4 invoice-col">
-                    <b>Invoice #007612</b>
-                    <br>
-                    <br>
-                    <b>Order ID:</b> 4F3S8J
-                    <br>
-                    <b>Payment Due:</b> 2/22/2014
-                    <br>
-                    <b>Account:</b> 968-34567
-                  </div>
                   <!-- /.col -->
                 </div>
                 <!-- /.row -->
 
                 <!-- Table row -->
-                <div class="row">
+                <div class="row" dir="rtl">
                   <div class="col-xs-12 table">
                     <table class="table table-striped">
                       <thead>
@@ -153,37 +105,23 @@
 
                 <div class="row">
                   <!-- accepted payments column -->
-                  <div class="col-xs-6">
-                    <p class="lead">Payment Methods:</p>
-                    <img src="/static/images/visa.png" alt="Visa">
-                    <img src="/static/images/mastercard.png" alt="Mastercard">
-                    <img src="/static/images/american-express.png" alt="American Express">
-                    <img src="/static/images/paypal.png" alt="Paypal">
-                    <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                      Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                    </p>
-                  </div>
                   <!-- /.col -->
-                  <div class="col-xs-6">
-                    <p class="lead">Amount Due 2/22/2014</p>
+                  <div class="col-xs-6" dir="rtl" align="right">
                     <div class="table-responsive">
                       <table class="table">
                         <tbody>
                           <tr>
-                            <th style="width:50%">Subtotal:</th>
-                            <td>$250.30</td>
+                            <th style="width:50%">الإجمالى:</th>
+                            <td>250.30 جنيه مصرى</td>
                           </tr>
                           <tr>
-                            <th>Tax (9.3%)</th>
-                            <td>$10.34</td>
+                            <th>مصاريف شحن و توصيل:</th>
+                            <td>250.30 جنيه مصرى</td>
                           </tr>
                           <tr>
-                            <th>Shipping:</th>
-                            <td>$5.80</td>
-                          </tr>
-                          <tr>
-                            <th>Total:</th>
-                            <td>$265.24</td>
+                            <th>الصافى :</th>
+
+                            <td><span style="background: yellow;"> 250.30 جنيه مصرى</span></td>
                           </tr>
                         </tbody>
                       </table>

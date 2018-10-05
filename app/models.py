@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.db.models import CASCADE, DO_NOTHING
@@ -105,3 +106,16 @@ class Warehouse(models.Model):
 
     def __unicode__(self):
         return self.item_name
+
+
+class MainFinance(models.Model):
+    balance = models.DecimalField(max_digits=8, decimal_places=2)
+
+
+class MainFinanceMovement(models.Model):
+    MODE_CHOICES = [('withdrawal','سحب'),('deposite', 'إيداع')]
+    mode = models.CharField(max_length=9, choices=MODE_CHOICES, default='1')
+    user = models.ForeignKey(User, on_delete=DO_NOTHING)
+    date = models.DateTimeField(auto_now=True)
+    text = models.CharField(max_length=800)
+    amount = models.DecimalField(max_digits=8, decimal_places=2)

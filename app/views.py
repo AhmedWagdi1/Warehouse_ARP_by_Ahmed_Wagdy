@@ -7,8 +7,9 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
-    AddProductForm, WarehouseEntryForm
-from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement
+    AddProductForm, WarehouseEntryForm, MainFinanceDepositForm
+from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
+    MainFinance
 from datetime import date, datetime
 
 
@@ -366,7 +367,32 @@ def warehouse_out(request, pk):
 
 def finance_main(request):
     all_movments = MainFinanceMovement.objects.all()
+    current_balance = MainFinance.objects.all()[0]
     context = {
         'all_movments': all_movments,
+        'current_balance': current_balance,
     }
     return render(request, 'app/finance_main.html', context)
+
+
+def finance_main_deposit(request):
+    current_balance = MainFinance.objects.all()[0]
+    main_finance_deposit_form = MainFinanceDepositForm(request.POST)
+    if request.method == 'POST':
+        if main_finance_deposit_form.is_valid():
+            form = main_finance_deposit_form.save(commit=False)
+            form.mode = 2
+            form.user = request.user
+            form.save()
+            old = current_balance.balance
+            new = form.amount
+            total = old + new
+            current_balance.balance = total
+            current_balance.save()
+            return redirect('finance_main')
+    else:
+        main_finance_deposit_form = MainFinanceDepositForm()
+    context = {
+        'main_finance_deposit_form': main_finance_deposit_form,
+    }
+    return render(request, 'app/finance_main_deposit.html', context)

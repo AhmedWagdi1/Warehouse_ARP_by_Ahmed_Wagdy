@@ -52,6 +52,7 @@ urlpatterns = [
                   url(r'^product/update/(?P<pk>[0-9]+)/', views.ProductUpdate.as_view(), name="product_update"),
                   # finance
                   url(r'^finance/main/$', views.finance_main, name="finance_main"),
+                  url(r'^finance/main/deposite/$', views.finance_main_deposit, name="finance_main_deposit"),
                   # invoices
                   url(r'^invoices/sell/$', views.invoices_sell, name="invoices_sell"),
 

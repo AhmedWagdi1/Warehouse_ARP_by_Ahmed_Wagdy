@@ -11,9 +11,11 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3><span class="fa fa-money"></span>      الخزينة المركزية
+                    <h3><span class="fa fa-money"></span>
+                        الخزينة المركزية
+                       <br>
                         <small>
-                            <br><br>
+                            <b>الرصيد</b> {{ current_balance.balance }} جنيه
                         </small>
                     </h3>
                 </div>
@@ -37,7 +39,7 @@
                         </div>
 
                         <div class="x_content" dir="rtl" align="right">
-                            <a href="{% url 'warehouse_entry' %}">
+                            <a href="{% url 'finance_main_deposit' %}">
                                 <button class="btn btn-primary">إيداع</button>
                             </a>                            <a href="{% url 'warehouse_entry' %}">
                                 <button class="btn btn-primary">سحب</button>

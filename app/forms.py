@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, SellInvoice
+from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, SellInvoice, \
+    MainFinanceMovement
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -66,5 +67,11 @@ class InvoiceForm(forms.ModelForm):
 
 class BuyInvoiceForm(forms.ModelForm):
     class Meta:
-        mode = SellInvoice
+        model = SellInvoice
         fields = ['client']
+
+
+class MainFinanceDepositForm(forms.ModelForm):
+    class Meta:
+        model = MainFinanceMovement
+        fields = ['text', 'amount']

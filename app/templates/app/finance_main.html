@@ -1,0 +1,89 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main" dir="rtl">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3><span class="fa fa-money"></span>      الخزينة المركزية
+                        <small>
+                            <br><br>
+                        </small>
+                    </h3>
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row" align="right" dir="rtl">
+
+
+                <div class="clearfix"></div>
+
+
+                <div class="clearfix"></div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12" dir="rtl" align="right">
+                    <div class="x_panel" dir="rtl" align="right">
+                        <div class="x_title" dir="rtl">
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content" dir="rtl" align="right">
+                            <a href="{% url 'warehouse_entry' %}">
+                                <button class="btn btn-primary">إيداع</button>
+                            </a>                            <a href="{% url 'warehouse_entry' %}">
+                                <button class="btn btn-primary">سحب</button>
+                            </a>
+                            <div class="table-responsive" align="right" dir="rtl">
+                                <table class="table table-striped jambo_table bulk_action" dir="rtl" align="right">
+                                    <thead dir="rtl" align="right">
+                                    <tr class="headings" dir="rtl" align="right">
+                                        <th class="column-title" align="right" dir="rtl"> رفم الحركة</th>
+                                        <th class="column-title" align="right" dir="rtl"> المبلغ</th>
+                                        <th class="column-title" align="right" dir="rtl">البيان</th>                                        <th class="column-title" align="right" dir="rtl"> المبلغ</th>
+                                        <th class="column-title" align="right" dir="rtl">التاريخ</th>                                        <th class="column-title" align="right" dir="rtl"> المبلغ</th>
+                                        <th class="column-title" align="right" dir="rtl">المستخدم</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in all_movments %}
+                                        <tr class="even pointer" align="center">
+                                            <td class=" ">{{ item.id }}</td>
+                                            <td class=" ">{{ item.amount }}</td>
+                                            <td class=" ">{{ item.text }}</td>
+                                            <td class=" ">{{ item.date }}</td>
+                                            <td class=" ">{{ item.user.username }}</td>
+
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+{% endblock javascripts %}
+
+
+
+
+
+

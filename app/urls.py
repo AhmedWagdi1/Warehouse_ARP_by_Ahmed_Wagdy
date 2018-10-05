@@ -50,7 +50,8 @@ urlpatterns = [
                   url(r'^product/(?P<pk>[0-9]+)/details', views.product_details, name="product_details"),
                   url(r'^product/(?P<pk>[0-9]+)/delete', views.product_delete, name="product_delete"),
                   url(r'^product/update/(?P<pk>[0-9]+)/', views.ProductUpdate.as_view(), name="product_update"),
-
+                  # finance
+                  url(r'^finance/main/$', views.finance_main, name="finance_main"),
                   # invoices
                   url(r'^invoices/sell/$', views.invoices_sell, name="invoices_sell"),
 

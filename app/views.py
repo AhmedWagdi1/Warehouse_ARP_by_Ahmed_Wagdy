@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm
-from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product
+from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement
 from datetime import date, datetime
 
 
@@ -319,7 +319,7 @@ class ProductUpdate(UpdateView):
 def invoices_sell(request):
     company = Company.objects.all()[0]
     context = {
-        'company':company,
+        'company': company,
     }
     return render(request, 'app/invoice_sell.html', context)
 
@@ -362,3 +362,11 @@ def warehouse_out(request, pk):
         'current': current,
     }
     return render(request, 'app/item_out.html', context)
+
+
+def finance_main(request):
+    all_movments = MainFinanceMovement.objects.all()
+    context = {
+        'all_movments': all_movments,
+    }
+    return render(request, 'app/finance_main.html', context)

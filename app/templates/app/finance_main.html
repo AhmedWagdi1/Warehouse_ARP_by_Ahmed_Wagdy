@@ -43,30 +43,30 @@
                                 <button class="btn btn-primary">سحب</button>
                             </a>
                             <div class="table-responsive" align="right" dir="rtl">
-                                <table class="table table-striped jambo_table bulk_action" dir="rtl" align="right">
+                                <table class="table table-striped jambo_table " dir="rtl" align="right">
                                     <thead dir="rtl" align="right">
                                     <tr class="headings" dir="rtl" align="right">
                                         <th class="column-title" align="right" dir="rtl"> رفم الحركة</th>
                                         <th class="column-title" align="right" dir="rtl"> المبلغ</th>
-                                        <th class="column-title" align="right" dir="rtl">البيان</th>                                        <th class="column-title" align="right" dir="rtl"> المبلغ</th>
-                                        <th class="column-title" align="right" dir="rtl">التاريخ</th>                                        <th class="column-title" align="right" dir="rtl"> المبلغ</th>
+                                        <th class="column-title" align="right" dir="rtl">البيان</th>
+                                        <th class="column-title" align="right" dir="rtl">التاريخ</th>
                                         <th class="column-title" align="right" dir="rtl">المستخدم</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for item in all_movments %}
-                                        <tr class="even pointer" align="center">
+                                        <tr align="left">
                                             <td class=" ">{{ item.id }}</td>
                                             <td class=" ">{{ item.amount }}</td>
                                             <td class=" ">{{ item.text }}</td>
                                             <td class=" ">{{ item.date }}</td>
                                             <td class=" ">{{ item.user.username }}</td>
-
                                         </tr>
                                     {% endfor %}
 
                                     </tbody>
                                 </table>
+
                             </div>
 
 

@@ -59,18 +59,6 @@ class WarehouseEntryForm(forms.ModelForm):
         fields = ['item_name', 'item_quantity']
 
 
-class InvoiceForm(forms.ModelForm):
-    class Meta:
-        model = Warehouse
-        fields = ['item_name', 'item_quantity']
-
-
-class BuyInvoiceForm(forms.ModelForm):
-    class Meta:
-        model = SellInvoice
-        fields = ['client']
-
-
 class MainFinanceDepositForm(forms.ModelForm):
     class Meta:
         model = MainFinanceMovement

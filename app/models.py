@@ -89,12 +89,50 @@ class Product(models.Model):
 
 class SellInvoice(models.Model):
     product = models.ForeignKey(Product, on_delete=DO_NOTHING)
-    invoice_description = models.CharField(max_length=260)
-    quantity = models.IntegerField()
-    price = models.IntegerField()
-    client = models.ForeignKey(Supplier, on_delete=DO_NOTHING)
+    product2 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product2', default=1)
+    product3 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product3', blank=True, default=1)
+    product4 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product4', blank=True, default=1)
+    product5 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product5', blank=True, default=1)
+    product6 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product6', blank=True, default=1)
+    product7 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product7', blank=True, default=1)
+    product8 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product8', blank=True, default=1)
+    product9 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product9', blank=True, default=1)
+    product10 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product10', blank=True, default=1)
+    invoice_description = models.CharField(max_length=260, default='البيان')
+    invoice_description2 = models.CharField(max_length=260, default='البيان', blank=True)
+    invoice_description3 = models.CharField(max_length=260, default='البيان', blank=True)
+    invoice_description4 = models.CharField(max_length=260, default='البيان', blank=True)
+    invoice_description5 = models.CharField(max_length=260, default='البيان', blank=True)
+    invoice_description6 = models.CharField(max_length=260, default='البيان', blank=True)
+    invoice_description7 = models.CharField(max_length=260, default='البيان', blank=True)
+    invoice_description8 = models.CharField(max_length=260, default='البيان', blank=True)
+    invoice_description9 = models.CharField(max_length=260, default='البيان', blank=True)
+    invoice_description10 = models.CharField(max_length=260, default='البيان', blank=True)
+    quantity = models.IntegerField(default=1)
+    quantity2 = models.IntegerField(default=1, blank=True)
+    quantity3 = models.IntegerField(default=1, blank=True)
+    quantity4 = models.IntegerField(default=1, blank=True)
+    quantity5 = models.IntegerField(default=1, blank=True)
+    quantity6 = models.IntegerField(default=1, blank=True)
+    quantity7 = models.IntegerField(default=1, blank=True)
+    quantity8 = models.IntegerField(default=1, blank=True)
+    quantity9 = models.IntegerField(default=1, blank=True)
+    quantity10 = models.IntegerField(default=1, blank=True)
+    price = models.IntegerField(default=1)
+    price2 = models.IntegerField(default=1, blank=True)
+    price3 = models.IntegerField(default=1, blank=True)
+    price4 = models.IntegerField(default=1, blank=True)
+    price5 = models.IntegerField(default=1, blank=True)
+    price6 = models.IntegerField(default=1, blank=True)
+    price7 = models.IntegerField(default=1, blank=True)
+    price8 = models.IntegerField(default=1, blank=True)
+    price9 = models.IntegerField(default=1, blank=True)
+    price10 = models.IntegerField(default=1, blank=True)
+    client = models.ForeignKey(Client, on_delete=DO_NOTHING)
     date = models.DateField(auto_now=True)
     notes = models.TextField(max_length=1200, default='ملاحظات')
+    user = models.ForeignKey(User, on_delete=DO_NOTHING, default=1)
+    source = models.CharField(max_length=180, default='الرئيسية')
 
     def __unicode__(self):
         return self.product
@@ -113,7 +151,7 @@ class MainFinance(models.Model):
 
 
 class MainFinanceMovement(models.Model):
-    MODE_CHOICES = [('withdrawal','سحب'),('deposite', 'إيداع')]
+    MODE_CHOICES = [('withdrawal', 'سحب'), ('deposite', 'إيداع')]
     mode = models.CharField(max_length=9, choices=MODE_CHOICES, default='1')
     user = models.ForeignKey(User, on_delete=DO_NOTHING)
     date = models.DateTimeField(auto_now=True)

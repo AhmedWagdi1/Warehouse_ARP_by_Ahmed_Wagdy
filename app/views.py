@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
-    AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm
+    AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
     MainFinance
 from datetime import date, datetime
@@ -317,10 +317,29 @@ class ProductUpdate(UpdateView):
     template_name_suffix = '_update_form'
 
 
-def invoices_sell(request):
+def invoices_sell(request, pk):
+    current_farm = get_object_or_404(Farm, pk=pk)
     company = Company.objects.all()[0]
+    company_farm = Farm.objects.get(farm_name=company.company_name)
+    sell_invoice_form = SellInvoiceForm(request.POST)
+    if request.method == 'POST':
+        if sell_invoice_form.is_valid():
+            form = sell_invoice_form.save(commit=False)
+            form.user = request.user
+            form.source = current_farm
+            form.save()
+            if current_farm == company_farm:
+                new_entry_main = MainFinanceMovement(mode=2, user=request.user, text=form.id, amount=form.total)
+                new_entry_main.save()
+            else:
+                pass
+    else:
+        sell_invoice_form = SellInvoiceForm()
+
     context = {
         'company': company,
+        'current_farm': current_farm,
+        'sell_invoice_form': sell_invoice_form,
     }
     return render(request, 'app/invoice_sell.html', context)
 
@@ -368,9 +387,12 @@ def warehouse_out(request, pk):
 def finance_main(request):
     all_movments = MainFinanceMovement.objects.all()
     current_balance = MainFinance.objects.all()[0]
+    company_name = Company.objects.all()[0]
+    current_farm = Farm.objects.get(farm_name=company_name.company_name)
     context = {
         'all_movments': all_movments,
         'current_balance': current_balance,
+        'current_farm': current_farm,
     }
     return render(request, 'app/finance_main.html', context)
 

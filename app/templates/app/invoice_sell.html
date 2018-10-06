@@ -3,151 +3,290 @@
 {% block title %} Invoice {% endblock title %}
 
 {% block stylesheets %}
-  {{ block.super }}
+    {{ block.super }}
 {% endblock stylesheets %}
 
 {% block content %}
-  <div class="right_col" role="main">
-    <div class="">
-      <div class="page-title">
-        <div class="title_left">
-        </div>
-
-      </div>
-
-      <div class="clearfix"></div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="x_panel">
-            <div class="x_content">
-
-              <section class="content invoice">
-                <!-- title row -->
-                <div class="row">
-                  <div class="col-xs-12 invoice-header" align="right">
-                    <h1>
-                                     فاتورة بيع<i class="fa fa-globe"></i>
-                                    <small class="pull-left" dir="rtl">{% now "d-m-Y" %}</small>
-                                </h1>
-                  </div>
-                  <!-- /.col -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
                 </div>
-                <!-- info row -->
-                <div class="row invoice-info" dir="rtl">
-                  <div class="col-sm-4 invoice-col">
-إلــى
-                    <address>
-                                    <strong>{{ company.company_name }}</strong>
-                     </address>
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-4 invoice-col">
-                    To
-                    <address>
-                                    <strong>John Doe</strong>
-                                </address>
-                  </div>
-                  <!-- /.col -->
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
 
-                <!-- Table row -->
-                <div class="row" dir="rtl">
-                  <div class="col-xs-12 table">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>Qty</th>
-                          <th>Product</th>
-                          <th>Serial #</th>
-                          <th style="width: 59%">Description</th>
-                          <th>Subtotal</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Call of Duty</td>
-                          <td>455-981-221</td>
-                          <td>El snort testosterone trophy driving gloves handsome gerry Richardson helvetica tousled street art master testosterone trophy driving gloves handsome gerry Richardson
-                          </td>
-                          <td>$64.50</td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td>Need for Speed IV</td>
-                          <td>247-925-726</td>
-                          <td>Wes Anderson umami biodiesel</td>
-                          <td>$50.00</td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td>Monsters DVD</td>
-                          <td>735-845-642</td>
-                          <td>Terry Richardson helvetica tousled street art master, El snort testosterone trophy driving gloves handsome letterpress erry Richardson helvetica tousled</td>
-                          <td>$10.70</td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td>Grown Ups Blue Ray</td>
-                          <td>422-568-642</td>
-                          <td>Tousled lomo letterpress erry Richardson helvetica tousled street art master helvetica tousled street art master, El snort testosterone</td>
-                          <td>$25.99</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                  <!-- accepted payments column -->
-                  <!-- /.col -->
-                  <div class="col-xs-6" dir="rtl" align="right">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <th style="width:50%">الإجمالى:</th>
-                            <td>250.30 جنيه مصرى</td>
-                          </tr>
-                          <tr>
-                            <th>مصاريف شحن و توصيل:</th>
-                            <td>250.30 جنيه مصرى</td>
-                          </tr>
-                          <tr>
-                            <th>الصافى :</th>
-
-                            <td><span style="background: yellow;"> 250.30 جنيه مصرى</span></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
-
-                <!-- this row will not appear when printing -->
-                <div class="row no-print">
-                  <div class="col-xs-12">
-                    <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
-                    <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
-                    <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
-                  </div>
-                </div>
-              </section>
             </div>
-          </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+
+                            <section class="content invoice">
+                                <!-- title row -->
+                                <div class="row">
+                                    <div class="col-xs-12 invoice-header" align="right">
+                                        <h1>
+                                            فاتورة بيع<i class="fa fa-globe"></i>
+                                            <small class="pull-left" dir="rtl">{% now "d-m-Y" %}</small>
+                                        </h1>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- info row -->
+                                <div class="row invoice-info" dir="rtl">
+                                    <div class="col-sm-4 invoice-col">
+                                        إلــى
+                                        <address>
+                                            <strong>{{ company.company_name }}</strong>
+                                        </address>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-4 invoice-col">
+                                        من
+                                        <address>
+                                            <strong>{{ sell_invoice_form.client }}</strong>
+                                        </address>
+                                    </div>
+                                    <!-- /.col -->
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+
+                                <!-- Table row -->
+                                <div class="row" dir="rtl">
+                                    <div class="col-xs-12 table">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>الكمية</th>
+                                                <th>الصنف</th>
+                                                <th style="width: 30%">البيان</th>
+                                                <th>سعر القطعة</th>
+                                                <th>الإجمالى</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td onchange="item1()">{{ sell_invoice_form.quantity }}</td>
+                                                <td>{{ sell_invoice_form.product }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description }}
+                                                </td>
+                                                <td onchange="item1()">{{ sell_invoice_form.price }}</td>
+                                                <td ><label><input type="text" id="subtotal1" disabled></label></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td onchange="item2()">{{ sell_invoice_form.quantity2 }}</td>
+                                                <td>{{ sell_invoice_form.product2 }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description2 }}</td>
+                                                <td onchange="item2()">{{ sell_invoice_form.price2 }}</td>
+
+                                                <td ><label><input type="text" id="subtotal2" disabled></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td onchange="item3()">{{ sell_invoice_form.quantity3 }}</td>
+                                                <td>{{ sell_invoice_form.product3 }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description3 }}</td>
+                                                <td onchange="item3()">{{ sell_invoice_form.price3 }}</td>
+
+                                                <td ><label><input type="text" id="subtotal3" disabled></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td onchange="item4()">{{ sell_invoice_form.quantity4 }}</td>
+                                                <td>{{ sell_invoice_form.product4 }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description4 }}</td>
+                                                <td onchange="item4()">{{ sell_invoice_form.price4 }}</td>
+
+                                                <td ><label><input type="text" id="subtotal4" disabled></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td onchange="item5()">{{ sell_invoice_form.quantity5 }}</td>
+                                                <td>{{ sell_invoice_form.product5 }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description5 }}</td>
+                                                <td onchange="item5()">{{ sell_invoice_form.price5 }}</td>
+
+                                                <td ><label><input type="text" id="subtotal5" disabled></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td onchange="item6()">{{ sell_invoice_form.quantity6 }}</td>
+                                                <td>{{ sell_invoice_form.product6 }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description6 }}</td>
+                                                <td onchange="item6()">{{ sell_invoice_form.price6 }}</td>
+
+                                                <td ><label><input type="text" id="subtotal6" disabled></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td onchange="item7()">{{ sell_invoice_form.quantity7 }}</td>
+                                                <td>{{ sell_invoice_form.product7 }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description7 }}</td>
+                                                <td onchange="item7()">{{ sell_invoice_form.price7 }}</td>
+
+                                                <td ><label><input type="text" id="subtotal7" disabled></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td onchange="item8()">{{ sell_invoice_form.quantity8 }}</td>
+                                                <td>{{ sell_invoice_form.product8 }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description8 }}</td>
+                                                <td onchange="item8()">{{ sell_invoice_form.price8 }}</td>
+
+                                                <td ><label><input type="text" id="subtotal8" disabled></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td onchange="item9()">{{ sell_invoice_form.quantity9 }}</td>
+                                                <td>{{ sell_invoice_form.product9 }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description9 }}</td>
+                                                <td onchange="item9()">{{ sell_invoice_form.price9 }}</td>
+
+                                                <td ><label><input type="text" id="subtotal9" disabled></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td onchange="item10()">{{ sell_invoice_form.quantity10 }}</td>
+                                                <td>{{ sell_invoice_form.product10 }}</td>
+                                                <td>{{ sell_invoice_form.invoice_description10 }}</td>
+                                                <td onchange="item10()">{{ sell_invoice_form.price10 }}</td>
+
+                                                <td ><label><input type="text" id="subtotal10" disabled></label></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                                <script>
+                                    function item1() {
+                                        var quant1 = document.getElementById('id_quantity');
+                                        var sub1 = document.getElementById('subtotal1');
+                                        var pric1 = document.getElementById('id_price');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>                                <script>
+                                    function item2() {
+                                        var quant1 = document.getElementById('id_quantity2');
+                                        var sub1 = document.getElementById('subtotal2');
+                                        var pric1 = document.getElementById('id_price2');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>                                <script>
+                                    function item3() {
+                                        var quant1 = document.getElementById('id_quantity3');
+                                        var sub1 = document.getElementById('subtotal3');
+                                        var pric1 = document.getElementById('id_price3');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>                                <script>
+                                    function item4() {
+                                        var quant1 = document.getElementById('id_quantity4');
+                                        var sub1 = document.getElementById('subtotal4');
+                                        var pric1 = document.getElementById('id_price4');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>                                <script>
+                                    function item5() {
+                                        var quant1 = document.getElementById('id_quantity5');
+                                        var sub1 = document.getElementById('subtotal5');
+                                        var pric1 = document.getElementById('id_price5');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>                                <script>
+                                    function item6() {
+                                        var quant1 = document.getElementById('id_quantity6');
+                                        var sub1 = document.getElementById('subtotal6');
+                                        var pric1 = document.getElementById('id_price6');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>                                <script>
+                                    function item7() {
+                                        var quant1 = document.getElementById('id_quantity7');
+                                        var sub1 = document.getElementById('subtotal7');
+                                        var pric1 = document.getElementById('id_price7');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>                                <script>
+                                    function item8() {
+                                        var quant1 = document.getElementById('id_quantity8');
+                                        var sub1 = document.getElementById('subtotal8');
+                                        var pric1 = document.getElementById('id_price8');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>                                <script>
+                                    function item9() {
+                                        var quant1 = document.getElementById('id_quantity9');
+                                        var sub1 = document.getElementById('subtotal9');
+                                        var pric1 = document.getElementById('id_price9');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>                                <script>
+                                    function item10() {
+                                        var quant1 = document.getElementById('id_quantity10');
+                                        var sub1 = document.getElementById('subtotal10');
+                                        var pric1 = document.getElementById('id_price10');
+                                        var newp = quant1.value * pric1.value;
+                                        sub1.value = newp;
+                                    }
+                                </script>
+                                <div class="row">
+                                    <!-- accepted payments column -->
+                                    <!-- /.col -->
+                                    <div class="col-xs-6" dir="rtl" align="right">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr>
+                                                    <th style="width:50%">الإجمالى:</th>
+                                                    <td>250.30 جنيه مصرى</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>مصاريف شحن و توصيل:</th>
+                                                    <td>250.30 جنيه مصرى</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>الصافى :</th>
+
+                                                    <td><span style="background: yellow;"> 250.30 جنيه مصرى</span></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+
+                                <!-- this row will not appear when printing -->
+                                <div class="row no-print">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-default" onclick="window.print();"><i
+                                                class="fa fa-print"></i> Print
+                                        </button>
+                                        <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i>
+                                            Submit Payment
+                                        </button>
+                                        <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i
+                                                class="fa fa-download"></i> Generate PDF
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 {% endblock content %}
 
 {% block javascripts %}
-  {{ block.super }}
+    {{ block.super }}
 {% endblock javascripts %}

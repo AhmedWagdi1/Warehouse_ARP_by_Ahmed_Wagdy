@@ -128,6 +128,7 @@ class SellInvoice(models.Model):
     price8 = models.IntegerField(default=1, blank=True)
     price9 = models.IntegerField(default=1, blank=True)
     price10 = models.IntegerField(default=1, blank=True)
+    total = models.IntegerField(default=1)
     client = models.ForeignKey(Client, on_delete=DO_NOTHING)
     date = models.DateField(auto_now=True)
     notes = models.TextField(max_length=1200, default='ملاحظات')

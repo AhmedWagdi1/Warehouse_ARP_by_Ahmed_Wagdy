@@ -21,7 +21,7 @@
                 <div class="col-md-12">
                     <div class="x_panel">
                         <div class="x_content">
-
+<form method="post">{% csrf_token %}
                             <section class="content invoice">
                                 <!-- title row -->
                                 <div class="row">
@@ -276,6 +276,9 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <b>ملاحظات</b>
+                                                                                {{ sell_invoice_form.notes }}
+
                                     </div>
                                     <!-- /.col -->
                                 </div>
@@ -287,8 +290,8 @@
                                         <button class="btn btn-default" onclick="window.print();"><i
                                                 class="fa fa-print"></i> Print
                                         </button>
-                                        <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i>
-                                            Submit Payment
+                                        <button class="btn btn-success pull-right" type="submit"><i class="fa fa-credit-card"></i>
+                                            موافق
                                         </button>
                                         <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i
                                                 class="fa fa-download"></i> Generate PDF
@@ -296,6 +299,7 @@
                                     </div>
                                 </div>
                             </section>
+    </form>
                         </div>
                     </div>
                 </div>

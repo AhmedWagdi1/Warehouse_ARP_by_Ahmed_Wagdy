@@ -321,18 +321,25 @@ def invoices_sell(request, pk):
     current_farm = get_object_or_404(Farm, pk=pk)
     company = Company.objects.all()[0]
     company_farm = Farm.objects.get(farm_name=company.company_name)
+    balance = MainFinance.objects.all()[0]
     sell_invoice_form = SellInvoiceForm(request.POST)
     if request.method == 'POST':
         if sell_invoice_form.is_valid():
             form = sell_invoice_form.save(commit=False)
             form.user = request.user
-            form.source = current_farm
+            form.source = current_farm.farm_company.company_name
             form.save()
             if current_farm == company_farm:
                 new_entry_main = MainFinanceMovement(mode=2, user=request.user, text=form.id, amount=form.total)
                 new_entry_main.save()
+                current_balance = balance.balance
+                added_balance = form.total
+                new_balance = current_balance + added_balance
+                balance.balance = new_balance
+                balance.save()
+                return redirect('finance_main')
             else:
-                pass
+                return redirect('finance_main')
     else:
         sell_invoice_form = SellInvoiceForm()
 

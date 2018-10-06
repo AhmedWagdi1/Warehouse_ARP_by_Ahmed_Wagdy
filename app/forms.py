@@ -99,10 +99,26 @@ class SellInvoiceForm(forms.ModelForm):
     quantity8 = forms.IntegerField(required=False)
     quantity9 = forms.IntegerField(required=False)
     quantity10 = forms.IntegerField(required=False)
+    price2 = forms.IntegerField(required=False)
+    price3 = forms.IntegerField(required=False)
+    price4 = forms.IntegerField(required=False)
+    price5 = forms.IntegerField(required=False)
+    price6 = forms.IntegerField(required=False)
+    price7 = forms.IntegerField(required=False)
+    price8 = forms.IntegerField(required=False)
+    price9 = forms.IntegerField(required=False)
+    price10 = forms.IntegerField(required=False)
     total = forms.IntegerField(
         widget=forms.NumberInput(
             attrs={
-                'disabled':'true',
+                'readonly':'true',
+            }
+        )
+    )
+    notes = forms.CharField(required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class':'form-control',
             }
         )
     )

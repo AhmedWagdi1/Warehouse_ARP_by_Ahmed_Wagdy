@@ -134,6 +134,7 @@ class SellInvoiceForm(forms.ModelForm):
                   'price10', 'client', 'notes', 'total']
 
 
+company = Company.objects.all()[0]
 class FundsTransfaerForm(forms.Form):
-    farms = forms.ModelChoiceField(queryset=Farm.objects.all)
-    aount = forms.IntegerField()
+    farms = forms.ModelChoiceField(queryset=Farm.objects.all())
+    amount = forms.IntegerField()

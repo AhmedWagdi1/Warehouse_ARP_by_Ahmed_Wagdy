@@ -55,6 +55,7 @@ urlpatterns = [
                   url(r'^finance/main/deposite/$', views.finance_main_deposit, name="finance_main_deposit"),
                   url(r'^finance/main/withdraw/$', views.finance_main_withdraw, name="finance_main_withdraw"),
                   url(r'^finance/farms/(?P<pk>[0-9]+)/', views.farms_finance, name="farms_finance"),
+                  url(r'^finance/transfer/$', views.trasnfaer_farm,name="transfaer_farm"),
                   # invoices
                   url(r'^invoices/sell/(?P<pk>[0-9]+)/$', views.invoices_sell, name="invoices_sell"),
 

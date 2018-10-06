@@ -7,9 +7,10 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
-    AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm
+    AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
+    FundsTransfaerForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
-    MainFinance, Balance
+    MainFinance, Balance, FarmFinancemove
 from datetime import date, datetime
 
 
@@ -455,8 +456,41 @@ def finance_main_withdraw(request):
 def farms_finance(request, pk):
     current_farm = get_object_or_404(Farm, pk=pk)
     bal = Balance.objects.get(farm=current_farm)
+    all_movement = FarmFinancemove.objects.filter(farm=current_farm)
     context = {
         'current_farm': current_farm,
         'bal': bal,
+        'all_movement': all_movement,
     }
     return render(request, 'app/farms_finance.html', context)
+
+
+def trasnfaer_farm(request):
+    farm_transfer_form = FundsTransfaerForm(request.POST)
+    selected_amount = request.POST.get('amount')
+    if request.method == 'POST':
+        if farm_transfer_form.is_valid():
+            selected_farm = farm_transfer_form.cleaned_data['farms']
+            the_farm = Balance.objects.get(farm=selected_farm)
+            current_farm_balance = the_farm.balance
+            new_farm_balance = int(current_farm_balance) + int(selected_amount)
+            the_farm.balance = new_farm_balance
+            the_farm.save()
+            main = MainFinance.objects.all()[0]
+            current_main_balance = main.balance
+            new_main_balance = int(current_main_balance) - int(selected_amount)
+            main.balance = new_main_balance
+            new_main_move = MainFinanceMovement(mode=1, user=request.user, text='تحويل لمزرعة ' + str(selected_farm.farm_name),
+                                                amount=selected_amount)
+            new_main_move.save()
+            main.save()
+            new_farm_move = FarmFinancemove(mode=2, user=request.user, text='تحويل من الشركة', amount=selected_amount,
+                                            farm=selected_farm)
+            new_farm_move.save()
+            return redirect('finance_main')
+    else:
+        farm_transfer_form = FundsTransfaerForm()
+    context = {
+        'farm_transfer_form': farm_transfer_form,
+    }
+    return render(request, 'app/transfer_farm.html', context)

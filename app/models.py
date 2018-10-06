@@ -169,6 +169,16 @@ class MainFinanceMovement(models.Model):
     amount = models.DecimalField(max_digits=8, decimal_places=2)
 
 
+class FarmFinancemove(models.Model):
+    MODE_CHOICES = [('withdrawal', 'سحب'), ('deposite', 'إيداع')]
+    mode = models.CharField(max_length=9, choices=MODE_CHOICES, default='1')
+    user = models.ForeignKey(User, on_delete=DO_NOTHING)
+    date = models.DateTimeField(auto_now=True)
+    text = models.CharField(max_length=800)
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
+    farm = models.ForeignKey(Farm, on_delete=CASCADE)
+
+
 class Balance(models.Model):
     balance = models.IntegerField()
     farm = models.ForeignKey(Farm, on_delete=CASCADE)

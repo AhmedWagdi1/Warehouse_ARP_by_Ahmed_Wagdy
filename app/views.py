@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
-    AddProductForm, WarehouseEntryForm, MainFinanceDepositForm
+    AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
     MainFinance
 from datetime import date, datetime
@@ -396,3 +396,26 @@ def finance_main_deposit(request):
         'main_finance_deposit_form': main_finance_deposit_form,
     }
     return render(request, 'app/finance_main_deposit.html', context)
+
+
+def finance_main_withdraw(request):
+    current_balance = MainFinance.objects.all()[0]
+    main_finance_withdraw_form = MainFinanceWithdrawForm(request.POST)
+    if request.method == 'POST':
+        if main_finance_withdraw_form.is_valid():
+            form = main_finance_withdraw_form.save(commit=False)
+            form.mode = 1
+            form.user = request.user
+            form.save()
+            old = current_balance.balance
+            new = form.amount
+            total = old - new
+            current_balance.balance = total
+            current_balance.save()
+            return redirect('finance_main')
+    else:
+        main_finance_withdraw_form = MainFinanceWithdrawForm()
+    context = {
+        'main_finance_withdraw_form': main_finance_withdraw_form,
+    }
+    return render(request, 'app/finance_main_withdraw.html', context)

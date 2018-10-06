@@ -1,0 +1,65 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main" dir="rtl">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3><span class="fa fa-money"></span>      الخزينة المركزية
+                        <br>
+                        <small>
+                           <font color="red"><span class="fa fa-minus"></span> سحب</font>
+                        </small>
+                    </h3>
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row" align="right" dir="rtl">
+
+
+                <div class="clearfix"></div>
+
+
+                <div class="clearfix"></div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12" dir="rtl" align="right">
+                    <div class="x_panel" dir="rtl" align="right">
+                        <div class="x_title" dir="rtl">
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="x_content" dir="rtl" align="right">
+                            <form method="post">{% csrf_token%}
+                            <b>البيان</b><br>
+{{ main_finance_withdraw_form.text }}<br>
+                            <b>المبلغ</b><br>
+                            {{ main_finance_withdraw_form.amount }}<br>
+                            <br>
+                            <button class="btn btn-warning" type="submit">سحب <span class="fa fa-minus"></span> </button>
+</form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+{% endblock javascripts %}
+
+
+
+
+
+

@@ -53,6 +53,7 @@ urlpatterns = [
                   # finance
                   url(r'^finance/main/$', views.finance_main, name="finance_main"),
                   url(r'^finance/main/deposite/$', views.finance_main_deposit, name="finance_main_deposit"),
+                  url(r'^finance/main/withdraw/$', views.finance_main_withdraw, name="finance_main_withdraw"),
                   # invoices
                   url(r'^invoices/sell/$', views.invoices_sell, name="invoices_sell"),
 

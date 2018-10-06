@@ -75,3 +75,9 @@ class MainFinanceDepositForm(forms.ModelForm):
     class Meta:
         model = MainFinanceMovement
         fields = ['text', 'amount']
+
+
+class MainFinanceWithdrawForm(forms.ModelForm):
+    class Meta:
+        model = MainFinanceMovement
+        fields = ['text', 'amount']

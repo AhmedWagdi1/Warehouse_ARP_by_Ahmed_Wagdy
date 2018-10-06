@@ -159,6 +159,9 @@ class Warehouse(models.Model):
 class MainFinance(models.Model):
     balance = models.DecimalField(max_digits=8, decimal_places=2)
 
+    def __unicode__(self):
+        return self.balance
+
 
 class MainFinanceMovement(models.Model):
     MODE_CHOICES = [('withdrawal', 'سحب'), ('deposite', 'إيداع')]
@@ -167,6 +170,9 @@ class MainFinanceMovement(models.Model):
     date = models.DateTimeField(auto_now=True)
     text = models.CharField(max_length=800)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __unicode__(self):
+        return self.text
 
 
 class FarmFinancemove(models.Model):
@@ -178,7 +184,13 @@ class FarmFinancemove(models.Model):
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
 
+    def __unicode__(self):
+        return self.text
+
 
 class Balance(models.Model):
     balance = models.IntegerField()
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
+
+    def __unicode__(self):
+        return self.balance

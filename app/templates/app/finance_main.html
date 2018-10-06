@@ -13,7 +13,7 @@
                 <div class="title_left">
                     <h3><span class="fa fa-money"></span>
                         الخزينة المركزية
-                       <br>
+                        <br>
                         <small>
                             <b>الرصيد</b> {{ current_balance.balance }} جنيه
                         </small>
@@ -41,28 +41,44 @@
                         <div class="x_content" dir="rtl" align="right">
                             <a href="{% url 'finance_main_deposit' %}">
                                 <button class="btn btn-primary">إيداع</button>
-                            </a>                            <a href="{% url 'warehouse_entry' %}">
-                                <button class="btn btn-primary">سحب</button>
-                            </a>
+                            </a> <a href="{% url 'warehouse_entry' %}">
+                            <button class="btn btn-primary">سحب</button>
+                        </a>
                             <div class="table-responsive" align="right" dir="rtl">
                                 <table class="table table-striped jambo_table " dir="rtl" align="right">
                                     <thead dir="rtl" align="right">
                                     <tr class="headings" dir="rtl" align="right">
                                         <th class="column-title" align="right" dir="rtl"> رفم الحركة</th>
-                                        <th class="column-title" align="right" dir="rtl"> المبلغ</th>
+                                        <th class="column-title" align="right" dir="rtl">مدين</th>
+                                        <th class="column-title" align="right" dir="rtl"> دائن</th>
                                         <th class="column-title" align="right" dir="rtl">البيان</th>
                                         <th class="column-title" align="right" dir="rtl">التاريخ</th>
                                         <th class="column-title" align="right" dir="rtl">المستخدم</th>
+
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for item in all_movments %}
                                         <tr align="left">
                                             <td class=" ">{{ item.id }}</td>
-                                            <td class=" ">{{ item.amount }}</td>
+                                            <td class=" ">
+                                                {% if item.mode == '2' %}
+                                                    {{ item.amount }}
+                                                {% else %}
+                                                    ------
+                                                {% endif %}
+                                            </td>
+                                            <td class=" ">
+                                                {% if item.mode == '1' %}
+                                                    {{ item.amount }}
+                                                {% else %}
+                                                    ------
+                                                {% endif %}
+                                            </td>
                                             <td class=" ">{{ item.text }}</td>
                                             <td class=" ">{{ item.date }}</td>
                                             <td class=" ">{{ item.user.username }}</td>
+
                                         </tr>
                                     {% endfor %}
 

@@ -480,7 +480,7 @@ def trasnfaer_farm(request):
             current_main_balance = main.balance
             new_main_balance = int(current_main_balance) - int(selected_amount)
             main.balance = new_main_balance
-            new_main_move = MainFinanceMovement(mode=1, user=request.user, text='تحويل لمزرعة ' + str(selected_farm.farm_name),
+            new_main_move = MainFinanceMovement(mode=1, user=request.user, text='تحويل لمزرعة ' ,
                                                 amount=selected_amount)
             new_main_move.save()
             main.save()

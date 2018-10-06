@@ -38,3 +38,11 @@ def include_current_time(request):
         'now': now,
     }
     return (context)
+
+
+def include_farm_no_company(request):
+    all_farms_no_company = Farm.objects.all()[1:]
+    context = {
+        'all_farms_no_company': all_farms_no_company,
+    }
+    return (context)

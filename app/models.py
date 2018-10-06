@@ -89,15 +89,24 @@ class Product(models.Model):
 
 class SellInvoice(models.Model):
     product = models.ForeignKey(Product, on_delete=DO_NOTHING)
-    product2 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product2', default=1, blank=True, null=True)
-    product3 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product3', blank=True, default=1, null=True)
-    product4 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product4', blank=True, default=1, null=True)
-    product5 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product5', blank=True, default=1, null=True)
-    product6 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product6', blank=True, default=1, null=True)
-    product7 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product7', blank=True, default=1, null=True)
-    product8 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product8', blank=True, default=1, null=True)
-    product9 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product9', blank=True, default=1, null=True)
-    product10 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product10', blank=True, default=1, null=True)
+    product2 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product2', default=1, blank=True,
+                                 null=True)
+    product3 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product3', blank=True, default=1,
+                                 null=True)
+    product4 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product4', blank=True, default=1,
+                                 null=True)
+    product5 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product5', blank=True, default=1,
+                                 null=True)
+    product6 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product6', blank=True, default=1,
+                                 null=True)
+    product7 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product7', blank=True, default=1,
+                                 null=True)
+    product8 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product8', blank=True, default=1,
+                                 null=True)
+    product9 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product9', blank=True, default=1,
+                                 null=True)
+    product10 = models.ForeignKey(Product, on_delete=DO_NOTHING, related_name='product10', blank=True, default=1,
+                                  null=True)
     invoice_description = models.CharField(max_length=260, default='البيان')
     invoice_description2 = models.CharField(max_length=260, default='البيان', blank=True, null=True)
     invoice_description3 = models.CharField(max_length=260, default='البيان', blank=True, null=True)
@@ -158,3 +167,8 @@ class MainFinanceMovement(models.Model):
     date = models.DateTimeField(auto_now=True)
     text = models.CharField(max_length=800)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
+
+
+class Balance(models.Model):
+    balance = models.IntegerField()
+    farm = models.ForeignKey(Farm, on_delete=CASCADE)

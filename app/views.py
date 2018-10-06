@@ -9,7 +9,7 @@ from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
-    MainFinance
+    MainFinance, Balance
 from datetime import date, datetime
 
 
@@ -62,6 +62,8 @@ def add_farm(request):
             ad_farm = add_farm_form.save(commit=False)
             ad_farm.farm_company = company_title
             ad_farm.save()
+            add_balance = Balance(farm=ad_farm, balance=0)
+            add_balance.save()
             return redirect('index')
     else:
         add_farm_form = AddFarmForm()
@@ -448,3 +450,13 @@ def finance_main_withdraw(request):
         'main_finance_withdraw_form': main_finance_withdraw_form,
     }
     return render(request, 'app/finance_main_withdraw.html', context)
+
+
+def farms_finance(request, pk):
+    current_farm = get_object_or_404(Farm, pk=pk)
+    bal = Balance.objects.get(farm=current_farm)
+    context = {
+        'current_farm': current_farm,
+        'bal': bal,
+    }
+    return render(request, 'app/farms_finance.html', context)

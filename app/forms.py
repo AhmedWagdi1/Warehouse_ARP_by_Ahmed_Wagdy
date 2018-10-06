@@ -111,17 +111,18 @@ class SellInvoiceForm(forms.ModelForm):
     total = forms.IntegerField(
         widget=forms.NumberInput(
             attrs={
-                'readonly':'true',
+                'readonly': 'true',
             }
         )
     )
     notes = forms.CharField(required=False,
-        widget=forms.TextInput(
-            attrs={
-                'class':'form-control',
-            }
-        )
-    )
+                            widget=forms.TextInput(
+                                attrs={
+                                    'class': 'form-control',
+                                }
+                            )
+                            )
+
     class Meta:
         model = SellInvoice
         fields = ['product', 'product2', 'product3', 'product4', 'product5', 'product6', 'product7', 'product8',
@@ -130,4 +131,9 @@ class SellInvoiceForm(forms.ModelForm):
                   'invoice_description8', 'invoice_description9', 'invoice_description10', 'quantity', 'quantity2',
                   'quantity3', 'quantity4', 'quantity5', 'quantity6', 'quantity7', 'quantity8', 'quantity9',
                   'quantity10', 'price', 'price2', 'price3', 'price4', 'price5', 'price6', 'price7', 'price8', 'price9',
-                  'price10','client','notes', 'total']
+                  'price10', 'client', 'notes', 'total']
+
+
+class FundsTransfaerForm(forms.Form):
+    farms = forms.ModelChoiceField(queryset=Farm.objects.all)
+    aount = forms.IntegerField()

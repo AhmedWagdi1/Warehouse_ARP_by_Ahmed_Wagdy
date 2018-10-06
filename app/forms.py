@@ -99,7 +99,13 @@ class SellInvoiceForm(forms.ModelForm):
     quantity8 = forms.IntegerField(required=False)
     quantity9 = forms.IntegerField(required=False)
     quantity10 = forms.IntegerField(required=False)
-
+    total = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                'disabled':'true',
+            }
+        )
+    )
     class Meta:
         model = SellInvoice
         fields = ['product', 'product2', 'product3', 'product4', 'product5', 'product6', 'product7', 'product8',

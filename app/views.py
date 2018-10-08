@@ -332,6 +332,11 @@ def invoices_sell(request, pk):
             form.user = request.user
             form.source = current_farm.farm_company.company_name
             form.save()
+            current_item = form.product.id
+            in_sotorage = Warehouse.objects.get(id=current_item)
+            new_amount = in_sotorage.item_quantity - form.quantity
+            in_sotorage.item_quantity = new_amount
+            in_sotorage.save()
             if current_farm == company_farm:
                 new_entry_main = MainFinanceMovement(mode=2, user=request.user, text=form.id, amount=form.total)
                 new_entry_main.save()

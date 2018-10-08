@@ -197,7 +197,7 @@ class BuyInvoiceForm(forms.ModelForm):
                   'price10', 'client', 'notes', 'total']
 
 
-#company = Company.objects.all()[0]
+company = Company.objects.all()[0]
 
 
 class FundsTransfaerForm(forms.Form):

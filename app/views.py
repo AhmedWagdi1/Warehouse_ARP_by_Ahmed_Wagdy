@@ -538,7 +538,12 @@ def invoices_buy(request, pk):
                 balance.save()
                 return redirect('finance_main')
             else:
-
+                current_balance = Balance.objects.get(farm=current_farm)
+                added_balance = current_balance.balance - form.total
+                current_balance.balance = added_balance
+                current_balance.save()
+                new_entry = FarmFinancemove(mode=1, user=request.user, text=form.id, amount=form.total, farm=current_farm)
+                new_entry.save()
                 return redirect('finance_main')
     else:
         buy_invoice_form = BuyInvoiceForm()

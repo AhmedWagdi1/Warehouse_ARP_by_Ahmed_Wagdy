@@ -330,7 +330,7 @@ def invoices_sell(request, pk):
         if sell_invoice_form.is_valid():
             form = sell_invoice_form.save(commit=False)
             form.user = request.user
-            form.source = current_farm.farm_company.company_name
+            form.source = current_farm.farm_name
             form.save()
             current_item = form.product.id
             in_sotorage = Warehouse.objects.get(id=current_item)
@@ -419,6 +419,12 @@ def invoices_sell(request, pk):
                 balance.save()
                 return redirect('finance_main')
             else:
+                current_balance = Balance.objects.get(farm=current_farm)
+                added_balance = current_balance.balance + form.total
+                current_balance.balance = added_balance
+                current_balance.save()
+                new_entry = FarmFinancemove(mode=2, user=request.user, text=form.id, amount=form.total, farm=current_farm)
+                new_entry.save()
                 return redirect('finance_main')
     else:
         sell_invoice_form = SellInvoiceForm()
@@ -438,6 +444,8 @@ def invoices_buy(request, pk):
     balance = MainFinance.objects.all()[0]
     buy_invoice_form = BuyInvoiceForm(request.POST)
     if request.method == 'POST':
+        print(company_farm)
+        print(current_farm)
         if buy_invoice_form.is_valid():
             form = buy_invoice_form.save(commit=False)
             form.user = request.user
@@ -530,6 +538,7 @@ def invoices_buy(request, pk):
                 balance.save()
                 return redirect('finance_main')
             else:
+
                 return redirect('finance_main')
     else:
         buy_invoice_form = BuyInvoiceForm()

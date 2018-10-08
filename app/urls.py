@@ -58,5 +58,6 @@ urlpatterns = [
                   url(r'^finance/transfer/$', views.trasnfaer_farm,name="transfaer_farm"),
                   # invoices
                   url(r'^invoices/sell/(?P<pk>[0-9]+)/$', views.invoices_sell, name="invoices_sell"),
+                  url(r'^invoices/buy/(?P<pk>[0-9]+)/$', views.invoices_buy, name="invoices_buy"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

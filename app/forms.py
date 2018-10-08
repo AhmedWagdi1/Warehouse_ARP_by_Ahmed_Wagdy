@@ -2,7 +2,7 @@
 from django import forms
 
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, SellInvoice, \
-    MainFinanceMovement
+    MainFinanceMovement, BuyInvoice
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -134,7 +134,72 @@ class SellInvoiceForm(forms.ModelForm):
                   'price10', 'client', 'notes', 'total']
 
 
+class BuyInvoiceForm(forms.ModelForm):
+    product2 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    product3 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    product4 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    product5 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    product6 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    product7 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    product8 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    product9 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    product10 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)
+    invoice_description2 = forms.CharField(required=False)
+    invoice_description3 = forms.CharField(required=False)
+    invoice_description4 = forms.CharField(required=False)
+    invoice_description5 = forms.CharField(required=False)
+    invoice_description6 = forms.CharField(required=False)
+    invoice_description7 = forms.CharField(required=False)
+    invoice_description8 = forms.CharField(required=False)
+    invoice_description9 = forms.CharField(required=False)
+    invoice_description10 = forms.CharField(required=False)
+    quantity2 = forms.IntegerField(required=False)
+    quantity3 = forms.IntegerField(required=False)
+    quantity4 = forms.IntegerField(required=False)
+    quantity5 = forms.IntegerField(required=False)
+    quantity6 = forms.IntegerField(required=False)
+    quantity7 = forms.IntegerField(required=False)
+    quantity8 = forms.IntegerField(required=False)
+    quantity9 = forms.IntegerField(required=False)
+    quantity10 = forms.IntegerField(required=False)
+    price2 = forms.IntegerField(required=False)
+    price3 = forms.IntegerField(required=False)
+    price4 = forms.IntegerField(required=False)
+    price5 = forms.IntegerField(required=False)
+    price6 = forms.IntegerField(required=False)
+    price7 = forms.IntegerField(required=False)
+    price8 = forms.IntegerField(required=False)
+    price9 = forms.IntegerField(required=False)
+    price10 = forms.IntegerField(required=False)
+    total = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                'readonly': 'true',
+            }
+        )
+    )
+    notes = forms.CharField(required=False,
+                            widget=forms.TextInput(
+                                attrs={
+                                    'class': 'form-control',
+                                }
+                            )
+                            )
+
+    class Meta:
+        model = BuyInvoice
+        fields = ['product', 'product2', 'product3', 'product4', 'product5', 'product6', 'product7', 'product8',
+                  'product9', 'product10', 'invoice_description', 'invoice_description2', 'invoice_description3',
+                  'invoice_description4', 'invoice_description5', 'invoice_description6', 'invoice_description7',
+                  'invoice_description8', 'invoice_description9', 'invoice_description10', 'quantity', 'quantity2',
+                  'quantity3', 'quantity4', 'quantity5', 'quantity6', 'quantity7', 'quantity8', 'quantity9',
+                  'quantity10', 'price', 'price2', 'price3', 'price4', 'price5', 'price6', 'price7', 'price8', 'price9',
+                  'price10', 'client', 'notes', 'total']
+
+
 company = Company.objects.all()[0]
+
+
 class FundsTransfaerForm(forms.Form):
     farms = forms.ModelChoiceField(queryset=Farm.objects.all())
     amount = forms.IntegerField()

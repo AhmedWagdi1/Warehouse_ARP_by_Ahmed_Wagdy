@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
-    FundsTransfaerForm
+    FundsTransfaerForm, BuyInvoiceForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
     MainFinance, Balance, FarmFinancemove
 from datetime import date, datetime
@@ -431,6 +431,116 @@ def invoices_sell(request, pk):
     return render(request, 'app/invoice_sell.html', context)
 
 
+def invoices_buy(request, pk):
+    current_farm = get_object_or_404(Farm, pk=pk)
+    company = Company.objects.all()[0]
+    company_farm = Farm.objects.get(farm_name=company.company_name)
+    balance = MainFinance.objects.all()[0]
+    buy_invoice_form = BuyInvoiceForm(request.POST)
+    if request.method == 'POST':
+        if buy_invoice_form.is_valid():
+            form = buy_invoice_form.save(commit=False)
+            form.user = request.user
+            form.source = current_farm.farm_company.company_name
+            form.save()
+            current_item = form.product.id
+            in_sotorage = Warehouse.objects.get(id=current_item)
+            new_amount = in_sotorage.item_quantity + form.quantity
+            in_sotorage.item_quantity = new_amount
+            in_sotorage.save()
+            if form.product2:
+                current_item2 = form.product2.id
+                in_sotorage2 = Warehouse.objects.get(id=current_item2)
+                new_amount2 = in_sotorage2.item_quantity + form.quantity2
+                in_sotorage2.item_quantity = new_amount2
+                in_sotorage2.save()
+            else:
+                pass
+            if form.product3:
+                current_item3 = form.product3.id
+                in_sotorage3 = Warehouse.objects.get(id=current_item3)
+                new_amount3 = in_sotorage3.item_quantity + form.quantity3
+                in_sotorage3.item_quantity = new_amount3
+                in_sotorage3.save()
+            else:
+                pass
+            if form.product4:
+                current_item4 = form.product4.id
+                in_sotorage4 = Warehouse.objects.get(id=current_item4)
+                new_amount4 = in_sotorage4.item_quantity + form.quantity4
+                in_sotorage4.item_quantity = new_amount4
+                in_sotorage4.save()
+            else:
+                pass
+            if form.product5:
+                current_item5 = form.product5.id
+                in_sotorage5 = Warehouse.objects.get(id=current_item5)
+                new_amount5 = in_sotorage5.item_quantity + form.quantity5
+                in_sotorage5.item_quantity = new_amount5
+                in_sotorage5.save()
+            else:
+                pass
+            if form.product6:
+                current_item6 = form.product6.id
+                in_sotorage6 = Warehouse.objects.get(id=current_item6)
+                new_amount6 = in_sotorage6.item_quantity + form.quantity6
+                in_sotorage6.item_quantity = new_amount6
+                in_sotorage6.save()
+            else:
+                pass
+            if form.product7:
+                current_item7 = form.product7.id
+                in_sotorage7 = Warehouse.objects.get(id=current_item7)
+                new_amount7 = in_sotorage7.item_quantity + form.quantity7
+                in_sotorage7.item_quantity = new_amount7
+                in_sotorage7.save()
+            else:
+                pass
+            if form.product8:
+                current_item8 = form.product8.id
+                in_sotorage8 = Warehouse.objects.get(id=current_item8)
+                new_amount8 = in_sotorage8.item_quantity + form.quantity8
+                in_sotorage8.item_quantity = new_amount8
+                in_sotorage8.save()
+            else:
+                pass
+            if form.product9:
+                current_item9 = form.product9.id
+                in_sotorage9 = Warehouse.objects.get(id=current_item9)
+                new_amount9 = in_sotorage9.item_quantity + form.quantity9
+                in_sotorage9.item_quantity = new_amount9
+                in_sotorage9.save()
+            else:
+                pass
+            if form.product10:
+                current_item10 = form.product10.id
+                in_sotorage10 = Warehouse.objects.get(id=current_item10)
+                new_amount10 = in_sotorage10.item_quantity + form.quantity10
+                in_sotorage10.item_quantity = new_amount10
+                in_sotorage10.save()
+            else:
+                pass
+            if current_farm == company_farm:
+                new_entry_main = MainFinanceMovement(mode=1, user=request.user, text=form.id, amount=form.total)
+                new_entry_main.save()
+                current_balance = balance.balance
+                added_balance = form.total
+                new_balance = current_balance - added_balance
+                balance.balance = new_balance
+                balance.save()
+                return redirect('finance_main')
+            else:
+                return redirect('finance_main')
+    else:
+        buy_invoice_form = BuyInvoiceForm()
+    context = {
+        'company': company,
+        'current_farm': current_farm,
+        'buy_invoice_form': buy_invoice_form,
+    }
+    return render(request, 'app/invoice_buy.html', context)
+
+
 def warehouse_entry(request):
     warehouse_entry_form = WarehouseEntryForm(request.POST)
     if request.method == 'POST':
@@ -557,7 +667,7 @@ def trasnfaer_farm(request):
             current_main_balance = main.balance
             new_main_balance = int(current_main_balance) - int(selected_amount)
             main.balance = new_main_balance
-            new_main_move = MainFinanceMovement(mode=1, user=request.user, text='تحويل لمزرعة ' ,
+            new_main_move = MainFinanceMovement(mode=1, user=request.user, text='تحويل لمزرعة ',
                                                 amount=selected_amount)
             new_main_move.save()
             main.save()

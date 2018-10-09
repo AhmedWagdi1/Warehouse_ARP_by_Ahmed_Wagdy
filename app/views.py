@@ -266,7 +266,7 @@ def client_delete(request, pk):
 
 class ClientUpdate(UpdateView):
     model = Client
-    fields = ['client_name']
+    fields = ['client_name', 'client_ID_number']
     template_name_suffix = '_update_form'
 
 
@@ -423,7 +423,8 @@ def invoices_sell(request, pk):
                 added_balance = current_balance.balance + form.total
                 current_balance.balance = added_balance
                 current_balance.save()
-                new_entry = FarmFinancemove(mode=2, user=request.user, text=form.id, amount=form.total, farm=current_farm)
+                new_entry = FarmFinancemove(mode=2, user=request.user, text=form.id, amount=form.total,
+                                            farm=current_farm)
                 new_entry.save()
                 return redirect('finance_main')
     else:
@@ -542,7 +543,8 @@ def invoices_buy(request, pk):
                 added_balance = current_balance.balance - form.total
                 current_balance.balance = added_balance
                 current_balance.save()
-                new_entry = FarmFinancemove(mode=1, user=request.user, text=form.id, amount=form.total, farm=current_farm)
+                new_entry = FarmFinancemove(mode=1, user=request.user, text=form.id, amount=form.total,
+                                            farm=current_farm)
                 new_entry.save()
                 return redirect('finance_main')
     else:

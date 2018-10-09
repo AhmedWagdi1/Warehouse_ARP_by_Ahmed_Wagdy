@@ -10,8 +10,10 @@
           </div>
 <div align="center">
     <b>{{ current_client.client_name }}</b><br><br>
-       <a href="{% url 'client_update' current_client.pk %}"><font color="#00008b">تعديل</font></a>
-      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter_{{ current_client.client_name }}"><font color="red">مسح</font> </a>
+    <b>الرقم القومى</b>
+    <b>{{ current_client.client_ID_number }}</b><br><br>
+       <a href="{% url 'client_update' current_client.pk %}"><button class="btn btn-primary"> تعديل</button></a>
+      <a href="{% url 'client_delete' current_client.pk%}"><button class="btn btn-danger"> مسح</button></font> </a>
 
 
             <!-- Modal -->

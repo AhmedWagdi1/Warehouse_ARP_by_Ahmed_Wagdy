@@ -10,8 +10,9 @@
           </div>
 <div align="center">
 <form method="post">{% csrf_token %}
-    إسم المورد <br>
+    إسم العميل <br>
     {{ form.client_name }}<br>
+    {{ form.client_ID_number }}<br>
     <input type="submit" value="تعديل">
 </form>
     </div>

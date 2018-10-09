@@ -1,0 +1,30 @@
+{% extends 'app/base_site.html' %}{% load static %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="dashboard_graph">
+
+
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+                </div>
+                <div align="right">
+<form method="post" >
+{% csrf_token %}
+    <B>
+    البيان <br>
+        </B>
+    {{ farm_finance_move_form.text }}<br>
+    <B>
+    المبلغ <br>
+    </B>
+    {{ farm_finance_move_form.amount }}<br><br>
+    <button class="btn btn-primary" type="submit">موافق</button>
+
+</form>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -3,12 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
-    FundsTransfaerForm, BuyInvoiceForm
+    FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
     MainFinance, Balance, FarmFinancemove
 from datetime import date, datetime
@@ -746,3 +746,29 @@ def trasnfaer_farm(request):
         'farm_transfer_form': farm_transfer_form,
     }
     return render(request, 'app/transfer_farm.html', context)
+
+
+def farm_costs(request, pk):
+    current_farm = get_object_or_404(Farm, pk=pk)
+    farm_finance_move_form = FarmFinancemoveForm(request.POST)
+    if request.method == 'POST':
+        if farm_finance_move_form.is_valid():
+            form = farm_finance_move_form.save(commit=False)
+            form.mode = 1
+            form.user = request.user
+            form.farm = current_farm
+            form.save()
+            current_balance = Balance.objects.get(farm=current_farm)
+            old_balance = current_balance.balance
+            added_balance = form.amount
+            new_balance = old_balance - added_balance
+            current_balance.balance = new_balance
+            current_balance.save()
+            return HttpResponseRedirect('/finance/farms/' + str(current_farm.pk) + '/')
+    else:
+        farm_finance_move_form = FarmFinancemoveForm()
+
+    context = {
+        'farm_finance_move_form':farm_finance_move_form,
+    }
+    return render(request, 'app/farm_withd.html', context)

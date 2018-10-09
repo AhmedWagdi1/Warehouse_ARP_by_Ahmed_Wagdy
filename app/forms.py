@@ -2,7 +2,7 @@
 from django import forms
 
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, SellInvoice, \
-    MainFinanceMovement, BuyInvoice
+    MainFinanceMovement, BuyInvoice, FarmFinancemove
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -203,3 +203,10 @@ class BuyInvoiceForm(forms.ModelForm):
 class FundsTransfaerForm(forms.Form):
     farms = forms.ModelChoiceField(queryset=Farm.objects.all())
     amount = forms.IntegerField()
+
+
+
+class FarmFinancemoveForm(forms.ModelForm):
+    class Meta:
+        model = FarmFinancemove
+        fields = ['text', 'amount']

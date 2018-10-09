@@ -445,90 +445,139 @@ def invoices_buy(request, pk):
     balance = MainFinance.objects.all()[0]
     buy_invoice_form = BuyInvoiceForm(request.POST)
     if request.method == 'POST':
-        print(company_farm)
-        print(current_farm)
         if buy_invoice_form.is_valid():
             form = buy_invoice_form.save(commit=False)
             form.user = request.user
             form.source = current_farm.farm_company.company_name
             form.save()
             current_item = form.product.id
-            in_sotorage = Warehouse.objects.get(id=current_item)
-            new_amount = in_sotorage.item_quantity + form.quantity
-            in_sotorage.item_quantity = new_amount
-            in_sotorage.save()
+            in_sotorage = Product.objects.get(id=current_item)
+            if Warehouse.objects.filter(id=current_item).count() != 0:
+                newit = Warehouse.objects.get(id=current_item)
+                new_amount = newit.item_quantity + form.quantity
+                newit.item_quantity = new_amount
+                newit.save()
+            else:
+                newz = Warehouse(item_name= in_sotorage, item_quantity=form.quantity)
+                newz.save()
             if form.product2:
                 current_item2 = form.product2.id
-                in_sotorage2 = Warehouse.objects.get(id=current_item2)
-                new_amount2 = in_sotorage2.item_quantity + form.quantity2
-                in_sotorage2.item_quantity = new_amount2
-                in_sotorage2.save()
+                in_sotorage2 = Product.objects.get(id=current_item2)
+                if Warehouse.objects.filter(id=current_item2) != 0:
+                    newit = Warehouse.objects.get(id=current_item2)
+                    new_amount2 = newit.item_quantity + form.quantity2
+                    newit.item_quantity = new_amount2
+                    newit.save()
+                else:
+                    news = Warehouse(item_name=in_sotorage2, item_quantity=form.quantity2)
+                    news.save()
             else:
                 pass
             if form.product3:
                 current_item3 = form.product3.id
-                in_sotorage3 = Warehouse.objects.get(id=current_item3)
-                new_amount3 = in_sotorage3.item_quantity + form.quantity3
-                in_sotorage3.item_quantity = new_amount3
-                in_sotorage3.save()
+                in_sotorage3 = Product.objects.get(id=current_item3)
+                if Warehouse.objects.filter(id=current_item3) != 0:
+                    newit = Warehouse.objects.get(id=current_item3)
+                    new_amount3 = newit.item_quantity + form.quantity3
+                    newit.item_quantity = new_amount3
+                    newit.save()
+                else:
+                    news = Warehouse(item_name=in_sotorage3, item_quantity=form.quantity3)
+                    news.save()
             else:
                 pass
             if form.product4:
                 current_item4 = form.product4.id
-                in_sotorage4 = Warehouse.objects.get(id=current_item4)
-                new_amount4 = in_sotorage4.item_quantity + form.quantity4
-                in_sotorage4.item_quantity = new_amount4
-                in_sotorage4.save()
+                in_sotorage4 = Product.objects.get(id=current_item4)
+                if Warehouse.objects.filter(id=current_item4) != 0:
+                    newit = Warehouse.objects.get(id=current_item4)
+                    new_amount4 = newit.item_quantity + form.quantity4
+                    newit.item_quantity = new_amount4
+                    newit.save()
+                else:
+                    news = Warehouse(item_name=in_sotorage4, item_quantity=form.quantity4)
+                    news.save()
             else:
                 pass
             if form.product5:
                 current_item5 = form.product5.id
-                in_sotorage5 = Warehouse.objects.get(id=current_item5)
-                new_amount5 = in_sotorage5.item_quantity + form.quantity5
-                in_sotorage5.item_quantity = new_amount5
-                in_sotorage5.save()
+                in_sotorage5 = Product.objects.get(id=current_item5)
+                if Warehouse.objects.filter(id=current_item5) != 0:
+                    newit = Warehouse.objects.get(id=current_item5)
+                    new_amount5 = newit.item_quantity + form.quantity5
+                    newit.item_quantity = new_amount5
+                    newit.save()
+                else:
+                    news = Warehouse(item_name=in_sotorage5, item_quantity=form.quantity5)
+                    news.save()
             else:
                 pass
             if form.product6:
                 current_item6 = form.product6.id
-                in_sotorage6 = Warehouse.objects.get(id=current_item6)
-                new_amount6 = in_sotorage6.item_quantity + form.quantity6
-                in_sotorage6.item_quantity = new_amount6
-                in_sotorage6.save()
+                in_sotorage6 = Product.objects.get(id=current_item6)
+                if Warehouse.objects.filter(id=current_item6) != 0:
+                    newit = Warehouse.objects.get(id=current_item6)
+                    new_amount6 = newit.item_quantity + form.quantity6
+                    newit.item_quantity = new_amount6
+                    newit.save()
+                else:
+                    news = Warehouse(item_name=in_sotorage6, item_quantity=form.quantity6)
+                    news.save()
             else:
                 pass
             if form.product7:
                 current_item7 = form.product7.id
-                in_sotorage7 = Warehouse.objects.get(id=current_item7)
-                new_amount7 = in_sotorage7.item_quantity + form.quantity7
-                in_sotorage7.item_quantity = new_amount7
-                in_sotorage7.save()
+                in_sotorage7 = Product.objects.get(id=current_item7)
+                if Warehouse.objects.filter(id=current_item7) != 0:
+                    newit = Warehouse.objects.get(id=current_item7)
+                    new_amount7 = newit.item_quantity + form.quantity7
+                    newit.item_quantity = new_amount7
+                    newit.save()
+                else:
+                    news = Warehouse(item_name=in_sotorage7, item_quantity=form.quantity7)
+                    news.save()
             else:
                 pass
             if form.product8:
                 current_item8 = form.product8.id
-                in_sotorage8 = Warehouse.objects.get(id=current_item8)
-                new_amount8 = in_sotorage8.item_quantity + form.quantity8
-                in_sotorage8.item_quantity = new_amount8
-                in_sotorage8.save()
+                in_sotorage8 = Product.objects.get(id=current_item8)
+                if Warehouse.objects.filter(id=current_item8) != 0:
+                    newit = Warehouse.objects.get(id=current_item8)
+                    new_amount8 = newit.item_quantity + form.quantity8
+                    newit.item_quantity = new_amount8
+                    newit.save()
+                else:
+                    news = Warehouse(item_name=in_sotorage8, item_quantity=form.quantity8)
+                    news.save()
             else:
                 pass
             if form.product9:
                 current_item9 = form.product9.id
-                in_sotorage9 = Warehouse.objects.get(id=current_item9)
-                new_amount9 = in_sotorage9.item_quantity + form.quantity9
-                in_sotorage9.item_quantity = new_amount9
-                in_sotorage9.save()
+                in_sotorage9 = Product.objects.get(id=current_item9)
+                if Warehouse.objects.filter(id=current_item9) != 0:
+                    newit = Warehouse.objects.get(id=current_item9)
+                    new_amount9 = newit.item_quantity + form.quantity9
+                    newit.item_quantity = new_amount9
+                    newit.save()
+                else:
+                    news = Warehouse(item_name=in_sotorage9, item_quantity=form.quantity9)
+                    news.save()
             else:
                 pass
             if form.product10:
                 current_item10 = form.product10.id
-                in_sotorage10 = Warehouse.objects.get(id=current_item10)
-                new_amount10 = in_sotorage10.item_quantity + form.quantity10
-                in_sotorage10.item_quantity = new_amount10
-                in_sotorage10.save()
+                in_sotorage10 = Product.objects.get(id=current_item10)
+                if Warehouse.objects.filter(id=current_item10) != 0:
+                    newit = Warehouse.objects.get(id=current_item10)
+                    new_amount10 = newit.item_quantity + form.quantity10
+                    newit.item_quantity = new_amount10
+                    newit.save()
+                else:
+                    news = Warehouse(item_name=in_sotorage10, item_quantity=form.quantity10)
+                    news.save()
             else:
                 pass
+
             if current_farm == company_farm:
                 new_entry_main = MainFinanceMovement(mode=1, user=request.user, text=form.id, amount=form.total)
                 new_entry_main.save()

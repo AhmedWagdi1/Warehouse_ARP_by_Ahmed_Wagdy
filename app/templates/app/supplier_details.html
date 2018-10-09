@@ -9,9 +9,10 @@
             <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
           </div>
 <div align="center">
-    <b>{{ current_supply.supplier_name }}</b><br><br>
-       <a href="{% url 'supplier_update' current_supply.pk %}"><font color="#00008b">تعديل</font></a>
-      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter_{{ current_supply.supplier_name }}"><font color="red">مسح</font> </a>
+    <b>إسم المورد : {{ current_supply.supplier_name }}</b><br><br>
+    <b>الرقم القومى : {{ current_supply.supplier_ID_number }}</b><br><br>
+    <a href="{% url 'supplier_update' current_supply.pk %}"><button class="btn btn-primary">تعديل</button></font></a>
+      <a href="{% url 'supplier_delete' current_supply.pk%}"><button class="btn btn-danger"> مسح</button></a>
 
 
             <!-- Modal -->

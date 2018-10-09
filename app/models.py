@@ -59,6 +59,7 @@ class Worker(models.Model):
 
 class Supplier(models.Model):
     supplier_name = models.CharField(max_length=85)
+    supplier_ID_number = models.IntegerField()
 
     def __unicode__(self):
         return self.supplier_name
@@ -69,6 +70,7 @@ class Supplier(models.Model):
 
 class Client(models.Model):
     client_name = models.CharField(max_length=85)
+    client_ID_number = models.IntegerField()
 
     def __unicode__(self):
         return self.client_name

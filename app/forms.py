@@ -38,13 +38,13 @@ class AddWorkerForm(forms.ModelForm):
 class AddSupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
-        fields = ['supplier_name']
+        fields = ['supplier_name', 'supplier_ID_number']
 
 
 class AddClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = ['client_name']
+        fields = ['client_name', 'client_ID_number']
 
 
 class AddProductForm(forms.ModelForm):
@@ -197,7 +197,7 @@ class BuyInvoiceForm(forms.ModelForm):
                   'price10', 'client', 'notes', 'total']
 
 
-#company = Company.objects.all()[0]
+# company = Company.objects.all()[0]
 
 
 class FundsTransfaerForm(forms.Form):

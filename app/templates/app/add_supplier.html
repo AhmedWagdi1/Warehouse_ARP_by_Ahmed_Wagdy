@@ -11,7 +11,10 @@
 <div align="center">
     <form method="post">{% csrf_token %}
         <b>إسم المورد</b><br>
-         {{ add_supplier_form.supplier_name }}<br>
+         {{ add_supplier_form.supplier_name }}<br><br>
+        <b>رقم البطاقة</b><br>
+        {{ add_supplier_form.supplier_ID_number }}
+        <Br><Br>
         <button class="btn btn-success">إضافة المورد </button>
 
     </form>

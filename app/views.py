@@ -238,7 +238,7 @@ def supplier_delete(request, pk):
 
 class SupplierUpdate(UpdateView):
     model = Supplier
-    fields = ['supplier_name']
+    fields = ['supplier_name', 'supplier_ID_number']
     template_name_suffix = '_update_form'
 
 

@@ -10,7 +10,7 @@ from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, Ad
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
     FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
-    MainFinance, Balance, FarmFinancemove
+    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice
 from datetime import date, datetime
 
 
@@ -426,7 +426,7 @@ def invoices_sell(request, pk):
                 new_entry = FarmFinancemove(mode=2, user=request.user, text=form.id, amount=form.total,
                                             farm=current_farm)
                 new_entry.save()
-                return redirect('finance_main')
+                return HttpResponseRedirect('/finance/farms/' + str(current_farm.pk) + '/')
     else:
         sell_invoice_form = SellInvoiceForm()
 
@@ -448,7 +448,10 @@ def invoices_buy(request, pk):
         if buy_invoice_form.is_valid():
             form = buy_invoice_form.save(commit=False)
             form.user = request.user
-            form.source = current_farm.farm_company.company_name
+            if current_farm == company_farm:
+                form.source = current_farm.farm_company.company_name
+            else:
+                form.source = current_farm.farm_name
             form.save()
             current_item = form.product.id
             in_sotorage = Product.objects.get(id=current_item)
@@ -458,7 +461,7 @@ def invoices_buy(request, pk):
                 newit.item_quantity = new_amount
                 newit.save()
             else:
-                newz = Warehouse(item_name= in_sotorage, item_quantity=form.quantity)
+                newz = Warehouse(item_name=in_sotorage, item_quantity=form.quantity)
                 newz.save()
             if form.product2:
                 current_item2 = form.product2.id
@@ -595,7 +598,7 @@ def invoices_buy(request, pk):
                 new_entry = FarmFinancemove(mode=1, user=request.user, text=form.id, amount=form.total,
                                             farm=current_farm)
                 new_entry.save()
-                return redirect('finance_main')
+                return HttpResponseRedirect('/finance/farms/' + str(current_farm.pk) + '/')
     else:
         buy_invoice_form = BuyInvoiceForm()
     context = {
@@ -709,10 +712,23 @@ def farms_finance(request, pk):
     current_farm = get_object_or_404(Farm, pk=pk)
     bal = Balance.objects.get(farm=current_farm)
     all_movement = FarmFinancemove.objects.filter(farm=current_farm)
+    this_farm_sell = SellInvoice.objects.filter(source=current_farm.farm_name)
+    all_sells = []
+    for item in this_farm_sell:
+        all_sells.append(item.total)
+    final_all_sells = sum(all_sells)
+
+    this_farm_buy = BuyInvoice.objects.filter(source=current_farm.farm_name)
+    all_buy = []
+    for item in this_farm_buy:
+        all_buy.append(item.total)
+    final_all_buy = sum(all_buy)
     context = {
         'current_farm': current_farm,
         'bal': bal,
         'all_movement': all_movement,
+        'final_all_sells': final_all_sells,
+        'final_all_buy': final_all_buy,
     }
     return render(request, 'app/farms_finance.html', context)
 
@@ -769,6 +785,6 @@ def farm_costs(request, pk):
         farm_finance_move_form = FarmFinancemoveForm()
 
     context = {
-        'farm_finance_move_form':farm_finance_move_form,
+        'farm_finance_move_form': farm_finance_move_form,
     }
     return render(request, 'app/farm_withd.html', context)

@@ -582,8 +582,6 @@ def invoices_buy(request, pk):
                 pass
 
             if current_farm == company_farm:
-                new_entry_main = MainFinanceMovement(mode=1, user=request.user, text=form.id, amount=form.total)
-                new_entry_main.save()
                 current_balance = balance.balance
                 added_balance = form.total
                 new_balance = current_balance - added_balance
@@ -654,10 +652,34 @@ def finance_main(request):
     current_balance = MainFinance.objects.all()[0]
     company_name = Company.objects.all()[0]
     current_farm = Farm.objects.get(farm_name=company_name.company_name)
+    this_farm_buys = BuyInvoice.objects.filter(source=company_name.company_name)
+    all_buy = []
+    for item in this_farm_buys:
+        all_buy.append(item.total)
+    final_all_buy = sum(all_buy)
+
+    this_farm_sells = SellInvoice.objects.filter(source=company_name.company_name)
+    all_sell = []
+    for item in this_farm_sells:
+        all_sell.append(item.total)
+    final_all_sell = sum(all_sell)
+
+    this_farm_cost = MainFinanceMovement.objects.filter(mode=1).exclude(text='تحويل لمزرعة ')
+    all_cost = []
+    for item in this_farm_cost:
+        all_cost.append(item.amount)
+    final_all_cost = sum(all_cost)
+
+    net = final_all_sell - (final_all_cost + final_all_buy)
+
     context = {
         'all_movments': all_movments,
         'current_balance': current_balance,
         'current_farm': current_farm,
+        'final_all_buy': final_all_buy,
+        'final_all_sell': final_all_sell,
+        'final_all_cost': final_all_cost,
+        'net': net,
     }
     return render(request, 'app/finance_main.html', context)
 

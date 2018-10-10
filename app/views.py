@@ -821,3 +821,46 @@ def farm_costs(request, pk):
         'farm_finance_move_form': farm_finance_move_form,
     }
     return render(request, 'app/farm_withd.html', context)
+
+
+def main_center(request):
+    main_movment = MainFinanceMovement.objects.all()
+    farm_movment = FarmFinancemove.objects.all()
+    # getting all buy
+    all_buy = BuyInvoice.objects.all()
+    all_buy_list = []
+    for item in all_buy:
+        all_buy_list.append(item.total)
+    final_all_buy = sum(all_buy_list)
+    # getting all_sell
+    all_sell = SellInvoice.objects.all()
+    all_sell_list = []
+    for item in all_sell:
+        all_sell_list.append(item.total)
+    final_all_sell = sum(all_sell_list)
+    # getting_all_costs
+    main_costs = MainFinanceMovement.objects.filter(mode=1)
+    main_costs_list = []
+    for item in main_costs:
+        main_costs_list.append(item.amount)
+    final_main_costs = sum(main_costs_list)
+    ########################################
+    farm_cost = FarmFinancemove.objects.filter(mode=1)
+    farm_cost_list = []
+    for item in farm_cost:
+        farm_cost_list.append(item.amount)
+    final_farm_costs = sum(farm_cost_list)
+    total_costs = final_main_costs + final_farm_costs
+    from itertools import chain
+    #####################################
+    net = final_all_sell - (final_all_buy - total_costs)
+    result_list = sorted(chain(main_movment, farm_movment),
+                         key=lambda instance: instance.date)
+    context = {
+        'result_list': result_list,
+        'final_all_buy': final_all_buy,
+        'final_all_sell': final_all_sell,
+        'total_costs': total_costs,
+        'net': net,
+    }
+    return render(request, 'app/main_center.html', context)

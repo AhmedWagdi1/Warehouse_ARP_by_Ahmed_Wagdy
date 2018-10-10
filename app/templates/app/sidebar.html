@@ -57,6 +57,10 @@
                     </ul>
                 </li>                <li><a><i class="fa fa-money"></i> الحسابات <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                                        <p align="right"> <b>مركز التكلفة الرئسيى</b></p>
+                        <li><a href="{% url 'main_center' %}">  تقارير مركز التكلفة الرئيسى</a></li>
+
+                    <p align="right"> <b>مراكز التكلفة الفرعية</b></p>
                         <li><a href="{% url 'finance_main' %}"> الفرع الرئيسى</a></li>
                         {% for farm in all_farms_no_company %}
                                                 <li><a href="{% url 'farms_finance' farm.pk%}">{{ farm.farm_name }}</a></li>

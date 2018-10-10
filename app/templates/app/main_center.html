@@ -1,0 +1,126 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main" dir="rtl">
+        <div class="">
+            <div class="page-title">
+
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row" align="right" dir="rtl">
+
+
+                <div class="clearfix"></div>
+
+
+                <div class="clearfix"></div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12" dir="rtl" align="right">
+                    <div class="x_panel" dir="rtl" align="right">
+                                            <div class="row tile_count" align="right">
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                <span class="count_top"><i class="fa fa-check"></i>صافى الربح </span>
+                                <h3><font color="green">{{ net }}</font></h3>
+                                جنيه مصرى
+
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                <span class="count_top"><i class="fa fa-money"></i> المصروفات </span>
+                                <h3><font color="red">{{ total_costs }}</font></h3>
+                                جنيه مصرى
+
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count" align="right">
+                                <span class="count_top"><i class="fa fa-sellsy"></i> المبيعات</span>
+                                <h3>{{ final_all_sell }}</h3>
+                                جنيه مصرى
+
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                <span class="count_top"><i class="fa fa-shopping-cart"></i>المشتريات</span>
+                                <h3>{{ final_all_buy }}</h3>
+                                جنيه مصرى
+                            </div>
+                            <div style="float: right;">
+                                                    <h3><span class="fa fa-money"></span>
+مراكز التكلفة
+                                                        <small>رئيسي</small>
+                                                    </h3>
+                            </div>
+                        </div>
+
+                        <div class="x_title" dir="rtl">
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                            <div class="table-responsive" align="right" dir="rtl">
+                                <table class="table table-striped jambo_table " dir="rtl" align="right">
+                                    <thead dir="rtl" align="right">
+                                    <tr class="headings" dir="rtl" align="right">
+                                        <th class="column-title" align="right" dir="rtl"> رفم الحركة</th>
+                                        <th class="column-title" align="right" dir="rtl">مدين</th>
+                                        <th class="column-title" align="right" dir="rtl"> دائن</th>
+                                        <th class="column-title" align="right" dir="rtl">البيان</th>
+                                        <th class="column-title" align="right" dir="rtl">التاريخ</th>
+                                        <th class="column-title" align="right" dir="rtl">المستخدم</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in result_list %}
+                                        <tr align="left">
+                                            <td class=" ">{{ item.id }}</td>
+                                            <td class=" ">
+                                                {% if item.mode == '2' %}
+                                                    {{ item.amount }}
+                                                {% else %}
+                                                    ------
+                                                {% endif %}
+                                            </td>
+                                            <td class=" ">
+                                                {% if item.mode == '1' %}
+                                                    {{ item.amount }}
+                                                {% else %}
+                                                    ------
+                                                {% endif %}
+                                            </td>
+                                            <td class=" ">{{ item.text }}</td>
+                                            <td class=" ">{{ item.date }}</td>
+                                            <td class=" ">{{ item.user.username }}</td>
+
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+{% endblock javascripts %}
+
+
+
+
+
+

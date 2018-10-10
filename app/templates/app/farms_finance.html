@@ -11,11 +11,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3><span class="fa fa-money"></span>
-                        {{ current_farm.farm_name }}
-                        <br>
                         <small>
-                            <b>الرصيد</b> {{ bal.balance }} جنيه
                         </small>
                     </h3>
                 </div>
@@ -29,26 +25,34 @@
                 <div class="col-md-12 col-sm-12 col-xs-12" dir="rtl" align="right">
                     <div class="x_panel" dir="rtl" align="right">
                         <div class="row tile_count" align="right">
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count" >
-        <span class="count_top"><i class="fa fa-check"></i>صافى الربح </span>
-        <div class="count green">2,500</div>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-money"></i> المصروفات </span>
-        <div class="count"></div>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count" align="right">
-        <span class="count_top"><i class="fa fa-sellsy"></i> المبيعات</span>
-        <div class="count">{{ final_all_sells }}</div>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-shopping-cart"></i>المشتريات</span>
-        <div class="count">{{ final_all_buy }}</div>
-      </div>
-                                  <div style="float: right;">
-                                     <h1> إحصائيات</h1>
-      </div>
-    </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                <span class="count_top"><i class="fa fa-check"></i>صافى الربح </span>
+                                <h3><font color="green">{{ net }}</font></h3>
+                                جنيه مصرى
+
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                <span class="count_top"><i class="fa fa-money"></i> المصروفات </span>
+                                <h3><font color="red">{{ final_all_cost }}</font></h3>
+                                جنيه مصرى
+
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count" align="right">
+                                <span class="count_top"><i class="fa fa-sellsy"></i> المبيعات</span>
+                                <h3>{{ final_all_sells }}</h3>
+                                جنيه مصرى
+
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                <span class="count_top"><i class="fa fa-shopping-cart"></i>المشتريات</span>
+                                <h3>{{ final_all_buy }}</h3>
+                                جنيه مصرى
+                            </div>
+                            <div style="float: right;">
+                                                    <h3><span class="fa fa-money"></span>
+                        {{ current_farm.farm_name }}
+                            </div>
+                        </div>
 
                         <div class="x_title" dir="rtl">
 
@@ -56,15 +60,15 @@
                         </div>
 
                         <div class="x_content" dir="rtl" align="right">
-                                                    <a href="{% url 'invoices_buy' current_farm.pk%}">
+                            <a href="{% url 'invoices_buy' current_farm.pk %}">
                                 <button class="btn btn-primary">إنشاء فاتورة شراء</button>
                             </a>
-                            <a href="{% url 'invoices_sell' current_farm.pk%}">
-                            <button class="btn btn-primary">إنشاء فاتورة بيع</button>
-                        </a>
-                            <a href="{% url 'farm_costs' current_farm.pk%}">
-                            <button class="btn btn-warning">مـصروفات</button>
-                        </a>
+                            <a href="{% url 'invoices_sell' current_farm.pk %}">
+                                <button class="btn btn-primary">إنشاء فاتورة بيع</button>
+                            </a>
+                            <a href="{% url 'farm_costs' current_farm.pk %}">
+                                <button class="btn btn-warning">مـصروفات</button>
+                            </a>
                             <div class="table-responsive" align="right" dir="rtl">
                                 <table class="table table-striped jambo_table " dir="rtl" align="right">
                                     <thead dir="rtl" align="right">

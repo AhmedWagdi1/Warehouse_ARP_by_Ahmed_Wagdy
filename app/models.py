@@ -243,6 +243,7 @@ class FarmFinancemove(models.Model):
     text = models.CharField(max_length=800)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
+    cost = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.text

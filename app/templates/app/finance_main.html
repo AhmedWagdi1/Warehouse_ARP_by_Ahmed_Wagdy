@@ -10,15 +10,7 @@
     <div class="right_col" role="main" dir="rtl">
         <div class="">
             <div class="page-title">
-                <div class="title_left">
-                    <h3><span class="fa fa-money"></span>
-                        الخزينة المركزية
-                        <br>
-                        <small>
-                            <b>الرصيد</b> {{ current_balance.balance }} جنيه
-                        </small>
-                    </h3>
-                </div>
+
 
             </div>
 
@@ -34,6 +26,36 @@
 
                 <div class="col-md-12 col-sm-12 col-xs-12" dir="rtl" align="right">
                     <div class="x_panel" dir="rtl" align="right">
+                                            <div class="row tile_count" align="right">
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                <span class="count_top"><i class="fa fa-check"></i>صافى الربح </span>
+                                <h3><font color="green">{{ net }}</font></h3>
+                                جنيه مصرى
+
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                <span class="count_top"><i class="fa fa-money"></i> المصروفات </span>
+                                <h3><font color="red">{{ final_all_cost }}</font></h3>
+                                جنيه مصرى
+
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count" align="right">
+                                <span class="count_top"><i class="fa fa-sellsy"></i> المبيعات</span>
+                                <h3>{{ final_all_sells }}</h3>
+                                جنيه مصرى
+
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                                <span class="count_top"><i class="fa fa-shopping-cart"></i>المشتريات</span>
+                                <h3>{{ final_all_buy }}</h3>
+                                جنيه مصرى
+                            </div>
+                            <div style="float: right;">
+                                                    <h3><span class="fa fa-money"></span>
+                        {{ current_farm.farm_name }}
+                            </div>
+                        </div>
+
                         <div class="x_title" dir="rtl">
                             <div class="clearfix"></div>
                         </div>

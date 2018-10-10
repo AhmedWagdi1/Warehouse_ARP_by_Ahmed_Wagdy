@@ -723,12 +723,22 @@ def farms_finance(request, pk):
     for item in this_farm_buy:
         all_buy.append(item.total)
     final_all_buy = sum(all_buy)
+
+    this_farm_costs = FarmFinancemove.objects.filter(farm=current_farm, mode=1, cost=True)
+    all_cost = []
+    for item in this_farm_costs:
+        all_cost.append(item.amount)
+    final_all_cost = sum(all_cost)
+
+    net = final_all_sells - (final_all_buy + final_all_cost)
     context = {
         'current_farm': current_farm,
         'bal': bal,
         'all_movement': all_movement,
         'final_all_sells': final_all_sells,
         'final_all_buy': final_all_buy,
+        'final_all_cost': final_all_cost,
+        'net': net,
     }
     return render(request, 'app/farms_finance.html', context)
 
@@ -773,6 +783,7 @@ def farm_costs(request, pk):
             form.mode = 1
             form.user = request.user
             form.farm = current_farm
+            form.cost = True
             form.save()
             current_balance = Balance.objects.get(farm=current_farm)
             old_balance = current_balance.balance

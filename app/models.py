@@ -260,6 +260,9 @@ class WorkingCosts(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('add_work_cost')
+
 
 class ManagmentCosts(models.Model):
     name = models.CharField(max_length=160)

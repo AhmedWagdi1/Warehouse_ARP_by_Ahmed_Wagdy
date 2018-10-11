@@ -17,15 +17,20 @@
                         {{ add_working_cost_form.name }}<br>
                         <button class="btn btn-primary" type="submit">إضافة</button>
                     </form>
-                    <p align="right" dir="rtl">
-                        {% for cost in all_working_costs %}
+                    {% for cost in all_working_costs %}
+                        <p align="right" dir="rtl">
                             -{{ cost.name }}
-                            <button class="btn btn-primary">تعديل</button>  -
+                            <a href="{% url 'update_work_cost' cost.pk %}">
+                                <button class="btn btn-primary">تعديل</button>
+                            </a>
+                            -
                             <A href="{% url 'delete_work_cost' cost.pk %}">
                                 <button class="btn btn-danger">مسح</button>
                             </A>
-                        {% endfor %}
-                    </p>
+                        </p>
+
+                        <hr>
+                    {% endfor %}
                 </div>
                 <div class="clearfix"></div>
             </div>

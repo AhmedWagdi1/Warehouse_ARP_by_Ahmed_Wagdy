@@ -895,6 +895,7 @@ def main_center(request):
     return render(request, 'app/main_center.html', context)
 
 
+@login_required
 def add_work_cost(request):
     all_working_costs = WorkingCosts.objects.all()
     add_working_cost_form = WorkingCostsForm(request.POST)
@@ -906,12 +907,19 @@ def add_work_cost(request):
         add_working_cost_form = WorkingCostsForm()
     context = {
         'add_working_cost_form': add_working_cost_form,
-        'all_working_costs':all_working_costs,
+        'all_working_costs': all_working_costs,
     }
     return render(request, 'app/add_work_costs.html', context)
 
 
+@login_required
 def delete_work_cost(request, pk):
     current_work_costs = get_object_or_404(WorkingCosts, pk=pk)
     current_work_costs.delete()
     return redirect('add_work_cost')
+
+
+class WorkingCostsUpdate(UpdateView):
+    model = WorkingCosts
+    fields = ['name']
+    template_name_suffix = '_update_form'

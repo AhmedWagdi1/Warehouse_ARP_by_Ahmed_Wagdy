@@ -940,3 +940,9 @@ def add_mang_cost(request):
         'all_mang_costs':all_mang_costs,
     }
     return render(request, 'app/add_mang_costs.html', context)
+
+@login_required
+def delete_mang_cost(request, pk):
+    current_mang_cost = get_object_or_404(ManagmentCosts, pk=pk)
+    current_mang_cost.delete()
+    return redirect('add_mang_cost')

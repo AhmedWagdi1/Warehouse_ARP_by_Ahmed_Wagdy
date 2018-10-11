@@ -13,8 +13,12 @@
         <div class="title_left">
           <h3>{{ current_farm.farm_name }}<small>
               <br><br>
+              <a href="{% url 'farm_update' current_farm.pk%}">
               <button class="btn btn-primary"><span class="fa fa-edit"></span> تعديل </button>
+                  </a>
+              <a href="{% url 'farm_delete' current_farm.pk%}">
           <button class="btn btn-danger"><span class="fa fa-trash"></span> مسح المزرعة</button>
+                  </a>
           </small></h3>
         </div>
 

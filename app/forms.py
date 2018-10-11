@@ -75,6 +75,10 @@ class MainMangCosts(forms.Form):
     type = forms.ModelChoiceField(queryset=ManagmentCosts.objects.all())
     amount = forms.IntegerField()
 
+class MainWorkCosts(forms.Form):
+    type = forms.ModelChoiceField(queryset=WorkingCosts.objects.all())
+    amount = forms.IntegerField()
+
 
 class SellInvoiceForm(forms.ModelForm):
     product2 = forms.ModelChoiceField(queryset=Product.objects.all(), required=False)

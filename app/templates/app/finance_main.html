@@ -63,8 +63,11 @@
                         <div class="x_content" dir="rtl" align="right">
                             <a href="{% url 'finance_main_deposit' %}">
                                 <button class="btn btn-primary">إيداع</button>
-                            </a> <a href="{% url 'mangcosts_main_withd' %}">
+                            </a>
+                            <a href="{% url 'mangcosts_main_withd' %}">
                             <button class="btn btn-primary">مصاريف عمومية و إدارية</button>
+                        </a>                            <a href="{% url 'work_main_withd' %}">
+                            <button class="btn btn-primary">مصاريف صناعية و تشغيلية</button>
                         </a>
                             ||
                             <a href="{% url 'invoices_buy' current_farm.pk %}">

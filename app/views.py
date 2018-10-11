@@ -853,7 +853,7 @@ def main_center(request):
     total_costs = final_main_costs + final_farm_costs
     from itertools import chain
     #####################################
-    net = final_all_sell - (final_all_buy - total_costs)
+    net = final_all_sell - (final_all_buy + total_costs)
     result_list = sorted(chain(main_movment, farm_movment),
                          key=lambda instance: instance.date)
     context = {

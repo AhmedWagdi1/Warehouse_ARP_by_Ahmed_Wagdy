@@ -909,3 +909,9 @@ def add_work_cost(request):
         'all_working_costs':all_working_costs,
     }
     return render(request, 'app/add_work_costs.html', context)
+
+
+def delete_work_cost(request, pk):
+    current_work_costs = get_object_or_404(WorkingCosts, pk=pk)
+    current_work_costs.delete()
+    return redirect('add_work_cost')

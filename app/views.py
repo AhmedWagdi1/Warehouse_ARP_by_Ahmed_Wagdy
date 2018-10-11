@@ -8,9 +8,9 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
-    FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm
+    FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
-    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts
+    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts
 from datetime import date, datetime
 
 
@@ -923,3 +923,20 @@ class WorkingCostsUpdate(UpdateView):
     model = WorkingCosts
     fields = ['name']
     template_name_suffix = '_update_form'
+
+
+@login_required
+def add_mang_cost(request):
+    mang_cost_add_form = ManagementCostsForm(request.POST)
+    all_mang_costs = ManagmentCosts.objects.all()
+    if request.method == 'POST':
+        if mang_cost_add_form.is_valid():
+            mang_cost_add_form.save()
+            return redirect('add_mang_cost')
+    else:
+        mang_cost_add_form = ManagementCostsForm()
+    context = {
+        'mang_cost_add_form': mang_cost_add_form,
+        'all_mang_costs':all_mang_costs,
+    }
+    return render(request, 'app/add_mang_costs.html', context)

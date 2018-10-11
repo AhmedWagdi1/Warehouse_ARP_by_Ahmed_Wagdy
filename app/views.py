@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
-    FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm
+    FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm, MainMangCosts
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
     MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts
 from datetime import date, datetime
@@ -953,3 +953,25 @@ class MangCostsUpdate(UpdateView):
     model = ManagmentCosts
     fields = ['name']
     template_name_suffix = '_update_form'
+
+
+def mangcosts_main_withd(request):
+    current_balance = MainFinance.objects.all()[0]
+    main_mang_costs_with_form = MainMangCosts(request.POST)
+    if request.method == 'POST':
+        if main_mang_costs_with_form.is_valid():
+            old_balance = current_balance.balance
+            added_balance = main_mang_costs_with_form.cleaned_data['amount']
+            new_balance = old_balance - added_balance
+            current_balance.balance = new_balance
+            current_balance.save()
+            new_move = MainFinanceMovement(mode=1, user=request.user,
+                                           text=main_mang_costs_with_form.cleaned_data['type'], amount=added_balance)
+            new_move.save()
+            return redirect('finance_main')
+    else:
+        main_mang_costs_with_form = MainMangCosts()
+    context = {
+        'main_mang_costs_with_form': main_mang_costs_with_form,
+    }
+    return render(request, 'app/mang_costs_main_withd.html', context)

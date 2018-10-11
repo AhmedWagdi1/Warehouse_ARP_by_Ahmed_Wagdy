@@ -876,6 +876,30 @@ def mangcosts_farm_withd(request, pk):
     return render(request, 'app/farm_mang_costs.html', context)
 
 
+def workcosts_farm_withd(request, pk):
+    current_farm = get_object_or_404(Farm, pk=pk)
+    farm_work_cost_form = MainWorkCosts(request.POST)
+    if request.method == 'POST':
+        if farm_work_cost_form.is_valid():
+            current_balance = Balance.objects.get(farm=current_farm)
+            old_balance = current_balance.balance
+            added_balance = farm_work_cost_form.cleaned_data['amount']
+            new_balance = old_balance - added_balance
+            current_balance.balance = new_balance
+            current_balance.save()
+            new_move = FarmFinancemove(mode=1, user=request.user, text=farm_work_cost_form.cleaned_data['type'],
+                                       amount=added_balance, farm=current_farm, cost=True)
+            new_move.save()
+            return HttpResponseRedirect('/finance/farms/' + str(current_farm.pk) + '/')
+    else:
+        farm_work_cost_form = MainWorkCosts()
+
+    context = {
+        'farm_work_cost_form': farm_work_cost_form,
+    }
+    return render(request, 'app/farm_work_costs.html', context)
+
+
 @login_required
 def main_center(request):
     main_movment = MainFinanceMovement.objects.all()

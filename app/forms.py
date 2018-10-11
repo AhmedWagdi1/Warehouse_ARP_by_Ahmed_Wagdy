@@ -2,7 +2,7 @@
 from django import forms
 
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, SellInvoice, \
-    MainFinanceMovement, BuyInvoice, FarmFinancemove
+    MainFinanceMovement, BuyInvoice, FarmFinancemove, WorkingCosts
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -205,8 +205,21 @@ class FundsTransfaerForm(forms.Form):
     amount = forms.IntegerField()
 
 
-
 class FarmFinancemoveForm(forms.ModelForm):
     class Meta:
         model = FarmFinancemove
         fields = ['text', 'amount']
+
+
+class WorkingCostsForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'إسم نوع المصروف',
+            }
+        )
+    )
+
+    class Meta:
+        model = WorkingCosts
+        fields = ['name']

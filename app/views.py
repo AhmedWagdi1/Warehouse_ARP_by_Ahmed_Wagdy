@@ -8,9 +8,9 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
-    FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm
+    FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
-    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice
+    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts
 from datetime import date, datetime
 
 
@@ -85,6 +85,7 @@ def farm_details(request, pk):
     }
     return render(request, 'app/farm_details.html', context)
 
+
 @login_required
 def farm_delete(request, pk):
     current_farm = get_object_or_404(Farm, pk=pk)
@@ -148,6 +149,7 @@ class JobUpdate(UpdateView):
     fields = ['job_name']
     template_name_suffix = '_update_form'
 
+
 @login_required
 def worker_details(request, pk):
     current_worker = get_object_or_404(Worker, pk=pk)
@@ -155,6 +157,7 @@ def worker_details(request, pk):
         'current_worker': current_worker,
     }
     return render(request, 'app/worker_details.html', context)
+
 
 @login_required
 def worker_delete(request, pk):
@@ -169,6 +172,7 @@ class WorkerUpdate(UpdateView):
               'worker_salary', 'worker_work_date', 'worker_image']
     template_name_suffix = '_update_form'
 
+
 @login_required
 def worker_archive(request, pk):
     current_worker = get_object_or_404(Worker, pk=pk)
@@ -176,6 +180,7 @@ def worker_archive(request, pk):
     current_worker.worker_deleted = True
     current_worker.save()
     return redirect('workers')
+
 
 @login_required
 def old_workers(request):
@@ -185,6 +190,7 @@ def old_workers(request):
     }
     return render(request, 'app/old_workers.html', context)
 
+
 @login_required
 def supplier(request):
     all_supply = Supplier.objects.all()
@@ -192,6 +198,7 @@ def supplier(request):
         'all_supply': all_supply,
     }
     return render(request, 'app/supplier.html', context)
+
 
 @login_required
 def supplier_add(request):
@@ -207,6 +214,7 @@ def supplier_add(request):
     }
     return render(request, 'app/add_supplier.html', context)
 
+
 @login_required
 def clients(request):
     all_clients = Client.objects.all()
@@ -214,6 +222,7 @@ def clients(request):
         'all_clients': all_clients,
     }
     return render(request, 'app/clients.html', context)
+
 
 @login_required
 def clients_add(request):
@@ -229,6 +238,7 @@ def clients_add(request):
     }
     return render(request, 'app/clients_add.html', context)
 
+
 @login_required
 def supplier_delete(request, pk):
     current_supply = get_object_or_404(Supplier, pk=pk)
@@ -241,6 +251,7 @@ class SupplierUpdate(UpdateView):
     fields = ['supplier_name', 'supplier_ID_number']
     template_name_suffix = '_update_form'
 
+
 @login_required
 def supplier_details(request, pk):
     current_supply = get_object_or_404(Supplier, pk=pk)
@@ -249,6 +260,7 @@ def supplier_details(request, pk):
     }
     return render(request, 'app/supplier_details.html', context)
 
+
 @login_required
 def client_details(request, pk):
     current_client = get_object_or_404(Client, pk=pk)
@@ -256,6 +268,7 @@ def client_details(request, pk):
         'current_client': current_client,
     }
     return render(request, 'app/client_details.html', context)
+
 
 @login_required
 def client_delete(request, pk):
@@ -269,6 +282,7 @@ class ClientUpdate(UpdateView):
     fields = ['client_name', 'client_ID_number']
     template_name_suffix = '_update_form'
 
+
 @login_required
 def warehouse(request):
     all_warehouse = Warehouse.objects.all()
@@ -277,6 +291,7 @@ def warehouse(request):
     }
     return render(request, 'app/warehouse.html', context)
 
+
 @login_required
 def product(request):
     all_products = Product.objects.all()
@@ -284,6 +299,7 @@ def product(request):
         'all_products': all_products,
     }
     return render(request, 'app/product.html', context)
+
 
 @login_required
 def product_add(request):
@@ -299,6 +315,7 @@ def product_add(request):
     }
     return render(request, 'app/product_add.html', context)
 
+
 @login_required
 def product_details(request, pk):
     current_product = get_object_or_404(Product, pk=pk)
@@ -306,6 +323,7 @@ def product_details(request, pk):
         'current_product': current_product,
     }
     return render(request, 'app/product_details.html', context)
+
 
 @login_required
 def product_delete(request, pk):
@@ -318,6 +336,7 @@ class ProductUpdate(UpdateView):
     model = Product
     fields = ['product_name']
     template_name_suffix = '_update_form'
+
 
 @login_required
 def invoices_sell(request, pk):
@@ -436,6 +455,7 @@ def invoices_sell(request, pk):
         'sell_invoice_form': sell_invoice_form,
     }
     return render(request, 'app/invoice_sell.html', context)
+
 
 @login_required
 def invoices_buy(request, pk):
@@ -606,6 +626,7 @@ def invoices_buy(request, pk):
     }
     return render(request, 'app/invoice_buy.html', context)
 
+
 @login_required
 def warehouse_entry(request):
     warehouse_entry_form = WarehouseEntryForm(request.POST)
@@ -630,6 +651,7 @@ def warehouse_entry(request):
     }
     return render(request, 'app/warehouse_entry.html', context)
 
+
 @login_required
 def warehouse_out(request, pk):
     current_item = get_object_or_404(Warehouse, pk=pk)
@@ -645,6 +667,7 @@ def warehouse_out(request, pk):
         'current': current,
     }
     return render(request, 'app/item_out.html', context)
+
 
 @login_required
 def finance_main(request):
@@ -683,6 +706,7 @@ def finance_main(request):
     }
     return render(request, 'app/finance_main.html', context)
 
+
 @login_required
 def finance_main_deposit(request):
     current_balance = MainFinance.objects.all()[0]
@@ -706,6 +730,7 @@ def finance_main_deposit(request):
     }
     return render(request, 'app/finance_main_deposit.html', context)
 
+
 @login_required
 def finance_main_withdraw(request):
     current_balance = MainFinance.objects.all()[0]
@@ -728,6 +753,7 @@ def finance_main_withdraw(request):
         'main_finance_withdraw_form': main_finance_withdraw_form,
     }
     return render(request, 'app/finance_main_withdraw.html', context)
+
 
 @login_required
 def farms_finance(request, pk):
@@ -764,6 +790,7 @@ def farms_finance(request, pk):
     }
     return render(request, 'app/farms_finance.html', context)
 
+
 @login_required
 def trasnfaer_farm(request):
     farm_transfer_form = FundsTransfaerForm(request.POST)
@@ -795,6 +822,7 @@ def trasnfaer_farm(request):
     }
     return render(request, 'app/transfer_farm.html', context)
 
+
 @login_required
 def farm_costs(request, pk):
     current_farm = get_object_or_404(Farm, pk=pk)
@@ -821,6 +849,7 @@ def farm_costs(request, pk):
         'farm_finance_move_form': farm_finance_move_form,
     }
     return render(request, 'app/farm_withd.html', context)
+
 
 @login_required
 def main_center(request):
@@ -864,3 +893,19 @@ def main_center(request):
         'net': net,
     }
     return render(request, 'app/main_center.html', context)
+
+
+def add_work_cost(request):
+    all_working_costs = WorkingCosts.objects.all()
+    add_working_cost_form = WorkingCostsForm(request.POST)
+    if request.method == 'POST':
+        if add_working_cost_form.is_valid():
+            add_working_cost_form.save()
+            return redirect('add_work_cost')
+    else:
+        add_working_cost_form = WorkingCostsForm()
+    context = {
+        'add_working_cost_form': add_working_cost_form,
+        'all_working_costs':all_working_costs,
+    }
+    return render(request, 'app/add_work_costs.html', context)

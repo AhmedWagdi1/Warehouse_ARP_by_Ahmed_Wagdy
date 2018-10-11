@@ -252,3 +252,17 @@ class FarmFinancemove(models.Model):
 class Balance(models.Model):
     balance = models.IntegerField()
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
+
+
+class WorkingCosts(models.Model):
+    name = models.CharField(max_length=160)
+
+    def __unicode__(self):
+        return self.name
+
+
+class ManagmentCosts(models.Model):
+    name = models.CharField(max_length=160)
+
+    def __unicode__(self):
+        return self.name

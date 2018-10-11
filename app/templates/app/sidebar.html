@@ -55,15 +55,19 @@
                         <li><a href="{% url 'warehouse' %}">المخزن الرئيسى</a></li>
                         <li><a href="{% url 'product' %}">الاصناف</a></li>
                     </ul>
-                </li>                <li><a><i class="fa fa-money"></i> الحسابات <span class="fa fa-chevron-down"></span></a>
+                </li>
+                <li><a><i class="fa fa-money"></i> الحسابات <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                                        <p align="right"> <b>مركز التكلفة الرئسيى</b></p>
-                        <li><a href="{% url 'main_center' %}">  تقارير مركز التكلفة الرئيسى</a></li>
+                        <li><a href="{% url 'add_work_cost' %}"> + مصروفات صناعية و تشغيلية </a></li>
+                        <li><a href="{% url 'main_center' %}"> + مصروفات عمومية و إدارية </a></li>
 
-                    <p align="right"> <b>مراكز التكلفة الفرعية</b></p>
+                        <p align="right"><b>مركز التكلفة الرئسيى</b></p>
+                        <li><a href="{% url 'main_center' %}"> تقارير مركز التكلفة الرئيسى</a></li>
+
+                        <p align="right"><b>مراكز التكلفة الفرعية</b></p>
                         <li><a href="{% url 'finance_main' %}"> الفرع الرئيسى</a></li>
                         {% for farm in all_farms_no_company %}
-                                                <li><a href="{% url 'farms_finance' farm.pk%}">{{ farm.farm_name }}</a></li>
+                            <li><a href="{% url 'farms_finance' farm.pk %}">{{ farm.farm_name }}</a></li>
 
                         {% endfor %}
                     </ul>

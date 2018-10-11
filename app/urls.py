@@ -61,6 +61,7 @@ urlpatterns = [
                   url(r'^finance/workcosts/delete/(?P<pk>[0-9]+)/$', views.delete_work_cost, name="delete_work_cost"),
                   url(r'^finance/mangcosts/delete/(?P<pk>[0-9]+)/$', views.delete_mang_cost, name="delete_mang_cost"),
                   url(r'^finance/workcosts/update/(?P<pk>[0-9]+)/$', views.WorkingCostsUpdate.as_view(), name="update_work_cost"),
+                  url(r'^finance/mangcosts/update/(?P<pk>[0-9]+)/$', views.MangCostsUpdate.as_view(), name="update_work_mang"),
                   url(r'^finance/managementcosts/add/$', views.add_mang_cost, name="add_mang_cost"),
                   # invoices
                   url(r'^invoices/sell/(?P<pk>[0-9]+)/$', views.invoices_sell, name="invoices_sell"),

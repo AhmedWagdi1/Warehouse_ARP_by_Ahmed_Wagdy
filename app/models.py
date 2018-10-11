@@ -269,3 +269,6 @@ class ManagmentCosts(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('add_mang_cost')

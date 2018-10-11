@@ -20,7 +20,7 @@
                     {% for cost in all_mang_costs %}
                         <p align="right" dir="rtl">
                             -{{ cost.name }}
-                            <a href="{% url 'update_work_cost' cost.pk %}">
+                            <a href="{% url 'update_work_mang' cost.pk %}">
                                 <button class="btn btn-primary">تعديل</button>
                             </a>
                             -

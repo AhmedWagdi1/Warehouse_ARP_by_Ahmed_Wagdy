@@ -291,4 +291,4 @@ class AddDailyForm(forms.ModelForm):
 
     class Meta:
         model = Daily
-        fields = ['text', 'type', 'category', 'maden', 'da2en', 'farm']
+        fields = ['text','category', 'maden', 'da2en', 'farm']

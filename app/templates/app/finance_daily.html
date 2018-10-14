@@ -25,15 +25,15 @@
             <div align="center">
                 <form method="post">{% csrf_token %}
                     <button type="submit" class="btn btn-primary"><span class="fa fa-plus"></span> إضافة</button>
-                    <td>{{ add_daily_form.farm }}</td>
-                    <td>{{ add_daily_form.maden }}</td>
-                    <td>{{ add_daily_form.da2en }}</td>
-                    <td>{{ add_daily_form.category }}</td>
-                    <td>{{ add_daily_form.type }}</td>
-                    <td>{{ add_daily_form.text }}</td>
+                    {{ add_daily_form.farm }}
+                                        <b>دائن</b>
+                    {{ add_daily_form.maden }}
+                                        <b>مدين</b>
 
+                    {{ add_daily_form.da2en }}
 
-
+                    {{ add_daily_form.category }}
+                    {{ add_daily_form.text }}
                 </form>
             </div>
             <table id="datatable" class="table table-striped table-bordered" dir="rtl">
@@ -45,8 +45,9 @@
                     <th>إجمالى مدين</th>
                     <th>النوع</th>
                     <th>الفئة</th>
-                    <th>مدين</th>
                     <th>دائن</th>
+
+                    <th>مدين</th>
                     <th>المزرعة</th>
                 </tr>
                 </thead>

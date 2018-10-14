@@ -1060,6 +1060,7 @@ def finance_daily(request):
             form = add_daily_form.save(commit=False)
             form.total_da2en = form.da2en
             form.total_maden = form.maden
+            form.type = form.category.type.type_name
             form.save()
             return redirect('finance_daily')
     else:

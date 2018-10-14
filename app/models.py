@@ -283,6 +283,7 @@ class Type(models.Model):
 
 class Category(models.Model):
     category_name = models.CharField(max_length=80)
+    type = models.ForeignKey(Type, on_delete=CASCADE)
 
     def __str__(self):
         return self.category_name

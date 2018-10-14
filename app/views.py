@@ -11,7 +11,7 @@ from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, Ad
     FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm, MainMangCosts, \
     MainWorkCosts, AddDailyForm, PickOstazForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
-    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts, Daily
+    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts, Daily, Type
 from datetime import date, datetime
 
 
@@ -1078,10 +1078,18 @@ def ostaz(request):
     if request.method == 'POST':
         if pick_ostaz_form.is_valid():
             current_type = pick_ostaz_form.cleaned_data['type']
-            return redirect('/ostaz/' + str(current_type.pk) + '/')
+            return redirect('ostaz_details', pk=current_type.pk)
     else:
         pick_ostaz_form = PickOstazForm()
     context = {
         'pick_ostaz_form': pick_ostaz_form,
     }
     return render(request, 'ostaz.html', context)
+
+
+def ostaz_details(request, pk):
+    current_type = get_object_or_404(Type, pk=pk)
+    context = {
+        'current_type': current_type,
+    }
+    return render(request, 'ostaz_details.html', context)

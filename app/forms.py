@@ -258,30 +258,24 @@ class AddDailyForm(forms.ModelForm):
         )
     )
     da2en = forms.IntegerField(required=False,
-        widget=forms.NumberInput(
-            attrs={
-                'style': 'max-width: 75px;',
-                'placeholder': 'دائن',
-                'value':0,
+                               widget=forms.NumberInput(
+                                   attrs={
+                                       'style': 'max-width: 75px;',
+                                       'placeholder': 'دائن',
+                                       'value': 0,
 
-            }
-        )
-    )
+                                   }
+                               )
+                               )
     maden = forms.IntegerField(required=False,
-        widget=forms.NumberInput(
-            attrs={
-                'style': 'max-width: 75px;',
-                'placeholder': 'مدين',
-                'value': 0,
-            }
-        )
-    )
-    type = forms.ModelChoiceField(queryset=Type.objects.all(),
-                                  widget=forms.Select(
-                                      attrs={
-                                      }
-                                  )
-                                  )
+                               widget=forms.NumberInput(
+                                   attrs={
+                                       'style': 'max-width: 75px;',
+                                       'placeholder': 'مدين',
+                                       'value': 0,
+                                   }
+                               )
+                               )
     category = forms.ModelChoiceField(queryset=Category.objects.all(),
                                       widget=forms.Select(
                                           attrs={
@@ -291,4 +285,14 @@ class AddDailyForm(forms.ModelForm):
 
     class Meta:
         model = Daily
-        fields = ['text','category', 'maden', 'da2en', 'farm']
+        fields = ['text', 'category', 'maden', 'da2en', 'farm']
+
+
+class PickOstazForm(forms.Form):
+    type = forms.ModelChoiceField(queryset=Type.objects.all(),
+                                  widget=forms.Select(
+                                      attrs={
+                                          'max-width': '650px;'
+                                      }
+                                  )
+                                  )

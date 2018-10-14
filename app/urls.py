@@ -68,6 +68,7 @@ urlpatterns = [
                   url(r'^finance/managementcosts/farm/(?P<pk>[0-9]+)/$', views.mangcosts_farm_withd, name="mangcosts_farm_withd"),
                   url(r'^finance/workcosts/farm/(?P<pk>[0-9]+)/$', views.workcosts_farm_withd, name="workcosts_farm_withd"),
                   url(r'finance/daily/', views.finance_daily, name="finance_daily"),
+                  url(r'finance/ostaz/', views.ostaz, name="ostaz"),
                   # invoices
                   url(r'^invoices/sell/(?P<pk>[0-9]+)/$', views.invoices_sell, name="invoices_sell"),
                   url(r'^invoices/buy/(?P<pk>[0-9]+)/$', views.invoices_buy, name="invoices_buy"),

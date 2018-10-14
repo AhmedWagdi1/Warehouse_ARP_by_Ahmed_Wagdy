@@ -9,7 +9,7 @@ from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
     FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm, MainMangCosts, \
-    MainWorkCosts, AddDailyForm
+    MainWorkCosts, AddDailyForm, PickOstazForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
     MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts, Daily
 from datetime import date, datetime
@@ -1060,7 +1060,7 @@ def finance_daily(request):
             form = add_daily_form.save(commit=False)
             form.total_da2en = form.da2en
             form.total_maden = form.maden
-            form.type = form.category.type.type_name
+            form.type = form.category.type
             form.save()
             return redirect('finance_daily')
     else:
@@ -1071,3 +1071,17 @@ def finance_daily(request):
         'final_all_da2en': final_all_da2en,
     }
     return render(request, 'app/finance_daily.html', context)
+
+
+def ostaz(request):
+    pick_ostaz_form = PickOstazForm(request.POST)
+    if request.method == 'POST':
+        if pick_ostaz_form.is_valid():
+            current_type = pick_ostaz_form.cleaned_data['type']
+            return redirect('/ostaz/' + str(current_type.pk) + '/')
+    else:
+        pick_ostaz_form = PickOstazForm()
+    context = {
+        'pick_ostaz_form': pick_ostaz_form,
+    }
+    return render(request, 'ostaz.html', context)

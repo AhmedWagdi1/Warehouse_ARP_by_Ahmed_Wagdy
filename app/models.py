@@ -272,3 +272,29 @@ class ManagmentCosts(models.Model):
 
     def get_absolute_url(self):
         return reverse('add_mang_cost')
+
+
+class Type(models.Model):
+    type_name = models.CharField(max_length=80)
+
+    def __str__(self):
+        return self.type_name
+
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=80)
+
+    def __str__(self):
+        return self.category_name
+
+
+class Daily(models.Model):
+    date = models.DateTimeField(auto_now=True)
+    text = models.CharField(max_length=80)
+    total_da2en = models.IntegerField(default=0)
+    total_maden = models.IntegerField(default=0)
+    type = models.ForeignKey(Type, on_delete=CASCADE)
+    category = models.ForeignKey(Category , on_delete=CASCADE)
+    maden = models.IntegerField(default=0)
+    da2en = models.IntegerField(default=0)
+    farm = models.ForeignKey(Farm, on_delete=DO_NOTHING)

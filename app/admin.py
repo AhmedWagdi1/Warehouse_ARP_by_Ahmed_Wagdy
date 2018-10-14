@@ -1,6 +1,6 @@
 from django.contrib import admin
 from app.models import Farm, Company, Job, Worker, Warehouse, MainFinance, MainFinanceMovement, SellInvoice, Balance, \
-    BuyInvoice, FarmFinancemove, WorkingCosts, ManagmentCosts
+    BuyInvoice, FarmFinancemove, WorkingCosts, ManagmentCosts, Type, Category, Daily
 
 admin.site.register(Farm)
 admin.site.register(Company)
@@ -15,3 +15,6 @@ admin.site.register(BuyInvoice)
 admin.site.register(FarmFinancemove)
 admin.site.register(WorkingCosts)
 admin.site.register(ManagmentCosts)
+admin.site.register(Type)
+admin.site.register(Category)
+admin.site.register(Daily)

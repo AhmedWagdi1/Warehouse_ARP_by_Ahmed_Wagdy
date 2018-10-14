@@ -2,7 +2,7 @@
 from django import forms
 
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, SellInvoice, \
-    MainFinanceMovement, BuyInvoice, FarmFinancemove, WorkingCosts, ManagmentCosts
+    MainFinanceMovement, BuyInvoice, FarmFinancemove, WorkingCosts, ManagmentCosts, Daily, Type, Category
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -74,6 +74,7 @@ class MainFinanceWithdrawForm(forms.ModelForm):
 class MainMangCosts(forms.Form):
     type = forms.ModelChoiceField(queryset=ManagmentCosts.objects.all())
     amount = forms.IntegerField()
+
 
 class MainWorkCosts(forms.Form):
     type = forms.ModelChoiceField(queryset=WorkingCosts.objects.all())
@@ -246,3 +247,48 @@ class ManagementCostsForm(forms.ModelForm):
     class Meta:
         model = ManagmentCosts
         fields = ['name']
+
+
+class AddDailyForm(forms.ModelForm):
+    text = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'البيان'
+            }
+        )
+    )
+    da2en = forms.IntegerField(required=False,
+        widget=forms.NumberInput(
+            attrs={
+                'style': 'max-width: 75px;',
+                'placeholder': 'دائن',
+                'value':0,
+
+            }
+        )
+    )
+    maden = forms.IntegerField(required=False,
+        widget=forms.NumberInput(
+            attrs={
+                'style': 'max-width: 75px;',
+                'placeholder': 'مدين',
+                'value': 0,
+            }
+        )
+    )
+    type = forms.ModelChoiceField(queryset=Type.objects.all(),
+                                  widget=forms.Select(
+                                      attrs={
+                                      }
+                                  )
+                                  )
+    category = forms.ModelChoiceField(queryset=Category.objects.all(),
+                                      widget=forms.Select(
+                                          attrs={
+                                          }
+                                      )
+                                      )
+
+    class Meta:
+        model = Daily
+        fields = ['text', 'type', 'category', 'maden', 'da2en', 'farm']

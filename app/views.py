@@ -9,9 +9,9 @@ from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
     FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm, MainMangCosts, \
-    MainWorkCosts
+    MainWorkCosts, AddDailyForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
-    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts
+    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts, Daily
 from datetime import date, datetime
 
 
@@ -1046,3 +1046,27 @@ def workcosts_main_withd(request):
         'main_work_costs_with_form': main_work_costs_with_form,
     }
     return render(request, 'app/work_costs_main_withd.html', context)
+
+
+def finance_daily(request):
+    add_daily_form = AddDailyForm(request.POST)
+    all_daily = Daily.objects.all().order_by('-date')
+    all_da2en = []
+    for item in all_daily:
+        all_da2en.append(item.total_da2en)
+    final_all_da2en = sum(all_da2en)
+    if request.method == 'POST':
+        if add_daily_form.is_valid():
+            form = add_daily_form.save(commit=False)
+            form.total_da2en = form.da2en
+            form.total_maden = form.maden
+            form.save()
+            return redirect('finance_daily')
+    else:
+        add_daily_form = AddDailyForm()
+    context = {
+        'add_daily_form': add_daily_form,
+        'all_daily': all_daily,
+        'final_all_da2en': final_all_da2en,
+    }
+    return render(request, 'app/finance_daily.html', context)

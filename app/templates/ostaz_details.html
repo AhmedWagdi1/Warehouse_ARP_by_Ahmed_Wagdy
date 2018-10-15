@@ -17,7 +17,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_right" align="right">
-                    <h3> حـســاب <span class="fa fa-list"></span></h3>
+                    <h3> حـســاب الاستــاذ <span class="fa fa-list"></span></h3>
                     <Br>
                     <form method="post">
                         {% csrf_token %}
@@ -31,21 +31,104 @@
 
             </div>
             <div class="clearfix"></div>
-
+            <div align="center">
+                <h2>حساب {{ current_type }}</h2>
+                {{ all_current.date.month }}
+            </div>
             <table id="datatable" class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>دائن</th>
                     <th>مدين</th>
                     <th>الشهر</th>
+                    <th>-</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr>
-                    <td>قم بإختيار الحساب</td>
-                    <td>قم بإختيار الحساب</td>
-                    <td>قم بإختيار الحساب</td>
+                    <td>{{ final_1_da2en }}</td>
+                    <td>{{ final_1_maden }}</td>
+                    <td>يــنــايــر</td>
+                    <th>1</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_2_da2en }}</td>
+                    <td>{{ final_2_maden }}</td>
+                    <td>فبــرايــر</td>
+                    <th>2</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_3_da2en }}</td>
+                    <td>{{ final_3_maden }}</td>
+                    <td>مــارس</td>
+                    <th>3</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_4_da2en }}</td>
+                    <td>{{ final_4_maden }}</td>
+                    <td>إبــريل</td>
+                    <th>4</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_5_da2en }}</td>
+                    <td>{{ final_5_maden }}</td>
+                    <td>مـــايو</td>
+                    <th>5</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_6_da2en }}</td>
+                    <td>{{ final_6_maden }}</td>
+                    <td>يــونيو</td>
+                    <th>6</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_7_da2en }}</td>
+                    <td>{{ final_7_maden }}</td>
+                    <td>يــوليو</td>
+                    <th>7</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_8_da2en }}</td>
+                    <td>{{ final_8_maden }}</td>
+                    <td>أغســطس</td>
+                    <th>8</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_9_da2en }}</td>
+                    <td>{{ final_9_maden }}</td>
+                    <td>سبتمبــر</td>
+                    <th>9</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_10_da2en }}</td>
+                    <td>{{ final_10_maden }}</td>
+                    <td>أكتــوبر</td>
+                    <th>10</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_11_da2en }}</td>
+                    <td>{{ final_11_maden }}</td>
+                    <td>نوفمبــر</td>
+                    <th>11</th>
+
+                </tr>
+                <tr>
+                    <td>{{ final_12_da2en }}</td>
+                    <td>{{ final_12_maden }}</td>
+                    <td>ديسمبــر</td>
+                    <th>12</th>
+
                 </tr>
 
                 </tbody>

@@ -1089,7 +1089,137 @@ def ostaz(request):
 
 def ostaz_details(request, pk):
     current_type = get_object_or_404(Type, pk=pk)
+    pick_ostaz_form = PickOstazForm(request.POST)
+    all_current = Daily.objects.filter(type=current_type)
+    jan_maden = []
+    feb_maden = []
+    march_maden = []
+    april_maden = []
+    may_maden = []
+    june_maden = []
+    july_maden = []
+    aug_maden = []
+    sep_maden = []
+    oct_maden = []
+    nov_maden = []
+    dec_maden = []
+    jan_da2en = []
+    feb_da2en = []
+    march_da2en = []
+    april_da2en = []
+    may_da2en = []
+    june_da2en = []
+    july_da2en = []
+    aug_da2en = []
+    sep_da2en = []
+    oct_da2en = []
+    nov_da2en = []
+    dec_da2en = []
+    for item in all_current:
+        if item.date.month == 1:
+            jan_maden.append(item.total_maden)
+            jan_da2en.append(item.total_da2en)
+    final_1_maden = sum(jan_maden)
+    final_1_da2en = sum(jan_da2en)
+    for item in all_current:
+        if item.date.month == 2:
+            feb_maden.append(item.total_maden)
+            feb_da2en.append(item.total_da2en)
+    final_2_maden = sum(feb_maden)
+    final_2_da2en = sum(feb_da2en)
+    for item in all_current:
+        if item.date.month == 3:
+            march_maden.append(item.total_maden)
+            march_da2en.append(item.total_da2en)
+    final_3_maden = sum(march_maden)
+    final_3_da2en = sum(march_da2en)
+    for item in all_current:
+        if item.date.month == 4:
+            april_maden.append(item.total_maden)
+            april_da2en.append(item.total_da2en)
+    final_4_maden = sum(april_maden)
+    final_4_da2en = sum(april_da2en)
+    for item in all_current:
+        if item.date.month == 5:
+            may_maden.append(item.total_maden)
+            may_da2en.append(item.total_da2en)
+    final_5_maden = sum(may_maden)
+    final_5_da2en = sum(may_da2en)
+    for item in all_current:
+        if item.date.month == 6:
+            june_maden.append(item.total_maden)
+            june_da2en.append(item.total_da2en)
+    final_6_maden = sum(june_maden)
+    final_6_da2en = sum(june_da2en)
+    for item in all_current:
+        if item.date.month == 7:
+            july_maden.append(item.total_maden)
+            july_da2en.append(item.total_da2en)
+    final_7_maden = sum(july_maden)
+    final_7_da2en = sum(july_da2en)
+    for item in all_current:
+        if item.date.month == 8:
+            aug_maden.append(item.total_maden)
+            aug_da2en.append(item.total_da2en)
+    final_8_maden = sum(aug_maden)
+    final_8_da2en = sum(aug_da2en)
+    for item in all_current:
+        if item.date.month == 9:
+            sep_maden.append(item.total_maden)
+            sep_da2en.append(item.total_da2en)
+    final_9_maden = sum(sep_maden)
+    final_9_da2en = sum(sep_da2en)
+    for item in all_current:
+        if item.date.month == 10:
+            oct_maden.append(item.total_maden)
+            oct_da2en.append(item.total_da2en)
+    final_10_maden = sum(oct_maden)
+    final_10_da2en = sum(oct_da2en)
+    for item in all_current:
+        if item.date.month == 11:
+            nov_maden.append(item.total_maden)
+            nov_da2en.append(item.total_da2en)
+    final_11_maden = sum(nov_maden)
+    final_11_da2en = sum(nov_da2en)
+    for item in all_current:
+        if item.date.month == 12:
+            dec_maden.append(item.total_maden)
+            dec_da2en.append(item.total_da2en)
+    final_12_maden = sum(dec_maden)
+    final_12_da2en = sum(dec_da2en)
+    if request.method == 'POST':
+        if pick_ostaz_form.is_valid():
+            current_type = pick_ostaz_form.cleaned_data['type']
+            return redirect('ostaz_details', pk=current_type.pk)
+    else:
+        pick_ostaz_form = PickOstazForm()
     context = {
         'current_type': current_type,
+        'pick_ostaz_form': pick_ostaz_form,
+        'all_current': all_current,
+        'final_1_maden': final_1_maden,
+        'final_2_maden': final_2_maden,
+        'final_3_maden': final_3_maden,
+        'final_4_maden': final_4_maden,
+        'final_5_maden': final_5_maden,
+        'final_6_maden': final_6_maden,
+        'final_7_maden': final_7_maden,
+        'final_8_maden': final_8_maden,
+        'final_9_maden': final_9_maden,
+        'final_10_maden': final_10_maden,
+        'final_11_maden': final_11_maden,
+        'final_12_maden': final_12_maden,
+        'final_1_da2en': final_1_da2en,
+        'final_2_da2en': final_2_da2en,
+        'final_3_da2en': final_3_da2en,
+        'final_4_da2en': final_4_da2en,
+        'final_5_da2en': final_5_da2en,
+        'final_6_da2en': final_6_da2en,
+        'final_7_da2en': final_7_da2en,
+        'final_8_da2en': final_8_da2en,
+        'final_9_da2en': final_9_da2en,
+        'final_10_da2en': final_10_da2en,
+        'final_11_da2en': final_11_da2en,
+        'final_12_da2en': final_12_da2en,
     }
     return render(request, 'ostaz_details.html', context)

@@ -277,7 +277,7 @@ class ManagmentCosts(models.Model):
 class Type(models.Model):
     type_name = models.CharField(max_length=80)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.type_name
 
 
@@ -285,7 +285,7 @@ class Category(models.Model):
     category_name = models.CharField(max_length=80)
     type = models.ForeignKey(Type, on_delete=CASCADE)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.category_name
 
 

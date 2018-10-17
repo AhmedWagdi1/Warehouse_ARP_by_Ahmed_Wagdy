@@ -289,7 +289,7 @@ class AddDailyForm(forms.ModelForm):
 
 
 class PickOstazForm(forms.Form):
-    type = forms.ModelChoiceField(queryset=Type.objects.all(),
+    category = forms.ModelChoiceField(queryset=Category.objects.all(),
                                   widget=forms.Select(
                                       attrs={
                                           'max-width': '650px;'

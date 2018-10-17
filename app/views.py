@@ -11,7 +11,7 @@ from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, Ad
     FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm, MainMangCosts, \
     MainWorkCosts, AddDailyForm, PickOstazForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
-    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts, Daily, Type
+    MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts, Daily, Type, Category
 from datetime import date, datetime
 
 
@@ -1077,7 +1077,7 @@ def ostaz(request):
     pick_ostaz_form = PickOstazForm(request.POST)
     if request.method == 'POST':
         if pick_ostaz_form.is_valid():
-            current_type = pick_ostaz_form.cleaned_data['type']
+            current_type = pick_ostaz_form.cleaned_data['category']
             return redirect('ostaz_details', pk=current_type.pk)
     else:
         pick_ostaz_form = PickOstazForm()
@@ -1088,9 +1088,9 @@ def ostaz(request):
 
 
 def ostaz_details(request, pk):
-    current_type = get_object_or_404(Type, pk=pk)
+    current_category = get_object_or_404(Category, pk=pk)
     pick_ostaz_form = PickOstazForm(request.POST)
-    all_current = Daily.objects.filter(type=current_type)
+    all_current = Daily.objects.filter(category=current_category)
     jan_maden = []
     feb_maden = []
     march_maden = []
@@ -1189,12 +1189,12 @@ def ostaz_details(request, pk):
     final_12_da2en = sum(dec_da2en)
     if request.method == 'POST':
         if pick_ostaz_form.is_valid():
-            current_type = pick_ostaz_form.cleaned_data['type']
-            return redirect('ostaz_details', pk=current_type.pk)
+            current_category = pick_ostaz_form.cleaned_data['category']
+            return redirect('ostaz_details', pk=current_category.pk)
     else:
         pick_ostaz_form = PickOstazForm()
     context = {
-        'current_type': current_type,
+        'current_category': current_category,
         'pick_ostaz_form': pick_ostaz_form,
         'all_current': all_current,
         'final_1_maden': final_1_maden,

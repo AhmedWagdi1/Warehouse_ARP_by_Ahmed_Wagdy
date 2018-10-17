@@ -52,11 +52,13 @@
                     window.onload = totals();
                     function totals() {
                         var maden_maga = document.getElementById('maden_maga');
+                        alert(maden_maga);
                         var da2en_maga = document.getElementById('da2en_maga');
+                        alert(da2en_maga);
                         var maden_ars = document.getElementById('maden_ars');
                         var da2en_ars = document.getElementById('da2en_ars');
                         if (maden_maga > da2en_maga) {
-                        maden_ars.innerText = maden_maga.innerText -da2en_maga.innerText
+                        maden_ars.innerText = maden_maga.innerText - da2en_maga.innerText;
                     }
                     }
                     </script>

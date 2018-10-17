@@ -1226,7 +1226,8 @@ def ostaz_details(request, pk):
 
 
 def mezan(request):
-    all_daily = Daily.objects.all().distinct('category')
+    from django.db.models import Count
+    all_daily = Daily.objects.all().distinct('category').annotate(Count('category'))
     context = {
         'all_daily':all_daily,
     }

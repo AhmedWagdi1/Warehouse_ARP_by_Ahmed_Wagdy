@@ -1227,7 +1227,7 @@ def ostaz_details(request, pk):
 
 
 def mezan(request):
-    all_daily = Daily.objects.values('category').annotate(Sum('total_maden', 'total_da2en'))
+    all_daily = Daily.objects.values('category').annotate(all_maden=Sum('total_maden')).annotate(all_da2en=Sum('total_da2en'))
     context = {
         'all_daily':all_daily,
     }

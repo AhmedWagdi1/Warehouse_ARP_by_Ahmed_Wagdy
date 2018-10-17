@@ -10,7 +10,7 @@ from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
     FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm, MainMangCosts, \
-    MainWorkCosts, AddDailyForm, PickOstazForm
+    MainWorkCosts, AddDailyForm, PickOstazForm, AddCategoryForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
     MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts, Daily, Type, Category
 from datetime import date, datetime
@@ -1237,7 +1237,27 @@ def mezan(request):
 
 def add_tawseef(request):
     all_cats = Category.objects.all()
+    add_category_form = AddCategoryForm(request.POST)
+    if request.method == 'POST':
+        if add_category_form.is_valid():
+            add_category_form.save()
+            return redirect('add_tawseef')
+    else:
+        add_category_form = AddCategoryForm()
     context = {
         'all_cats': all_cats,
+        'add_category_form': add_category_form,
     }
     return render(request, 'add_tawseef.html', context)
+
+
+def delete_tawseef(request, pk):
+    current_tawseef = get_object_or_404(Category, pk=pk)
+    current_tawseef.delete()
+    return redirect('add_tawseef')
+
+
+class TawseefUpdate(UpdateView):
+    model = Category
+    fields = ['category_name', 'type']
+    template_name_suffix = '_update_form'

@@ -289,6 +289,10 @@ class Category(models.Model):
         return self.category_name
 
 
+    def get_absolute_url(self):
+        return reverse('add_tawseef')
+
+
 class Daily(models.Model):
     date = models.DateTimeField(auto_now=True)
     text = models.CharField(max_length=80)

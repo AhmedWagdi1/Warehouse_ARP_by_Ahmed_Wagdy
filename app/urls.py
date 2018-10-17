@@ -76,6 +76,9 @@ urlpatterns = [
                   url(r'ostaz/(?P<pk>[0-9]+)/$', views.ostaz_details, name="ostaz_details"),
                   url(r'mezan/', views.mezan, name="mezan"),
                   url(r'add/tawseef/', views.add_tawseef, name="add_tawseef"),
+                  url(r'delete/tawseef/(?P<pk>[0-9]+)/$', views.delete_tawseef, name="delete_tawseef"),
+                  url(r'^tawseef/update/(?P<pk>[0-9]+)/', views.TawseefUpdate.as_view(), name="tawseef_update"),
+
                   # invoices
                   url(r'^invoices/sell/(?P<pk>[0-9]+)/$', views.invoices_sell, name="invoices_sell"),
                   url(r'^invoices/buy/(?P<pk>[0-9]+)/$', views.invoices_buy, name="invoices_buy"),

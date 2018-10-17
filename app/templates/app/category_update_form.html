@@ -16,14 +16,14 @@
         <div class="">
             <div class="page-title">
                 <div class="title_right" align="right">
-                    <h3> إضافة توصيف <span class="fa fa-plus"></span></h3>
+                    <h3> تعديل توصيف <span class="fa fa-plus"></span></h3>
                     <Br>
                     <form method="post">{% csrf_token %}
-                        {{ add_category_form.category_name }} <b>إسم التوصيف</b>
+                        {{ form.category_name }} <b>إسم التوصيف</b>
                         <br>
-                        {{ add_category_form.type }} <b>الشجرة المحاسبية</b>
+                        {{ form.type }} <b>الشجرة المحاسبية</b>
                         <br>
-                        <button class="btn btn-primary">إضافة</button>
+                        <button class="btn btn-primary">تعديل</button>
                     </form>
                 </div>
 
@@ -31,32 +31,6 @@
 
             <div class="clearfix"></div>
 
-            <table id="" class="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th>تعديل/مسح</th>
-                    <th>الشجرة المحاسبية</th>
-                    <th>إسم التوصيف</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                {% for item in all_cats %}
-                    <tr>
-                        <td>
-                            <a href="{% url 'delete_tawseef' item.pk %}">
-                                <button class="btn btn-danger">مسح</button>
-                            </a>
-                            <a href="{% url 'tawseef_update' item.pk%}">
-                            <button class="btn btn-primary">تعديل</button>
-                                </a>
-                        </td>
-                        <td>{{ item.type }}</td>
-                        <td>{{ item.category_name }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
         </div>
 
     </div>

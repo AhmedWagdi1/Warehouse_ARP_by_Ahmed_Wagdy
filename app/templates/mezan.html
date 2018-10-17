@@ -42,8 +42,8 @@
                 <tbody>
                 {% for item in all_daily %}
                     <tr>
-                        <td id="da2en_ars">قم بإختيار الحساب</td>
-                        <td id="maden_ars">قم بإختيار الحساب</td>
+                        <td id="da2en_ars"></td>
+                        <td id="maden_ars"></td>
                         <td>{{ item.category__category_name }}</td>
                         <td id="da2en_maga">{{ item.all_da2en }}</td>
                         <td id ="maden_maga">{{ item.all_maden }}</td>
@@ -57,7 +57,7 @@
                         var maden_ars = document.getElementById('maden_ars');
                         var da2en_ars = document.getElementById('da2en_ars');
                         if (maden_maga > da2en_maga) {
-                        maden_ars.innerText = maden_maga.innerText - da2en_maga.innerText;
+                        maden_ars.innerHTML = maden_maga.innerHTML - da2en_maga.innerHTML;
                     }
                     }
                     window.addEventListener('load', totals);

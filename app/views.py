@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
@@ -1226,8 +1227,7 @@ def ostaz_details(request, pk):
 
 
 def mezan(request):
-    from django.db.models import Count
-    all_daily = Daily.objects.all().distinct('category').annotate(Count('total_maden', 'total_da2en'))
+    all_daily = Daily.objects.values('category').annotate(Sum('total_maden', 'total_da2en'))
     context = {
         'all_daily':all_daily,
     }

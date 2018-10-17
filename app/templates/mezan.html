@@ -41,14 +41,14 @@
 
                 <tbody>
                 {% for item in all_daily %}
-                <tr>
-                    <td>قم بإختيار الحساب</td>
-                    <td>قم بإختيار الحساب</td>
-                    <td>{{ item.category }}</td>
-                    <td>{{ item.total_da2en }}</td>
-                    <td>{{ item.total_maden }}</td>
-                </tr>
-{% endfor %}
+                    <tr>
+                        <td>قم بإختيار الحساب</td>
+                        <td>قم بإختيار الحساب</td>
+                        <td>{{ item.category.category_name }}</td>
+                        <td>{{ item.all_da2en }}</td>
+                        <td>{{ item.all_maden }}</td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>

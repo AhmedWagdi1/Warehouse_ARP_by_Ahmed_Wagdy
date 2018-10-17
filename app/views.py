@@ -1227,8 +1227,17 @@ def ostaz_details(request, pk):
 
 
 def mezan(request):
-    all_daily = Daily.objects.values('category__category_name').annotate(all_maden=Sum('total_maden')).annotate(all_da2en=Sum('total_da2en'))
+    all_daily = Daily.objects.values('category__category_name').annotate(all_maden=Sum('total_maden')).annotate(
+        all_da2en=Sum('total_da2en'))
     context = {
-        'all_daily':all_daily,
+        'all_daily': all_daily,
     }
     return render(request, 'mezan.html', context)
+
+
+def add_tawseef(request):
+    all_cats = Category.objects.all()
+    context = {
+        'all_cats': all_cats,
+    }
+    return render(request, 'add_tawseef.html', context)

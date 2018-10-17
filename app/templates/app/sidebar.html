@@ -56,16 +56,17 @@
                         <li><a href="{% url 'product' %}">الاصناف</a></li>
                     </ul>
                 </li>
-                <li><a><i class="fa fa-money"></i> الحسابات  <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-money"></i> الحسابات <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{% url 'finance_daily' %}">القيود اليومية</a></li>
                         <li><a href="{% url 'ostaz' %}">حساب الاستاذ</a></li>
                         <li><a href="{% url 'mezan' %}">ميزان المراجعة</a></li>
-                                            <h2 align="right">إضافة توصيف <span class="fa fa-plus"></span></h2>
+                        <a href="{% url 'add_tawseef' %}"><h2 align="right">إضافة توصيف <span class="fa fa-plus"></span>
+                        </h2></a>
 
                     </ul>
                 </li>
-            <!-- old finance
+                <!-- old finance
                 <li><a><i class="fa fa-money"></i> الحسابات <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{% url 'add_work_cost' %}"> + مصروفات صناعية و تشغيلية </a></li>

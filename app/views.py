@@ -1223,3 +1223,120 @@ def ostaz_details(request, pk):
         'final_12_da2en': final_12_da2en,
     }
     return render(request, 'ostaz_details.html', context)
+
+
+def mezan(request):
+    all_daily = Daily.objects.all()
+    cat_1_maden = []
+    cat_1_da2en = []
+    cat_2_maden = []
+    cat_2_da2en = []
+    cat_3_maden = []
+    cat_3_da2en = []
+    cat_4_maden = []
+    cat_4_da2en = []
+    cat_5_maden = []
+    cat_5_da2en = []
+    cat_6_maden = []
+    cat_6_da2en = []
+    cat_7_maden = []
+    cat_7_da2en = []
+    cat_8_maden = []
+    cat_8_da2en = []
+    cat_9_maden = []
+    cat_9_da2en = []
+    cat_10_maden = []
+    cat_10_da2en = []
+    for daily in all_daily:
+        cat = Category.objects.get(id=1)
+        if daily.category == cat:
+            cat_1_maden.append(daily.total_maden)
+            cat_1_da2en.append(daily.total_da2en)
+    final_cat_1_maden = sum(cat_1_maden)
+    final_cat_1_da2en = sum(cat_4_da2en)
+    for daily in all_daily:
+        cat = Category.objects.get(id=2)
+        if daily.category == cat:
+            cat_2_maden.append(daily.total_maden)
+            cat_2_da2en.append(daily.total_da2en)
+    final_cat_2_maden = sum(cat_2_maden)
+    final_cat_2_da2en = sum(cat_2_da2en)
+    for daily in all_daily:
+        cat = Category.objects.get(id=3)
+        if daily.category == cat:
+            cat_3_maden.append(daily.total_maden)
+            cat_3_da2en.append(daily.total_da2en)
+    final_cat_3_maden = sum(cat_3_maden)
+    final_cat_3_da2en = sum(cat_3_da2en)
+    for daily in all_daily:
+        cat = Category.objects.get(id=4)
+        if daily.category == cat:
+            cat_4_maden.append(daily.total_maden)
+            cat_4_da2en.append(daily.total_da2en)
+    final_cat_4_maden = sum(cat_4_maden)
+    final_cat_4_da2en = sum(cat_4_da2en)
+    for daily in all_daily:
+        cat = Category.objects.get(id=5)
+        if daily.category == cat:
+            cat_5_maden.append(daily.total_maden)
+            cat_5_da2en.append(daily.total_da2en)
+    final_cat_5_maden = sum(cat_5_maden)
+    final_cat_5_da2en = sum(cat_5_da2en)
+    for daily in all_daily:
+        cat = Category.objects.get(id=6)
+        if daily.category == cat:
+            cat_6_maden.append(daily.total_maden)
+            cat_6_da2en.append(daily.total_da2en)
+    final_cat_6_maden = sum(cat_6_maden)
+    final_cat_6_da2en = sum(cat_6_da2en)
+    for daily in all_daily:
+        cat = Category.objects.get(id=7)
+        if daily.category == cat:
+            cat_7_maden.append(daily.total_maden)
+            cat_7_da2en.append(daily.total_da2en)
+    final_cat_7_maden = sum(cat_7_maden)
+    final_cat_7_da2en = sum(cat_7_da2en)
+    for daily in all_daily:
+        cat = Category.objects.get(id=8)
+        if daily.category == cat:
+            cat_8_maden.append(daily.total_maden)
+            cat_8_da2en.append(daily.total_da2en)
+    final_cat_8_maden = sum(cat_8_maden)
+    final_cat_8_da2en = sum(cat_8_da2en)
+    for daily in all_daily:
+        cat = Category.objects.get(id=9)
+        if daily.category == cat:
+            cat_9_maden.append(daily.total_maden)
+            cat_9_da2en.append(daily.total_da2en)
+    final_cat_9_maden = sum(cat_9_maden)
+    final_cat_9_da2en = sum(cat_9_da2en)
+    for daily in all_daily:
+        cat = Category.objects.get(id=10)
+        if daily.category == cat:
+            cat_10_maden.append(daily.total_maden)
+            cat_10_da2en.append(daily.total_da2en)
+    final_cat_10_maden = sum(cat_10_maden)
+    final_cat_10_da2en = sum(cat_10_da2en)
+    context = {
+        'final_cat_1_maden':final_cat_1_maden,
+        'final_cat_1_da2en':final_cat_1_da2en,
+        'final_cat_2_maden':final_cat_2_maden,
+        'final_cat_2_da2en':final_cat_2_da2en,
+        'final_cat_3_maden':final_cat_3_maden,
+        'final_cat_3_da2en':final_cat_3_da2en,
+        'final_cat_4_maden':final_cat_4_maden,
+        'final_cat_4_da2en':final_cat_4_da2en,
+        'final_cat_5_maden':final_cat_5_maden,
+        'final_cat_5_da2en':final_cat_5_da2en,
+        'final_cat_6_maden':final_cat_6_maden,
+        'final_cat_6_da2en':final_cat_6_da2en,
+        'final_cat_7_maden':final_cat_7_maden,
+        'final_cat_7_da2en':final_cat_7_da2en,
+        'final_cat_8_maden':final_cat_8_maden,
+        'final_cat_8_da2en':final_cat_8_da2en,
+        'final_cat_9_maden':final_cat_9_maden,
+        'final_cat_9_da2en':final_cat_9_da2en,
+        'final_cat_10_maden':final_cat_10_maden,
+        'final_cat_10_da2en':final_cat_10_da2en,
+    }
+    return render(request, 'mezan.html', context)

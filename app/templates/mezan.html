@@ -42,25 +42,23 @@
                 <tbody>
                 {% for item in all_daily %}
                     <tr>
-                        <td id="da2en_ars"></td>
-                        <td id="maden_ars"></td>
+                        <td id="da2en_ars_{{ item.id }}"></td>
+                        <td id="maden_ars_{{ item.id }}"></td>
                         <td>{{ item.category__category_name }}</td>
-                        <td id="da2en_maga">{{ item.all_da2en }}</td>
-                        <td id ="maden_maga">{{ item.all_maden }}</td>
+                        <td id="da2en_maga_{{ item.id }}">{{ item.all_da2en }}</td>
+                        <td id ="maden_maga_{{ item.id }}">{{ item.all_maden }}</td>
                     </tr>
                     <script>
-                    function totals() {
-                        var maden_maga = document.getElementById('maden_maga').innerHTML;
+                    function totals_{{ item.id }}() {
+                        var maden_maga = document.getElementById('maden_maga_{{ item.id }}').innerHTML;
                         alert(maden_maga);
-                        var da2en_maga = document.getElementById('da2en_maga').innerHTML;
+                        var da2en_maga = document.getElementById('da2en_maga_{{ item.id }}').innerHTML;
                         alert(da2en_maga);
-                        var maden_ars = document.getElementById('maden_ars');
-                        var da2en_ars = document.getElementById('da2en_ars');
-                        if (maden_maga.innerHTML > da2en_maga.innerHTML) {
-                        maden_ars.innerHTML = maden_maga.innerHTML - da2en_maga.innerHTML;
+                        var maden_ars = document.getElementById('maden_ars_{{ item.id }}');
+                        var da2en_ars = document.getElementById('da2en_ars_{{ item.id }}');
                     }
                     }
-                    window.addEventListener('load', totals);
+                    window.addEventListener('load', totals_{{ item.id }});
                     </script>
                 {% endfor %}
                 </tbody>

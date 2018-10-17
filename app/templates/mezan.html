@@ -49,7 +49,6 @@
                         <td id ="maden_maga">{{ item.all_maden }}</td>
                     </tr>
                     <script>
-                    window.onload = totals();
                     function totals() {
                         var maden_maga = document.getElementById('maden_maga');
                         alert(maden_maga);
@@ -61,6 +60,7 @@
                         maden_ars.innerText = maden_maga.innerText - da2en_maga.innerText;
                     }
                     }
+                    window.onload = totals;
                     </script>
                 {% endfor %}
                 </tbody>

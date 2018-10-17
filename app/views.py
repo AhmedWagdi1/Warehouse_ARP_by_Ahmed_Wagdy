@@ -1248,12 +1248,13 @@ def mezan(request):
     cat_10_maden = []
     cat_10_da2en = []
     for daily in all_daily:
-        cat = Category.objects.get(id=1)
-        if daily.category == cat:
+        cat_1 = Category.objects.get(id=1)
+        if daily.category == cat_1:
             cat_1_maden.append(daily.total_maden)
             cat_1_da2en.append(daily.total_da2en)
     final_cat_1_maden = sum(cat_1_maden)
     final_cat_1_da2en = sum(cat_4_da2en)
+    cat_1 = Category.objects.get(id=1)
     for daily in all_daily:
         cat = Category.objects.get(id=2)
         if daily.category == cat:
@@ -1318,6 +1319,7 @@ def mezan(request):
     final_cat_10_maden = sum(cat_10_maden)
     final_cat_10_da2en = sum(cat_10_da2en)
     context = {
+        'cat_1':cat_1,
         'final_cat_1_maden':final_cat_1_maden,
         'final_cat_1_da2en':final_cat_1_da2en,
         'final_cat_2_maden':final_cat_2_maden,

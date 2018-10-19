@@ -27,7 +27,10 @@
                 <hr>
                 <form method="post">
                     {% csrf_token %}
-                    {{ add_new_daily_form.type }}<b>الحساب</b>
+                    <h1>
+                        {{ current_type.type_name }}
+                    </h1>
+                    <button class="btn-primary">تغير الحساب</button>
                     <Br><Br>
                     {{ add_new_daily_form.category }}<b>التصنيف</b>
                     <br><br>
@@ -38,8 +41,9 @@
                     {{ add_new_daily_form.da2en }}<b>دائن</b>
                     <br><br>
                     {{ add_new_daily_form.farm }}<b>المزرعة</b>
-                   <Br><br>
-                    <button class="btn btn-success" type="submit" style="width: 300px;">موافق<span class="fa fa-check"></span></button>
+                    <Br><br>
+                    <button class="btn btn-success" type="submit" style="width: 300px;">موافق<span
+                            class="fa fa-check"></span></button>
 
                 </form>
             </div>

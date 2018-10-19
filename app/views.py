@@ -10,7 +10,7 @@ from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
     FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm, MainMangCosts, \
-    MainWorkCosts, AddDailyForm, PickOstazForm, AddCategoryForm, AddNewDailyForm
+    MainWorkCosts, AddDailyForm, PickOstazForm, AddCategoryForm, AddNewDailyForm, AddDailyOne
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
     MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts, Daily, Type, Category
 from datetime import date, datetime
@@ -1263,18 +1263,39 @@ class TawseefUpdate(UpdateView):
     template_name_suffix = '_update_form'
 
 
-def add_new_daily(request):
-    add_new_daily_form = AddNewDailyForm(request.POST)
+def add_new_daily(request, pk):
+    current_type = get_object_or_404(Type, pk=pk)
+    add_new_daily_form = AddNewDailyForm(request.POST, typz=current_type)
     if request.method == 'POST':
+        print('yes')
         if add_new_daily_form.is_valid():
+            print('ok')
             form = add_new_daily_form.save(commit=False)
             form.total_da2en = form.da2en
             form.total_maden = form.maden
+            form.type = current_type
             form.save()
+            print(form.type)
             return redirect('finance_daily')
     else:
-        add_new_daily_form = AddNewDailyForm()
+        print('no')
+        add_new_daily_form = AddNewDailyForm(typz=current_type)
     context = {
         'add_new_daily_form': add_new_daily_form,
+        'current_type': current_type,
     }
     return render(request, 'add_new_daily.html', context)
+
+
+def add_daily_one(request):
+    add_daily_one_form = AddDailyOne(request.POST)
+    if request.method == 'POST':
+        if add_daily_one_form.is_valid():
+            current_type = add_daily_one_form.cleaned_data['type']
+            return redirect('/finance/adddaily/' + str(current_type.pk) + '/')
+    else:
+        add_daily_one_form = AddDailyOne()
+    context = {
+        'add_daily_one_form': add_daily_one_form,
+    }
+    return render(request, 'add_new_daily_one.html', context)

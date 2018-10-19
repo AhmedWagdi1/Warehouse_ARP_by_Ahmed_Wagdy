@@ -305,6 +305,7 @@ class AddCategoryForm(forms.ModelForm):
 
 
 class AddNewDailyForm(forms.ModelForm):
+
     text = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -312,20 +313,13 @@ class AddNewDailyForm(forms.ModelForm):
             }
         )
     )
-    type = forms.ModelChoiceField(queryset=Type.objects.all(),
+    type = forms.ModelChoiceField(queryset=Type.objects.all(),required=False,
                                   widget=forms.Select(
                                       attrs={
                                           'style': 'width: 300px;'
                                       }
                                   )
                                   )
-    category = forms.ModelChoiceField(queryset=Category.objects.all(),
-                                      widget=forms.Select(
-                                          attrs={
-                                              'style': 'width: 300px;'
-                                          }
-                                      )
-                                      )
     maden = forms.IntegerField(
         widget=forms.NumberInput(
             attrs={
@@ -351,4 +345,26 @@ class AddNewDailyForm(forms.ModelForm):
 
     class Meta:
         model = Daily
-        fields = ['text', 'type', 'category', 'maden', 'da2en', 'farm']
+        fields = ['text', 'maden', 'da2en', 'farm', 'category']
+
+
+
+    def __init__(self, *args, **kwargs):
+        myClient = kwargs.pop("typz")  # client is the parameter passed from views.py
+        super(AddNewDailyForm, self).__init__(*args, **kwargs)
+        self.fields['category'] = forms.ModelChoiceField(queryset=Category.objects.filter(type=myClient),
+                                                         widget=forms.Select(
+                                                             attrs={
+                                                                 'style': 'width: 300px;'
+                                                             }
+                                                         ))
+
+
+
+class AddDailyOne(forms.Form):
+    type = forms.ModelChoiceField(queryset=Type.objects.all(),
+                                  widget=forms.Select(
+                                      attrs={
+                                          'style': 'width: 300px;'
+                                      }
+                                  ))

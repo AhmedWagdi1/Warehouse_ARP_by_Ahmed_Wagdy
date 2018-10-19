@@ -5,7 +5,7 @@ from django.contrib.auth import logout
 from django.conf.urls.static import static
 
 urlpatterns = [
-                  url(r'^$', views.main_center, name='index'),
+    url(r'^$', views.index, name="index"),
                   url(r'^workers/$', views.workers, name="workers"),
                   url(r'^nocomp/$', views.nocomp, name="nocomp"),
                   # company
@@ -51,26 +51,7 @@ urlpatterns = [
                   url(r'^product/(?P<pk>[0-9]+)/delete', views.product_delete, name="product_delete"),
                   url(r'^product/update/(?P<pk>[0-9]+)/', views.ProductUpdate.as_view(), name="product_update"),
                   # finance
-                  url(r'^finance/main/$', views.finance_main, name="finance_main"),
-                  url(r'^finance/main/deposite/$', views.finance_main_deposit, name="finance_main_deposit"),
-                  url(r'^finance/main/withdraw/$', views.finance_main_withdraw, name="finance_main_withdraw"),
-                  url(r'^finance/farms/(?P<pk>[0-9]+)/', views.farms_finance, name="farms_finance"),
-                  url(r'^finance/transfer/$', views.trasnfaer_farm, name="transfaer_farm"),
-                  url(r'^finance/farms/costs/(?P<pk>[0-9]+)/$', views.farm_costs, name="farm_costs"),
-                  url(r'^finance/workcosts/add/$', views.add_work_cost, name="add_work_cost"),
-                  url(r'^finance/workcosts/delete/(?P<pk>[0-9]+)/$', views.delete_work_cost, name="delete_work_cost"),
-                  url(r'^finance/mangcosts/delete/(?P<pk>[0-9]+)/$', views.delete_mang_cost, name="delete_mang_cost"),
-                  url(r'^finance/workcosts/update/(?P<pk>[0-9]+)/$', views.WorkingCostsUpdate.as_view(),
-                      name="update_work_cost"),
-                  url(r'^finance/mangcosts/update/(?P<pk>[0-9]+)/$', views.MangCostsUpdate.as_view(),
-                      name="update_work_mang"),
-                  url(r'^finance/managementcosts/add/$', views.add_mang_cost, name="add_mang_cost"),
-                  url(r'^finance/managementcosts/main/$', views.mangcosts_main_withd, name="mangcosts_main_withd"),
-                  url(r'^finance/workcosts/main/$', views.workcosts_main_withd, name="work_main_withd"),
-                  url(r'^finance/managementcosts/farm/(?P<pk>[0-9]+)/$', views.mangcosts_farm_withd,
-                      name="mangcosts_farm_withd"),
-                  url(r'^finance/workcosts/farm/(?P<pk>[0-9]+)/$', views.workcosts_farm_withd,
-                      name="workcosts_farm_withd"),
+
                   url(r'finance/daily/', views.finance_daily, name="finance_daily"),
                   url(r'finance/ostaz/', views.ostaz, name="ostaz"),
                   url(r'finance/adddaily/one', views.add_daily_one, name="add_daily_one"),
@@ -81,10 +62,5 @@ urlpatterns = [
                   url(r'delete/tawseef/(?P<pk>[0-9]+)/$', views.delete_tawseef, name="delete_tawseef"),
                   url(r'^tawseef/update/(?P<pk>[0-9]+)/', views.TawseefUpdate.as_view(), name="tawseef_update"),
 
-                  # invoices
-                  url(r'^invoices/sell/(?P<pk>[0-9]+)/$', views.invoices_sell, name="invoices_sell"),
-                  url(r'^invoices/buy/(?P<pk>[0-9]+)/$', views.invoices_buy, name="invoices_buy"),
-                  # centers
-                  url(r'^main/center/', views.main_center, name="main_center"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

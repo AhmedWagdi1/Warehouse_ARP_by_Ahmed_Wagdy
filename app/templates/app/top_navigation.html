@@ -16,13 +16,7 @@
             <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out pull-right"></i>تسجيل الخروج</a></li>
         </ul>
       </li>
-    {% if not all_farms %}
-    <div align="center">
-    <a href="{% url 'add_farm' %}">
-<button class="btn btn-warning"> بعد إضافة اسم الشركةإضغط هنا لإضافة مزرعة جديدة <span class="fa fa-question"></span> </button>
-</a>
-    </div>
-    {% endif %}
+
 
     </ul>
   </nav>

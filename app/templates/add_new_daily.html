@@ -25,12 +25,15 @@
             <div align="center">
                 إضافة قيد جديد <span class="fa fa-plus"></span>
                 <hr>
+                <h1>
+                    {{ current_type.type_name }}
+                </h1>
+                <a href="{% url 'add_daily_one' %}">
+                    <button class="btn-primary">تغير الحساب</button>
+                </a>
                 <form method="post">
                     {% csrf_token %}
-                    <h1>
-                        {{ current_type.type_name }}
-                    </h1>
-                    <button class="btn-primary">تغير الحساب</button>
+
                     <Br><Br>
                     {{ add_new_daily_form.category }}<b>التصنيف</b>
                     <br><br>

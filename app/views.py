@@ -10,7 +10,7 @@ from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, MainFinanceDepositForm, MainFinanceWithdrawForm, SellInvoiceForm, \
     FundsTransfaerForm, BuyInvoiceForm, FarmFinancemoveForm, WorkingCostsForm, ManagementCostsForm, MainMangCosts, \
-    MainWorkCosts, AddDailyForm, PickOstazForm, AddCategoryForm
+    MainWorkCosts, AddDailyForm, PickOstazForm, AddCategoryForm, AddNewDailyForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, MainFinanceMovement, \
     MainFinance, Balance, FarmFinancemove, SellInvoice, BuyInvoice, WorkingCosts, ManagmentCosts, Daily, Type, Category
 from datetime import date, datetime
@@ -1261,3 +1261,20 @@ class TawseefUpdate(UpdateView):
     model = Category
     fields = ['category_name', 'type']
     template_name_suffix = '_update_form'
+
+
+def add_new_daily(request):
+    add_new_daily_form = AddNewDailyForm(request.POST)
+    if request.method == 'POST':
+        if add_new_daily_form.is_valid():
+            form = add_new_daily_form.save(commit=False)
+            form.total_da2en = form.da2en
+            form.total_maden = form.maden
+            form.save()
+            return redirect('finance_daily')
+    else:
+        add_new_daily_form = AddNewDailyForm()
+    context = {
+        'add_new_daily_form': add_new_daily_form,
+    }
+    return render(request, 'add_new_daily.html', context)

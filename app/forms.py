@@ -302,3 +302,53 @@ class AddCategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['category_name', 'type']
+
+
+class AddNewDailyForm(forms.ModelForm):
+    text = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'style': 'width: 300px;'
+            }
+        )
+    )
+    type = forms.ModelChoiceField(queryset=Type.objects.all(),
+                                  widget=forms.Select(
+                                      attrs={
+                                          'style': 'width: 300px;'
+                                      }
+                                  )
+                                  )
+    category = forms.ModelChoiceField(queryset=Category.objects.all(),
+                                      widget=forms.Select(
+                                          attrs={
+                                              'style': 'width: 300px;'
+                                          }
+                                      )
+                                      )
+    maden = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                'style': 'width: 300px;'
+            }
+        )
+    )
+    da2en = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                'style': 'width: 300px;'
+            }
+        )
+    )
+
+    farm = forms.ModelChoiceField(queryset=Farm.objects.all(),
+                                  widget=forms.Select(
+                                      attrs={
+                                          'style': 'width: 300px;'
+                                      }
+                                  )
+                                  )
+
+    class Meta:
+        model = Daily
+        fields = ['text', 'type', 'category', 'maden', 'da2en', 'farm']

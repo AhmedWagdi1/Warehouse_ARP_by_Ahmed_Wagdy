@@ -23,44 +23,26 @@
 
             <div class="clearfix"></div>
             <div align="center">
-                <a href="{% url 'add_new_daily' %}">
-                    <button class="btn btn-primary">إضافة قيد جديد <span class="fa fa-plus"></span></button>
-                </a>
+                إضافة قيد جديد <span class="fa fa-plus"></span>
+                <hr>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ add_new_daily_form.type }}<b>الحساب</b>
+                    <Br><Br>
+                    {{ add_new_daily_form.category }}<b>التصنيف</b>
+                    <br><br>
+                    {{ add_new_daily_form.text }}<b>البيـان</b>
+                    <br><br>
+                    {{ add_new_daily_form.maden }}<b>مدين</b>
+                    <br><br>
+                    {{ add_new_daily_form.da2en }}<b>دائن</b>
+                    <br><br>
+                    {{ add_new_daily_form.farm }}<b>المزرعة</b>
+                   <Br><br>
+                    <button class="btn btn-success" type="submit" style="width: 300px;">موافق<span class="fa fa-check"></span></button>
+
+                </form>
             </div>
-            <table id="datatable" class="table table-striped table-bordered" dir="rtl">
-                <thead dir="rtl" align="right">
-                <tr>
-                    <th>التاريح</th>
-                    <th>البيان</th>
-                    <th>إجمالى مدين</th>
-
-                    <th>إجمالى دائن</th>
-                    <th>الحساب</th>
-                    <th>الفئة</th>
-                    <th>مدين</th>
-                    <th>دائن</th>
-                    <th>المزرعة</th>
-                </tr>
-                </thead>
-
-
-                <tbody>
-                {% for input in all_daily %}
-                    <tr>
-                        <td>{{ input.date }}</td>
-                        <td>{{ input.text }} </td>
-                        <td>{{ input.total_maden }}</td>
-                        <td>{{ input.total_da2en }}</td>
-                        <td>{{ input.type.type_name }}</td>
-                        <td>{{ input.category.category_name }}</td>
-                        <td>{{ input.maden }}</td>
-                        <td>{{ input.da2en }}</td>
-                        <td>{{ input.farm.farm_name }}</td>
-                    </tr>
-                {% endfor %}
-
-                </tbody>
-            </table>
         </div>
 
     </div>

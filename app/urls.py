@@ -73,6 +73,7 @@ urlpatterns = [
                       name="workcosts_farm_withd"),
                   url(r'finance/daily/', views.finance_daily, name="finance_daily"),
                   url(r'finance/ostaz/', views.ostaz, name="ostaz"),
+                  url(r'finance/adddaily/', views.add_new_daily, name="add_new_daily"),
                   url(r'ostaz/(?P<pk>[0-9]+)/$', views.ostaz_details, name="ostaz_details"),
                   url(r'mezan/', views.mezan, name="mezan"),
                   url(r'add/tawseef/', views.add_tawseef, name="add_tawseef"),

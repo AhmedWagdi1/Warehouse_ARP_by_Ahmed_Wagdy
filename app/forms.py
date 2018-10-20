@@ -2,7 +2,7 @@
 from django import forms
 
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, Daily, Type, Category, \
-    BuyInvoice
+    BuyInvoice, SellInvoice
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -187,3 +187,9 @@ class AddBuyInvoice(forms.ModelForm):
     class Meta:
         model = BuyInvoice
         fields = ['supplier', 'product', 'quantity', 'price', 'category', 'farm']
+
+
+class AddSellInvoice(forms.ModelForm):
+    class Meta:
+        model = SellInvoice
+        fields = ['client', 'product', 'quantity', 'price', 'category', 'farm']

@@ -15,7 +15,7 @@ from datetime import date, datetime
 
 
 def index(request):
-    return render(request, 'app/index2.html')
+    return render(request, 'app/add_farm.html')
 
 
 @login_required

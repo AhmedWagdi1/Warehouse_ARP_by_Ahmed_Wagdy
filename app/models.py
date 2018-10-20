@@ -128,3 +128,4 @@ class Daily(models.Model):
     maden = models.IntegerField(default=0)
     da2en = models.IntegerField(default=0)
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
+    is_invoice = models.BooleanField(default=False)

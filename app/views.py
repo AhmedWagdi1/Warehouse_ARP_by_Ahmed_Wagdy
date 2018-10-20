@@ -635,9 +635,15 @@ def safes(request, pk):
     current_farm = Farm.objects.get(farm_name=current_safe.farm.farm_name)
     balance = current_safe.balance
     farm_daily = Daily.objects.filter(farm=current_farm)
+    all_costs = []
+    for item in farm_daily:
+        if item.maden != 0:
+            all_costs.append(item.maden)
+    final_costs = sum(all_costs)
     context = {
         'current_safe': current_safe,
         'balance': balance,
         'farm_daily': farm_daily,
+        'final_costs':final_costs,
     }
     return render(request, 'safes.html', context)

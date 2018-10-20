@@ -69,6 +69,7 @@ TEMPLATES = [
                 'gentelella.context_processors.include_job',
                 'gentelella.context_processors.include_current_time',
                 'gentelella.context_processors.include_farm_no_company',
+                'gentelella.context_processors.include_balances',
 
             ],
         },

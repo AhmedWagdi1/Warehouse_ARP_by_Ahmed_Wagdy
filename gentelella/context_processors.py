@@ -1,6 +1,6 @@
 import datetime
 
-from app.models import Company, Farm, Job
+from app.models import Company, Farm, Job, Balance
 
 
 def include_company(request):
@@ -44,5 +44,13 @@ def include_farm_no_company(request):
     all_farms_no_company = Farm.objects.all()[1:]
     context = {
         'all_farms_no_company': all_farms_no_company,
+    }
+    return (context)
+
+
+def include_balances(request):
+    all_balance = Balance.objects.all()
+    context = {
+        'all_balance': all_balance,
     }
     return (context)

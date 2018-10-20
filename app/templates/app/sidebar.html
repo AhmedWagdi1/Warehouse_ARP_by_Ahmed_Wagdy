@@ -61,10 +61,12 @@
                         <li><a href="{% url 'finance_daily' %}">القيود اليومية</a></li>
                         <li><a href="{% url 'ostaz' %}">حساب الاستاذ</a></li>
                         <li><a href="{% url 'mezan' %}">ميزان المراجعة</a></li>
-                        <a href="{% url 'add_tawseef' %}"><h2 align="right">إضافة توصيف <span class="fa fa-plus"></span>
-                        </h2></a>
-                        <li><a href="#">الخزينة الرئيسية</a></li>
-
+                        <li><a href="{% url 'add_tawseef' %}">إضافة توصيف<span class="fa fa-plus"> </a></li>
+                       <hr>
+                        <h2 align="center">الخزن </h2>
+                        {% for item in all_balance %}
+                            <li><a href="{% url 'safes' item.pk %}">{{ item.farm.farm_name }}</a></li>
+                        {% endfor %}
                     </ul>
                 </li>
                 <!--

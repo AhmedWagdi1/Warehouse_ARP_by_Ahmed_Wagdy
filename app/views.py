@@ -588,18 +588,26 @@ def add_new_daily(request, pk):
     current_type = get_object_or_404(Type, pk=pk)
     add_new_daily_form = AddNewDailyForm(request.POST, typz=current_type)
     if request.method == 'POST':
-        print('yes')
         if add_new_daily_form.is_valid():
-            print('ok')
             form = add_new_daily_form.save(commit=False)
             form.total_da2en = form.da2en
             form.total_maden = form.maden
             form.type = current_type
             form.save()
-            print(form.type)
+            current_farm = form.farm
+            current_balance = Balance.objects.get(farm=current_farm)
+            if form.maden != 0:
+                added_balance = form.maden
+                new_balance = int(current_balance.balance) - int(added_balance)
+                current_balance.balance = new_balance
+                current_balance.save()
+            if form.da2en != 0:
+                added_balance = form.da2en
+                new_balance = int(current_balance.balance) + int(added_balance)
+                current_balance.balance = new_balance
+                current_balance.save()
             return redirect('finance_daily')
     else:
-        print('no')
         add_new_daily_form = AddNewDailyForm(typz=current_type)
     context = {
         'add_new_daily_form': add_new_daily_form,
@@ -620,3 +628,16 @@ def add_daily_one(request):
         'add_daily_one_form': add_daily_one_form,
     }
     return render(request, 'add_new_daily_one.html', context)
+
+
+def safes(request, pk):
+    current_safe = get_object_or_404(Balance, pk=pk)
+    current_farm = Farm.objects.get(farm_name=current_safe.farm.farm_name)
+    balance = current_safe.balance
+    farm_daily = Daily.objects.filter(farm=current_farm)
+    context = {
+        'current_safe': current_safe,
+        'balance': balance,
+        'farm_daily': farm_daily,
+    }
+    return render(request, 'safes.html', context)

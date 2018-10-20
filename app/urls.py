@@ -5,7 +5,7 @@ from django.contrib.auth import logout
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^$', views.index, name="index"),
+                  url(r'^$', views.index, name="index"),
                   url(r'^workers/$', views.workers, name="workers"),
                   url(r'^nocomp/$', views.nocomp, name="nocomp"),
                   # company
@@ -51,7 +51,6 @@ urlpatterns = [
                   url(r'^product/(?P<pk>[0-9]+)/delete', views.product_delete, name="product_delete"),
                   url(r'^product/update/(?P<pk>[0-9]+)/', views.ProductUpdate.as_view(), name="product_update"),
                   # finance
-
                   url(r'finance/daily/', views.finance_daily, name="finance_daily"),
                   url(r'finance/ostaz/', views.ostaz, name="ostaz"),
                   url(r'finance/adddaily/one', views.add_daily_one, name="add_daily_one"),
@@ -61,6 +60,7 @@ urlpatterns = [
                   url(r'add/tawseef/', views.add_tawseef, name="add_tawseef"),
                   url(r'delete/tawseef/(?P<pk>[0-9]+)/$', views.delete_tawseef, name="delete_tawseef"),
                   url(r'^tawseef/update/(?P<pk>[0-9]+)/', views.TawseefUpdate.as_view(), name="tawseef_update"),
-
+                  # safes
+                  url(r'^safe/(?P<pk>[0-9]+)/', views.safes, name="safes"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

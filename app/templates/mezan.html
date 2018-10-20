@@ -46,21 +46,35 @@
                         <td id="maden_ars_{{ item.category__category_name }}"></td>
                         <td>{{ item.category__category_name }}</td>
                         <td id="da2en_maga_{{ item.category__category_name }}">{{ item.all_da2en }}</td>
-                        <td id ="maden_maga_{{ item.category__category_name }}">{{ item.all_maden }}</td>
+                        <td id="maden_maga_{{ item.category__category_name }}">{{ item.all_maden }}</td>
                     </tr>
                     <script>
-                    function totals_{{ item.category__category_name }}() {
-                        var maden_maga = document.getElementById('maden_maga_{{ item.category__category_name }}').innerHTML;
-                        alert(maden_maga);
-                        var da2en_maga = document.getElementById('da2en_maga_{{ item.category__category_name }}').innerHTML;
-                        alert(da2en_maga);
-                        var maden_ars = document.getElementById('maden_ars_{{ item.category__category_name }}');
-                        var da2en_ars = document.getElementById('da2en_ars_{{ item.category__category_name }}');
-                    }
-                    }
-                    window.addEventListener('load', totals_{{ item.category__category_name }});
+                        function totals() {
+                            var maden_maga = document.getElementById('maden_maga_{{ item.category__category_name }}').innerHTML;
+                            var da2en_maga = document.getElementById('da2en_maga_{{ item.category__category_name }}').innerHTML;
+                            var maden_ars = document.getElementById('maden_ars_{{ item.category__category_name }}');
+                            var da2en_ars = document.getElementById('da2en_ars_{{ item.category__category_name }}');
+                            if (maden_maga > da2en_maga) {
+                                var new_maden_ars = maden_maga - da2en_maga;
+                                maden_ars.innerHTML = new_maden_ars;
+                            } else {
+                                maden_ars.innerHTML = 0;
+
+                            }
+                            if (da2en_maga > maden_maga) {
+                                var new_da2en_ars = da2en_maga - maden_maga;
+                                da2en_ars.innerHTML = new_da2en_ars;
+                            } else {
+                                da2en_ars.innerHTML = 0;
+
+                            }
+                        }
                     </script>
+                    <Script>
+                        window.onload = totals();
+                    </Script>
                 {% endfor %}
+
                 </tbody>
             </table>
         </div>

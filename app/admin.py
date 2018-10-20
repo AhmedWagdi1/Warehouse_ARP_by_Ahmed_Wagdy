@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app.models import Farm, Company, Job, Worker, Warehouse, Type, Category, Daily, Balance
+from app.models import Farm, Company, Job, Worker, Warehouse, Type, Category, Daily, Balance, Supplier, Client
 
 admin.site.register(Farm)
 admin.site.register(Company)
@@ -10,3 +10,5 @@ admin.site.register(Balance)
 admin.site.register(Type)
 admin.site.register(Category)
 admin.site.register(Daily)
+admin.site.register(Supplier)
+admin.site.register(Client)

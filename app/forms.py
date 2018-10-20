@@ -37,13 +37,13 @@ class AddWorkerForm(forms.ModelForm):
 class AddSupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
-        fields = ['supplier_name', 'supplier_ID_number']
+        fields = ['supplier_name', 'supplier_ID_number', 'supplier_mob_number']
 
 
 class AddClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = ['client_name', 'client_ID_number']
+        fields = ['client_name', 'client_ID_number', 'client_mobile_number']
 
 
 class AddProductForm(forms.ModelForm):

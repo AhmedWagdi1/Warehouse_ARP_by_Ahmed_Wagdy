@@ -10,6 +10,7 @@
           </div>
 <div align="center">
     <b>إسم المورد : {{ current_supply.supplier_name }}</b><br><br>
+    <b>رقم الموبايل : {{ current_supply.supplier_mob_number }}</b><br><br>
     <b>الرقم القومى : {{ current_supply.supplier_ID_number }}</b><br><br>
     <a href="{% url 'supplier_update' current_supply.pk %}"><button class="btn btn-primary">تعديل</button></font></a>
       <a href="{% url 'supplier_delete' current_supply.pk%}"><button class="btn btn-danger"> مسح</button></a>

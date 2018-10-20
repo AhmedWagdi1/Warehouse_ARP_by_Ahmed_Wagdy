@@ -12,6 +12,8 @@
                     <form method="post">{% csrf_token %}
                         <b>إسم العميل</b><br>
                         {{ add_client_form.client_name }}<br>
+                        <b>رقم الموبايل </b><br>
+                        {{ add_client_form.client_mobile_number }}<br>
                         <b>الرقم الومى</b><br>
                         {{ add_client_form.client_ID_number }}<br>
 

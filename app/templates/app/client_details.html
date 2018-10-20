@@ -10,6 +10,8 @@
           </div>
 <div align="center">
     <b>{{ current_client.client_name }}</b><br><br>
+    <b>رقم الموبايل </b>
+    <b>{{ current_client.client_mobile_number }}</b><br><br>
     <b>الرقم القومى</b>
     <b>{{ current_client.client_ID_number }}</b><br><br>
        <a href="{% url 'client_update' current_client.pk %}"><button class="btn btn-primary"> تعديل</button></a>

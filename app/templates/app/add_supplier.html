@@ -12,6 +12,8 @@
     <form method="post">{% csrf_token %}
         <b>إسم المورد</b><br>
          {{ add_supplier_form.supplier_name }}<br><br>
+        <b>رقم الموبايل</b><br>
+         {{ add_supplier_form.supplier_mob_number }}<br><br>
         <b>رقم البطاقة</b><br>
         {{ add_supplier_form.supplier_ID_number }}
         <Br><Br>

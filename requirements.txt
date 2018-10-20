@@ -4,3 +4,4 @@ django-imagekit
 gunicorn
 dj-database-url
 whitenoise
+django-filter

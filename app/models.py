@@ -122,12 +122,23 @@ class Category(models.Model):
 
 class Daily(models.Model):
     date = models.DateTimeField(auto_now=True)
-    text = models.CharField(max_length=80)
-    total_da2en = models.IntegerField(default=0)
-    total_maden = models.IntegerField(default=0)
-    type = models.ForeignKey(Type, on_delete=CASCADE)
+    text = models.CharField(max_length=80)#
+    total_da2en = models.IntegerField(default=0)#
+    total_maden = models.IntegerField(default=0)#
+    type = models.ForeignKey(Type, on_delete=CASCADE)#
+    category = models.ForeignKey(Category, on_delete=CASCADE)#
+    maden = models.IntegerField(default=0)#
+    da2en = models.IntegerField(default=0)#
+    farm = models.ForeignKey(Farm, on_delete=CASCADE)#
+    is_invoice = models.BooleanField(default=False)#
+
+
+class BuyInvoice(models.Model):
+    date = models.DateField(auto_now=True)
+    supplier = models.ForeignKey(Supplier, on_delete=CASCADE)
+    product = models.ForeignKey(Product, on_delete=CASCADE)
+    quantity = models.IntegerField()
+    price = models.IntegerField()
+    total_price = models.IntegerField()
     category = models.ForeignKey(Category, on_delete=CASCADE)
-    maden = models.IntegerField(default=0)
-    da2en = models.IntegerField(default=0)
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
-    is_invoice = models.BooleanField(default=False)

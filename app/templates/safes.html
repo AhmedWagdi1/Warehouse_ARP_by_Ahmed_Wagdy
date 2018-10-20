@@ -29,7 +29,7 @@
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="tile-stats">
                         <div class="icon"><i class="fa fa-check-square-o" style="color: green;"></i></div>
-                        <div class="count">0</div>
+                        <div class="count">{{ net }}</div>
                         <br>
                         <h3 dir="rtl">صافى الربح</h3>
                         <p dir="rtl">صافى الربح {{ current_safe.farm.farm_name }}</p>
@@ -48,7 +48,7 @@
                     <div class="tile-stats">
                         <div class="icon"><i class="fa fa-list-ol" style="color: orange;"></i></div>
 
-                        <div class="count">0</div>
+                        <div class="count">{{ final_buys }}</div>
                         <br>
                         <h3 dir="rtl">إجمالى المشتريات</h3>
                         <p dir="rtl">إجمالى قيمة فواتير الشراء {{ current_safe.farm.farm_name }}</p>
@@ -57,7 +57,7 @@
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="tile-stats">
                         <div class="icon"><i class="fa fa-list-ol" style="color: #0D3349;"></i></div>
-                        <div class="count">0</div>
+                        <div class="count">{{ final_sells }}</div>
                         <br>
                         <h3 dir="rtl">إجمالى المبيعات</h3>
                         <p dir="rtl">إجمالى قيمة فواتير البيع {{ current_safe.farm.farm_name }}</p>

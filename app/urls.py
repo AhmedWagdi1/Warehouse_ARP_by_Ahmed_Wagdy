@@ -62,5 +62,7 @@ urlpatterns = [
                   url(r'^tawseef/update/(?P<pk>[0-9]+)/', views.TawseefUpdate.as_view(), name="tawseef_update"),
                   # safes
                   url(r'^safe/(?P<pk>[0-9]+)/', views.safes, name="safes"),
+                  # invoice
+                  url(r'^create/invoice/buy$', views.create_invoice_buy, name="create_buy_invoice"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, \
-    AddNewDailyForm, AddDailyOne
+    AddNewDailyForm, AddDailyOne, AddBuyInvoice
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category
 from datetime import date, datetime
 
@@ -634,16 +634,61 @@ def safes(request, pk):
     current_safe = get_object_or_404(Balance, pk=pk)
     current_farm = Farm.objects.get(farm_name=current_safe.farm.farm_name)
     balance = current_safe.balance
-    farm_daily = Daily.objects.filter(farm=current_farm)
+    farm_daily = Daily.objects.filter(farm=current_farm, is_invoice=False)
+    all_invoice = Daily.objects.filter(farm=current_farm, is_invoice=True)
+    all_buys = []
+    all_sells = []
+    for item in all_invoice:
+        if item.maden != 0:
+            all_buys.append(item.maden)
+        if item.da2en != 0:
+            all_sells.append(item.da2en)
+    final_buys = sum(all_buys)
+    final_sells = sum(all_sells)
     all_costs = []
     for item in farm_daily:
         if item.maden != 0:
             all_costs.append(item.maden)
     final_costs = sum(all_costs)
+    costs = final_costs + final_buys
+    net = final_sells - costs
+
     context = {
         'current_safe': current_safe,
         'balance': balance,
         'farm_daily': farm_daily,
-        'final_costs':final_costs,
+        'final_costs': final_costs,
+        'final_buys':final_buys,
+        'final_sells':final_sells,
+        'net':net,
     }
     return render(request, 'safes.html', context)
+
+
+def create_invoice_buy(request):
+    add_buy_invoice_form = AddBuyInvoice(request.POST)
+    if request.method == 'POST':
+        if add_buy_invoice_form.is_valid():
+            form = add_buy_invoice_form.save(commit=False)
+            total = form.quantity + form.price
+            form.total_price = total
+            form.save()
+            new_daily = Daily(text='فاتورة رقم  ' + str(form.id), total_da2en=0, total_maden=form.total_price,
+                              type=form.category.type, category=form.category, da2en=0, maden=form.total_price,
+                              farm=form.farm, is_invoice=True)
+            new_daily.save()
+            current_balance = Balance.objects.get(farm=form.farm)
+            new_balance = int(current_balance.balance) - int(form.total_price)
+            current_balance.balance = new_balance
+            current_balance.save()
+            current_item = Warehouse.objects.get(item_name=form.product)
+            added_quant = int(current_item.item_quantity) + int(form.quantity)
+            current_item.item_quantity = added_quant
+            current_item.save()
+            return redirect('finance_daily')
+    else:
+        add_buy_invoice_form = AddBuyInvoice()
+    context = {
+        'add_buy_invoice_form': add_buy_invoice_form,
+    }
+    return render(request, 'create_buy_invoice.html', context)

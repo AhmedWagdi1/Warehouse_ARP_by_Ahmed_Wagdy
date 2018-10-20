@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, Daily, Type, Category
+from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, Daily, Type, Category, \
+    BuyInvoice
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -61,12 +62,6 @@ class WarehouseEntryForm(forms.ModelForm):
 class FundsTransfaerForm(forms.Form):
     farms = forms.ModelChoiceField(queryset=Farm.objects.all())
     amount = forms.IntegerField()
-
-
-
-
-
-
 
 
 class AddDailyForm(forms.ModelForm):
@@ -140,21 +135,21 @@ class AddNewDailyForm(forms.ModelForm):
                                   )
                                   )
     maden = forms.IntegerField(required=False,
-        widget=forms.NumberInput(
-            attrs={
-                'style': 'width: 300px;',
-                'value': '0',
-            }
-        )
-    )
+                               widget=forms.NumberInput(
+                                   attrs={
+                                       'style': 'width: 300px;',
+                                       'value': '0',
+                                   }
+                               )
+                               )
     da2en = forms.IntegerField(required=False,
-        widget=forms.NumberInput(
-            attrs={
-                'style': 'width: 300px;',
-                'value': '0',
-            }
-        )
-    )
+                               widget=forms.NumberInput(
+                                   attrs={
+                                       'style': 'width: 300px;',
+                                       'value': '0',
+                                   }
+                               )
+                               )
 
     farm = forms.ModelChoiceField(queryset=Farm.objects.all(),
                                   widget=forms.Select(
@@ -186,3 +181,9 @@ class AddDailyOne(forms.Form):
                                           'style': 'width: 300px;'
                                       }
                                   ))
+
+
+class AddBuyInvoice(forms.ModelForm):
+    class Meta:
+        model = BuyInvoice
+        fields = ['supplier', 'product', 'quantity', 'price', 'category', 'farm']

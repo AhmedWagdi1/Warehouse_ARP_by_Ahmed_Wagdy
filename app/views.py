@@ -721,3 +721,33 @@ def create_invoice_sell(request):
         'add_sell_invoice_form': add_sell_invoice_form,
     }
     return render(request, 'create_sell_invoice.html', context)
+
+
+def income_list(request):
+    all_invoice = Daily.objects.filter(is_invoice=True)
+    all_daily = Daily.objects.filter(is_invoice=False)
+    all_sells = []
+    all_buys = []
+    for item in all_invoice:
+        if item.da2en != 0:
+            all_sells.append(item.da2en)
+        if item.maden != 0:
+            all_buys.append(item.maden)
+    final_sells = sum(all_sells)
+    final_buys = sum(all_buys)
+    st_profit = final_sells - final_buys
+    all_costs = []
+    for item in all_daily:
+        if item.da2en != 0:
+            all_costs.append(item.da2en)
+    final_costs = sum(all_costs)
+    net = st_profit - final_costs
+    context = {
+        'final_sells': final_sells,
+        'final_buys': final_buys,
+        'st_profit': st_profit,
+        'final_costs': final_costs,
+        'net': net,
+    }
+
+    return render(request, 'income_list.html', context)

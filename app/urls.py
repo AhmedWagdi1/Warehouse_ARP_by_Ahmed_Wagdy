@@ -65,5 +65,7 @@ urlpatterns = [
                   # invoice
                   url(r'^create/invoice/buy$', views.create_invoice_buy, name="create_buy_invoice"),
                   url(r'^create/invoice/sell$', views.create_invoice_sell, name="create_sell_invoice"),
+                  # income_list
+                  url(r'^income/list/', views.income_list, name="income_list"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

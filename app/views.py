@@ -750,7 +750,7 @@ def income_list(request):
     st_profit = final_sells - final_buys
     all_costs = []
     for item in all_daily:
-        if item.da2en != 0:
+        if item.maden != 0:
             all_costs.append(item.da2en)
     final_costs = sum(all_costs)
     net = st_profit - final_costs

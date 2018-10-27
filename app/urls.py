@@ -73,5 +73,6 @@ urlpatterns = [
                   url(r'^farm/report/details/(?P<pk>[0-9]+)/', views.report_farm_details, name="report_farm_details"),
                   url(r'^report/sales/', views.report_sales, name="report_sales"),
                   url(r'^report/buys/', views.report_buys, name="report_buys"),
+                  url(r'^report/daily/', views.report_daily, name="report_daily"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

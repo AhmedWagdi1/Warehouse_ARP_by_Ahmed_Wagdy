@@ -205,7 +205,8 @@ class FarmReportForm(forms.Form):
 
 class SellInvoiceFilterForm(django_filters.FilterSet):
     date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12'}))
-    #date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12','type':'date'}))
+
+    # date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12','type':'date'}))
 
     class Meta:
         model = SellInvoice
@@ -219,3 +220,11 @@ class BuyInvoiceFilterForm(django_filters.FilterSet):
     class Meta:
         model = BuyInvoice
         fields = ['supplier', 'product', 'category', 'farm', ]
+
+
+class DailyReportFilterForm(django_filters.FilterSet):
+    date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12'}))
+
+    class Meta:
+        model = Daily
+        fields = ['category', 'farm']

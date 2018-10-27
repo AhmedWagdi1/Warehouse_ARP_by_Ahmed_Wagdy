@@ -10,7 +10,7 @@ from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, \
     AddNewDailyForm, AddDailyOne, AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, \
-    BuyInvoiceFilterForm
+    BuyInvoiceFilterForm, DailyReportFilterForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
     SellInvoice, BuyInvoice
 from datetime import date, datetime
@@ -861,3 +861,12 @@ def report_buys(request):
         'filter': form,
     }
     return render(request, 'reports/buys.html', context)
+
+
+def report_daily(request):
+    form = DailyReportFilterForm(request.GET, queryset=Daily.objects.filter().order_by('-date'))
+    context = {
+        'all_daily': form.qs,
+        'filter':form,
+    }
+    return render(request, 'reports/daily.html', context)

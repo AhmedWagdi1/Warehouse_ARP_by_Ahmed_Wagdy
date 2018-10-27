@@ -36,7 +36,7 @@
                     </ul>
 
                 </li>
-                <li><a><i class="fa fa-list"></i> الوظائف <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-file "></i> الوظائف <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{% url 'jobs_add' %}"> إضافة\تعديل الوظائف</a></li>
 
@@ -70,10 +70,16 @@
                         {% endfor %}
                     </ul>
                 </li>
-                <li><a><i class="fa fa-money"></i> الفواتير <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-list"></i> الفواتير <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{% url 'create_buy_invoice' %}"> إنشاء فاتورة شراء</a></li>
                         <li><a href="{% url 'create_sell_invoice' %}"> إنشاء فاتورة بيع</a></li>
+                    </ul>
+                </li>
+                <li><a><i class="fa fa-bars "></i> التقارير <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{% url 'report_all' %}"> إجمالى حركة الشركة</a></li>
+                        <li><a href="{% url 'report_farm' %}"> حركة المزارع</a></li>
                     </ul>
                 </li>
                 <!--

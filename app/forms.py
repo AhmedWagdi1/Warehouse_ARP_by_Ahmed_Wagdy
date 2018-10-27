@@ -193,3 +193,9 @@ class AddSellInvoice(forms.ModelForm):
     class Meta:
         model = SellInvoice
         fields = ['client', 'product', 'quantity', 'price', 'category', 'farm']
+
+
+class FarmReportForm(forms.Form):
+    farm = forms.ModelChoiceField(queryset=Farm.objects.all(),
+        widget=forms.Select()
+    )

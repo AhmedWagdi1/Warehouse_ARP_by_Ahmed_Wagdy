@@ -1,0 +1,86 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Table Dynamic {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_right" align="right" dir="rtl">
+                    <h3> تقارير إجمالى حركة {{ current_farm.farm_name }}<span class="fa fa-list"></span></h3>
+                    <Br>
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+            <hr>
+<h1 align="right" dir="rtl"><span class="fa fa-money"></span> أجمالى رصيد الخزينة  <span style="color: blue;">{{ current_balance }}</span> </h1>
+            <hr>
+<h1 align="right" dir="rtl"><span class="fa fa-cart-plus "></span> المبيعات </h1>
+           <h2 align="right" dir="rtl">  إجمالى المبيعات  <b>{{ final_total_sells }}</b></h2>
+           <h2 align="right" dir="rtl">  إجمالى الضرائب <b>{{ taxes }}</b></h2>
+           <h2 align="right" dir="rtl">  صافى المبيعات<b>{{ one_net }}</b></h2>
+            <hr>
+<h1 align="right" dir="rtl"><span class="fa fa-shopping-cart  "></span> المشتريات </h1>
+           <h2 align="right" dir="rtl">  إجمالى المشتريات  <b>{{ final_total_buys }}</b></h2>
+        </div>
+<hr>
+<h1 align="right" dir="rtl"><span class="fa fa-google-wallet  "></span> المصروفات </h1>
+           <h2 align="right" dir="rtl">   إجمالى المصروفات  <b>{{ final_costs }}</b></h2>
+    <hr>
+<h1 align="right" dir="rtl" id="net_title"><span class="fa fa-dollar  "></span> الأرباح </h1>
+           <h2 align="right" dir="rtl" id="net_title2">   صافى الارباح  <b id="number">{{ final_net }}</b></h2>
+    <hr>
+        </div>
+<script>
+function net_color(){
+    var net = document.getElementById('net_title'),
+        net2 = document.getElementById('net_title2'),
+        nmber = document.getElementById('number');
+    if (nmber.innerHTML > 0) {
+        net.setAttribute('style', 'color: green;');
+        net2.setAttribute('style', 'color: green;');
+        nmber.setAttribute('style', 'color: green;')
+    }else{
+        net.setAttribute('style', 'color: red;');
+        net2.setAttribute('style', 'color: red;');
+        nmber.setAttribute('style', 'color: red;')
+
+    }
+}
+</script>
+        <script>
+    window.onload(net_color())
+    </script>
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+{% endblock javascripts %}

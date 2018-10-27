@@ -9,8 +9,9 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, \
-    AddNewDailyForm, AddDailyOne, AddBuyInvoice, AddSellInvoice
-from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category
+    AddNewDailyForm, AddDailyOne, AddBuyInvoice, AddSellInvoice, FarmReportForm
+from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
+    SellInvoice, BuyInvoice
 from datetime import date, datetime
 
 
@@ -751,3 +752,93 @@ def income_list(request):
     }
 
     return render(request, 'income_list.html', context)
+
+
+def report_all(request):
+    all_balance = Balance.objects.all()
+    total_bal = []
+    for bal in all_balance:
+        total_bal.append(bal.balance)
+    final_total_bal = sum(total_bal)
+    all_sales = SellInvoice.objects.all()
+    total_sales = []
+    for item in all_sales:
+        total_sales.append(item.total_price)
+    final_total_sells = sum(total_sales)
+    all_buys = BuyInvoice.objects.all()
+    total_buy = []
+    for item in all_buys:
+        total_buy.append(item.total_price)
+    final_total_buys = sum(total_buy)
+    taxes = 0
+    one_net = final_total_sells - taxes
+    all_costs = Daily.objects.filter(is_invoice=False)
+    costs = []
+    for item in all_costs:
+        if item.maden != 0:
+            costs.append(item.maden)
+    final_costs = sum(costs)
+    all_costs_and_buys = final_costs + final_total_buys
+    final_net = final_total_sells - all_costs_and_buys
+    context = {
+        'all_balance': all_balance,
+        'final_total_bal': final_total_bal,
+        'all_sales': all_sales,
+        'final_total_sells': final_total_sells,
+        'taxes': taxes,
+        'one_net': one_net,
+        'final_total_buys': final_total_buys,
+        'final_costs': final_costs,
+        'final_net': final_net,
+    }
+    return render(request, 'reports/all.html', context)
+
+
+def report_farm(request):
+    farm_report_form = FarmReportForm(request.POST)
+    if request.method == 'POST':
+        if farm_report_form.is_valid():
+            farm_name = farm_report_form.cleaned_data['farm']
+            return redirect('/farm/report/details/' + str(farm_name.pk))
+    else:
+        farm_report_form = FarmReportForm()
+    context = {
+        'farm_report_form': farm_report_form,
+    }
+    return render(request, 'reports/farm.html', context)
+
+
+def report_farm_details(request, pk):
+    current_farm = get_object_or_404(Farm, pk=pk)
+    current_balance = Balance.objects.get(farm=current_farm).balance
+    all_sales = SellInvoice.objects.filter(farm=current_farm)
+    total_sales = []
+    for item in all_sales:
+        total_sales.append(item.total_price)
+    final_total_sells = sum(total_sales)
+    taxes = 0
+    one_net = final_total_sells - taxes
+    all_buys = BuyInvoice.objects.filter(farm=current_farm)
+    total_buy = []
+    for item in all_buys:
+        total_buy.append(item.total_price)
+    final_total_buys = sum(total_buy)
+    all_costs = Daily.objects.filter(is_invoice=False, farm=current_farm)
+    costs = []
+    for item in all_costs:
+        if item.maden != 0:
+            costs.append(item.maden)
+    final_costs = sum(costs)
+    all_costs_and_buys = final_costs + final_total_buys
+    final_net = final_total_sells - all_costs_and_buys
+    context = {
+        'current_farm': current_farm,
+        'current_balance': current_balance,
+        'final_total_sells': final_total_sells,
+        'taxes': taxes,
+        'one_net': one_net,
+        'final_total_buys': final_total_buys,
+        'final_costs': final_costs,
+        'final_net': final_net,
+    }
+    return render(request, 'reports/farm_details.html', context)

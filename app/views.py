@@ -688,8 +688,8 @@ def create_invoice_buy(request):
                 current_quant = 0
                 added_quant = form.quantity
                 new_quant = int(current_quant) + int(added_quant)
-                current_item.item_quantity = new_quant
-                current_item.update()
+                new_item = Warehouse(item_name=form.product,item_quantity=new_quant)
+                new_item.save()
                 return redirect('finance_daily')
             else:
                 current_quant = current_item.item_quantity

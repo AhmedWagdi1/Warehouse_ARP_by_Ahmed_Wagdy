@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
+import django_filters
+from django_filters.widgets import RangeWidget
 
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, Daily, Type, Category, \
     BuyInvoice, SellInvoice
@@ -197,5 +199,14 @@ class AddSellInvoice(forms.ModelForm):
 
 class FarmReportForm(forms.Form):
     farm = forms.ModelChoiceField(queryset=Farm.objects.all(),
-        widget=forms.Select()
-    )
+                                  widget=forms.Select()
+                                  )
+
+
+class SellInvoiceFilterForm(django_filters.FilterSet):
+    #date__range = django_filters.DateFromToRangeFilter(field_name='date', lookup_expr='month__gt')
+    date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12'}))
+
+    class Meta:
+        model = SellInvoice
+        fields = ['client', 'product', 'category', 'farm', ]

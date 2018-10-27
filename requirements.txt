@@ -1,6 +1,7 @@
-Django==1.10
+Django
 Pillow
 django-imagekit
 gunicorn
 dj-database-url
 whitenoise
+django-filter

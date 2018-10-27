@@ -683,11 +683,21 @@ def create_invoice_buy(request):
             new_balance = int(current_balance.balance) - int(form.total_price)
             current_balance.balance = new_balance
             current_balance.save()
-            current_item = Warehouse.objects.get(item_name=form.product)
-            added_quant = int(current_item.item_quantity) + int(form.quantity)
-            current_item.item_quantity = added_quant
-            current_item.save()
-            return redirect('finance_daily')
+            current_item = Warehouse.objects.filter(item_name=form.product)
+            if not current_item:
+                current_quant = 0
+                added_quant = form.quantity
+                new_quant = int(current_quant) + int(added_quant)
+                current_item.item_quantity = new_quant
+                current_item.save()
+                return redirect('finance_daily')
+            else:
+                current_quant = current_item.item_quantity
+                added_quant = form.quantity
+                new_quant = int(current_quant) + int(added_quant)
+                current_item.item_quantity = new_quant
+                current_item.save()
+                return redirect('finance_daily')
     else:
         add_buy_invoice_form = AddBuyInvoice()
     context = {

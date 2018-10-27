@@ -204,9 +204,18 @@ class FarmReportForm(forms.Form):
 
 
 class SellInvoiceFilterForm(django_filters.FilterSet):
-    #date__range = django_filters.DateFromToRangeFilter(field_name='date', lookup_expr='month__gt')
     date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12'}))
+    #date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12','type':'date'}))
 
     class Meta:
         model = SellInvoice
         fields = ['client', 'product', 'category', 'farm', ]
+
+
+class BuyInvoiceFilterForm(django_filters.FilterSet):
+    # date__range = django_filters.DateFromToRangeFilter(field_name='date', lookup_expr='month__gt')
+    date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12'}))
+
+    class Meta:
+        model = BuyInvoice
+        fields = ['supplier', 'product', 'category', 'farm', ]

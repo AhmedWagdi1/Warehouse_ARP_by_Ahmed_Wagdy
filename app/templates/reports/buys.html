@@ -1,0 +1,89 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Table Dynamic {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_right" align="right">
+                    <h3> تقارير المشتريات <span class="fa fa-list"></span></h3>
+                    <Br>
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+            <div align="right">
+                <form method="get" dir="rtl">
+                    {% csrf_token %}
+                     عن الفترة {{ filter.form.date_range }}
+                    <br><br>
+                    المزرعة{{ filter.form.farm }}
+                    المورد {{ filter.form.supplier }}
+                    الفئة {{ filter.form.category }}
+                    المنتج {{ filter.form.product }}
+                    <br><br>
+                    <button class="btn btn-primary" type="submit">عرض</button>
+                </form>
+            </div>
+
+            <table id="datatable" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>المزرعة</th>
+                    <th>القيمة</th>
+                    <th>المنتج</th>
+                    <th>العميل</th>
+                    <th>فاتورة رقم</th>
+                    <th>التاريخ</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for item in all_sells %}
+                    <tr>
+                        <td>{{ item.farm }}</td>
+                        <td>{{ item.total_price }}</td>
+                        <td>{{ item.product.product_name }}</td>
+                        <td>{{ item.client }}</td>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.date }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+{% endblock javascripts %}

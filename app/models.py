@@ -10,14 +10,14 @@ from imagekit.processors import ResizeToFill
 class Company(models.Model):
     company_name = models.CharField(max_length=250)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.company_name
 
 
 class Farm(models.Model):
     farm_name = models.CharField(max_length=250)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.farm_name
 
     def get_absolute_url(self):
@@ -27,7 +27,7 @@ class Farm(models.Model):
 class Job(models.Model):
     job_name = models.CharField(max_length=250)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.job_name
 
 
@@ -48,7 +48,7 @@ class Worker(models.Model):
     worker_deleted = models.BooleanField(default=False)
     worker_end_time = models.DateField(blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.worker_name
 
     def get_absolute_url(self):
@@ -60,7 +60,7 @@ class Supplier(models.Model):
     supplier_mob_number = models.IntegerField()
     supplier_ID_number = models.IntegerField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.supplier_name
 
     def get_absolute_url(self):
@@ -72,7 +72,7 @@ class Client(models.Model):
     client_mobile_number = models.IntegerField()
     client_ID_number = models.IntegerField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.client_name
 
     def get_absolute_url(self):
@@ -82,7 +82,7 @@ class Client(models.Model):
 class Product(models.Model):
     product_name = models.CharField(max_length=160)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.product_name
 
     def get_absolute_url(self):
@@ -93,7 +93,7 @@ class Warehouse(models.Model):
     item_name = models.ForeignKey(Product, on_delete=CASCADE)
     item_quantity = models.IntegerField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.item_name
 
 
@@ -105,7 +105,7 @@ class Balance(models.Model):
 class Type(models.Model):
     type_name = models.CharField(max_length=80)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.type_name
 
 
@@ -113,7 +113,7 @@ class Category(models.Model):
     category_name = models.CharField(max_length=80)
     type = models.ForeignKey(Type, on_delete=CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.category_name
 
     def get_absolute_url(self):

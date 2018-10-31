@@ -691,7 +691,7 @@ def create_invoice_buy(request):
             new_balance = int(current_balance.balance) - int(form.total_price)
             current_balance.balance = new_balance
             current_balance.save()
-            current_item = Warehouse.objects.filter(item_name=form.product)
+            current_item = Warehouse.objects.get(item_name=form.product)
             if not current_item:
                 current_quant = 0
                 added_quant = form.quantity

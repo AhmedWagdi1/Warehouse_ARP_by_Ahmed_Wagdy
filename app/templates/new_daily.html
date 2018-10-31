@@ -1,0 +1,114 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Table Dynamic {% endblock title %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_right" align="right">
+                    <h3> إضافة قيد يومى  <span class="fa fa-plus"></span></h3>
+                    <Br>
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+<div align="right" dir="rtl">
+              <form method="post" id="dailyform" data-cities-url="{% url 'ajax_load_cates' %}" data-citire-url-da2en ="{% url 'ajax_load_cates_da2en' %}" novalidate>
+    {% csrf_token %}
+        {{ new_daily_form.text }}
+        <hr>
+<h3>مدين</h3>
+        القيمة&nbsp;{{ new_daily_form.maden }}&nbsp;&nbsp;
+        من حساب&nbsp;{{ new_daily_form.maden_from_type }}&nbsp;&nbsp;
+        فئة&nbsp;{{ new_daily_form.maden_from_cat }}&nbsp;&nbsp;
+        <hr>
+<h3>دائن</h3>
+        القيمة&nbsp;{{ new_daily_form.da2en }}&nbsp;&nbsp;
+        من حساب&nbsp;{{ new_daily_form.da2en_from_type }}&nbsp;&nbsp;
+        فئة&nbsp;{{ new_daily_form.da2en_from_cat }}&nbsp;&nbsp;
+        <hr>
+        <h3>المزرعة &nbsp;{{ new_daily_form.farm }}&nbsp;&nbsp;</h3>
+
+    <button type="submit" class="btn btn-primary" >إضافة</button>
+  </form>
+</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_maden_from_type").change(function () {
+      var url = $("#dailyform").attr("data-cities-url");  // get the url of the `load_cities` view
+      var countryId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'maden_from_type': countryId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_maden_from_cat").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+  <script>
+    $("#id_da2en_from_type").change(function () {
+      var url = $("#dailyform").attr("data-citire-url-da2en");  // get the url of the `load_cities` view
+      var countryId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'da2en_from_type': countryId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_da2en_from_cat").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+
+
+
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ block.super }}
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+{% endblock javascripts %}
+
+
+
+

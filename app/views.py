@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
@@ -9,8 +9,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, \
-    AddNewDailyForm, AddDailyOne, AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, \
-    BuyInvoiceFilterForm, DailyReportFilterForm
+    AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, \
+    BuyInvoiceFilterForm, NewDailyForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
     SellInvoice, BuyInvoice
 from datetime import date, datetime
@@ -373,26 +373,9 @@ def warehouse_out(request, pk):
 
 
 def finance_daily(request):
-    add_daily_form = AddDailyForm(request.POST)
     all_daily = Daily.objects.all().order_by('-date')
-    all_da2en = []
-    for item in all_daily:
-        all_da2en.append(item.total_da2en)
-    final_all_da2en = sum(all_da2en)
-    if request.method == 'POST':
-        if add_daily_form.is_valid():
-            form = add_daily_form.save(commit=False)
-            form.total_da2en = form.da2en
-            form.total_maden = form.maden
-            form.type = form.category.type
-            form.save()
-            return redirect('finance_daily')
-    else:
-        add_daily_form = AddDailyForm()
     context = {
-        'add_daily_form': add_daily_form,
         'all_daily': all_daily,
-        'final_all_da2en': final_all_da2en,
     }
     return render(request, 'app/finance_daily.html', context)
 
@@ -414,7 +397,8 @@ def ostaz(request):
 def ostaz_details(request, pk):
     current_category = get_object_or_404(Category, pk=pk)
     pick_ostaz_form = PickOstazForm(request.POST)
-    all_current = Daily.objects.filter(category=current_category)
+    all_current_da2n = Daily.objects.filter(da2en_from_cat=current_category)
+    all_current_maden = Daily.objects.filter(maden_from_cat=current_category)
     jan_maden = []
     feb_maden = []
     march_maden = []
@@ -439,78 +423,102 @@ def ostaz_details(request, pk):
     oct_da2en = []
     nov_da2en = []
     dec_da2en = []
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 1:
-            jan_maden.append(item.total_maden)
-            jan_da2en.append(item.total_da2en)
-    final_1_maden = sum(jan_maden)
+            jan_da2en.append(item.da2en)
     final_1_da2en = sum(jan_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 2:
-            feb_maden.append(item.total_maden)
-            feb_da2en.append(item.total_da2en)
-    final_2_maden = sum(feb_maden)
+            feb_da2en.append(item.da2en)
     final_2_da2en = sum(feb_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 3:
-            march_maden.append(item.total_maden)
-            march_da2en.append(item.total_da2en)
-    final_3_maden = sum(march_maden)
+            march_da2en.append(item.da2en)
     final_3_da2en = sum(march_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 4:
-            april_maden.append(item.total_maden)
-            april_da2en.append(item.total_da2en)
-    final_4_maden = sum(april_maden)
+            april_da2en.append(item.da2en)
     final_4_da2en = sum(april_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 5:
-            may_maden.append(item.total_maden)
-            may_da2en.append(item.total_da2en)
-    final_5_maden = sum(may_maden)
+            may_da2en.append(item.da2en)
     final_5_da2en = sum(may_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 6:
-            june_maden.append(item.total_maden)
-            june_da2en.append(item.total_da2en)
-    final_6_maden = sum(june_maden)
+            june_da2en.append(item.da2en)
     final_6_da2en = sum(june_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 7:
-            july_maden.append(item.total_maden)
-            july_da2en.append(item.total_da2en)
-    final_7_maden = sum(july_maden)
+            july_da2en.append(item.da2en)
     final_7_da2en = sum(july_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 8:
-            aug_maden.append(item.total_maden)
-            aug_da2en.append(item.total_da2en)
-    final_8_maden = sum(aug_maden)
+            aug_da2en.append(item.da2en)
     final_8_da2en = sum(aug_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 9:
-            sep_maden.append(item.total_maden)
-            sep_da2en.append(item.total_da2en)
-    final_9_maden = sum(sep_maden)
+            sep_da2en.append(item.da2en)
     final_9_da2en = sum(sep_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 10:
-            oct_maden.append(item.total_maden)
-            oct_da2en.append(item.total_da2en)
-    final_10_maden = sum(oct_maden)
+            oct_da2en.append(item.da2en)
     final_10_da2en = sum(oct_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 11:
-            nov_maden.append(item.total_maden)
-            nov_da2en.append(item.total_da2en)
-    final_11_maden = sum(nov_maden)
+            nov_da2en.append(item.da2en)
     final_11_da2en = sum(nov_da2en)
-    for item in all_current:
+    for item in all_current_da2n:
         if item.date.month == 12:
-            dec_maden.append(item.total_maden)
-            dec_da2en.append(item.total_da2en)
-    final_12_maden = sum(dec_maden)
+            dec_da2en.append(item.da2en)
     final_12_da2en = sum(dec_da2en)
+    for item in all_current_maden:
+        if item.date.month == 1:
+            jan_maden.append(item.maden)
+    final_1_maden = sum(jan_maden)
+    for item in all_current_maden:
+        if item.date.month == 2:
+            feb_maden.append(item.maden)
+    final_2_maden = sum(feb_maden)
+    for item in all_current_maden:
+        if item.date.month == 3:
+            march_maden.append(item.maden)
+    final_3_maden = sum(march_maden)
+    for item in all_current_maden:
+        if item.date.month == 4:
+            april_maden.append(item.maden)
+    final_4_maden = sum(april_maden)
+    for item in all_current_maden:
+        if item.date.month == 5:
+            may_maden.append(item.maden)
+    final_5_maden = sum(may_maden)
+    for item in all_current_maden:
+        if item.date.month == 6:
+            june_maden.append(item.maden)
+    final_6_maden = sum(june_maden)
+    for item in all_current_maden:
+        if item.date.month == 7:
+            july_maden.append(item.maden)
+    final_7_maden = sum(july_maden)
+    for item in all_current_maden:
+        if item.date.month == 8:
+            aug_maden.append(item.maden)
+    final_8_maden = sum(aug_maden)
+    for item in all_current_maden:
+        if item.date.month == 9:
+            sep_maden.append(item.maden)
+    final_9_maden = sum(sep_maden)
+    for item in all_current_maden:
+        if item.date.month == 10:
+            oct_maden.append(item.maden)
+    final_10_maden = sum(oct_maden)
+    for item in all_current_maden:
+        if item.date.month == 11:
+            nov_maden.append(item.maden)
+    final_11_maden = sum(nov_maden)
+    for item in all_current_maden:
+        if item.date.month == 12:
+            dec_maden.append(item.maden)
+    final_12_maden = sum(dec_maden)
     if request.method == 'POST':
         if pick_ostaz_form.is_valid():
             current_category = pick_ostaz_form.cleaned_data['category']
@@ -520,19 +528,6 @@ def ostaz_details(request, pk):
     context = {
         'current_category': current_category,
         'pick_ostaz_form': pick_ostaz_form,
-        'all_current': all_current,
-        'final_1_maden': final_1_maden,
-        'final_2_maden': final_2_maden,
-        'final_3_maden': final_3_maden,
-        'final_4_maden': final_4_maden,
-        'final_5_maden': final_5_maden,
-        'final_6_maden': final_6_maden,
-        'final_7_maden': final_7_maden,
-        'final_8_maden': final_8_maden,
-        'final_9_maden': final_9_maden,
-        'final_10_maden': final_10_maden,
-        'final_11_maden': final_11_maden,
-        'final_12_maden': final_12_maden,
         'final_1_da2en': final_1_da2en,
         'final_2_da2en': final_2_da2en,
         'final_3_da2en': final_3_da2en,
@@ -545,13 +540,26 @@ def ostaz_details(request, pk):
         'final_10_da2en': final_10_da2en,
         'final_11_da2en': final_11_da2en,
         'final_12_da2en': final_12_da2en,
+        'final_1_maden': final_1_maden,
+        'final_2_maden': final_2_maden,
+        'final_3_maden': final_3_maden,
+        'final_4_maden': final_4_maden,
+        'final_5_maden': final_5_maden,
+        'final_6_maden': final_6_maden,
+        'final_7_maden': final_7_maden,
+        'final_8_maden': final_8_maden,
+        'final_9_maden': final_9_maden,
+        'final_10_maden': final_10_maden,
+        'final_11_maden': final_11_maden,
+        'final_12_maden': final_12_maden,
     }
     return render(request, 'ostaz_details.html', context)
 
 
 def mezan(request):
-    all_daily = Daily.objects.values('category__category_name').annotate(all_maden=Sum('total_maden')).annotate(
-        all_da2en=Sum('total_da2en'))
+    all_daily = Daily.objects.values('da2en_from_cat__category_name', 'maden_from_cat__category_name').annotate(
+        all_maden=Sum('maden')).annotate(
+        all_da2en=Sum('da2en'))
     context = {
         'all_daily': all_daily,
     }
@@ -675,9 +683,9 @@ def create_invoice_buy(request):
             total = form.quantity * form.price
             form.total_price = total
             form.save()
-            new_daily = Daily(text='فاتورة رقم  ' + str(form.id), total_da2en=0, total_maden=form.total_price,
-                              type=form.category.type, category=form.category, da2en=0, maden=form.total_price,
-                              farm=form.farm, is_invoice=True)
+            new_daily = Daily(text='فاتورة شراء رقم  ' + str(form.id), maden=form.total_price,
+                              maden_from_type=form.category.type, maden_from_cat=form.category, da2en=0, farm=form.farm,
+                              is_invoice=True)
             new_daily.save()
             current_balance = Balance.objects.get(farm=form.farm)
             new_balance = int(current_balance.balance) - int(form.total_price)
@@ -688,7 +696,7 @@ def create_invoice_buy(request):
                 current_quant = 0
                 added_quant = form.quantity
                 new_quant = int(current_quant) + int(added_quant)
-                new_item = Warehouse(item_name=form.product,item_quantity=new_quant)
+                new_item = Warehouse(item_name=form.product, item_quantity=new_quant)
                 new_item.save()
                 return redirect('finance_daily')
             else:
@@ -714,9 +722,9 @@ def create_invoice_sell(request):
             total = form.quantity * form.price
             form.total_price = total
             form.save()
-            new_daily = Daily(text='فاتورة رقم  ' + str(form.id), total_da2en=form.total_price, total_maden=0,
-                              type=form.category.type, category=form.category, da2en=form.total_price, maden=0,
-                              farm=form.farm, is_invoice=True)
+            new_daily = Daily(text='فاتورة بيع رقم  ' + str(form.id), da2en=form.total_price,
+                              da2en_from_type=form.category.type, da2en_from_cat=form.category, maden=0, farm=form.farm,
+                              is_invoice=True)
             new_daily.save()
             current_balance = Balance.objects.get(farm=form.farm)
             new_balance = int(current_balance.balance) + int(form.total_price)
@@ -751,7 +759,7 @@ def income_list(request):
     all_costs = []
     for item in all_daily:
         if item.maden != 0:
-            all_costs.append(item.da2en)
+            all_costs.append(item.maden)
     final_costs = sum(all_costs)
     net = st_profit - final_costs
     context = {
@@ -877,6 +885,45 @@ def report_daily(request):
     form = DailyReportFilterForm(request.GET, queryset=Daily.objects.filter().order_by('-date'))
     context = {
         'all_daily': form.qs,
-        'filter':form,
+        'filter': form,
     }
     return render(request, 'reports/daily.html', context)
+
+
+def new_daily(request):
+    new_daily_form = NewDailyForm(request.POST)
+    if request.method == 'POST':
+        if new_daily_form.is_valid():
+            form = new_daily_form.save(commit=False)
+            if form.da2en != 0:
+                current_farm_balance = Balance.objects.get(farm=form.farm)
+                added_balance = form.da2en
+                new_balance = int(current_farm_balance.balance) + int(added_balance)
+                current_farm_balance.balance = new_balance
+                current_farm_balance.save()
+            if form.maden != 0:
+                current_farm_balance = Balance.objects.get(farm=form.farm)
+                added_balance = form.maden
+                new_balance = int(current_farm_balance.balance) - int(added_balance)
+                current_farm_balance.balance = new_balance
+                current_farm_balance.save()
+            form.save()
+            return redirect('finance_daily')
+    else:
+        new_daily_form = NewDailyForm()
+    context = {
+        'new_daily_form': new_daily_form,
+    }
+    return render(request, 'new_daily.html', context)
+
+
+def load_cates(request):
+    current_maden_type = request.GET.get('maden_from_type')
+    cates = Category.objects.filter(type=current_maden_type)
+    return render(request, 'aj/maden_from_cate_dropdown_list_options.html', {'cates': cates})
+
+
+def load_cates_da2en(request):
+    current_da2en_type = request.GET.get('da2en_from_type')
+    cates_da2en = Category.objects.filter(type=current_da2en_type)
+    return render(request, 'aj/da2en_from_cate_dropdown_list_options.html', {'cates_da2en': cates_da2en})

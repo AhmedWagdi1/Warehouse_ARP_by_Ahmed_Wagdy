@@ -121,70 +121,6 @@ class AddCategoryForm(forms.ModelForm):
         fields = ['category_name', 'type']
 
 
-class AddNewDailyForm(forms.ModelForm):
-    text = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'style': 'width: 300px;'
-            }
-        )
-    )
-    type = forms.ModelChoiceField(queryset=Type.objects.all(), required=False,
-                                  widget=forms.Select(
-                                      attrs={
-                                          'style': 'width: 300px;'
-                                      }
-                                  )
-                                  )
-    maden = forms.IntegerField(required=False,
-                               widget=forms.NumberInput(
-                                   attrs={
-                                       'style': 'width: 300px;',
-                                       'value': '0',
-                                   }
-                               )
-                               )
-    da2en = forms.IntegerField(required=False,
-                               widget=forms.NumberInput(
-                                   attrs={
-                                       'style': 'width: 300px;',
-                                       'value': '0',
-                                   }
-                               )
-                               )
-
-    farm = forms.ModelChoiceField(queryset=Farm.objects.all(),
-                                  widget=forms.Select(
-                                      attrs={
-                                          'style': 'width: 300px;'
-                                      }
-                                  )
-                                  )
-
-    class Meta:
-        model = Daily
-        fields = ['text', 'maden', 'da2en', 'farm', 'category']
-
-    def __init__(self, *args, **kwargs):
-        myClient = kwargs.pop("typz")  # client is the parameter passed from views.py
-        super(AddNewDailyForm, self).__init__(*args, **kwargs)
-        self.fields['category'] = forms.ModelChoiceField(queryset=Category.objects.filter(type=myClient),
-                                                         widget=forms.Select(
-                                                             attrs={
-                                                                 'style': 'width: 300px;'
-                                                             }
-                                                         ))
-
-
-class AddDailyOne(forms.Form):
-    type = forms.ModelChoiceField(queryset=Type.objects.all(),
-                                  widget=forms.Select(
-                                      attrs={
-                                          'style': 'width: 300px;'
-                                      }
-                                  ))
-
-
 class AddBuyInvoice(forms.ModelForm):
     class Meta:
         model = BuyInvoice
@@ -222,9 +158,55 @@ class BuyInvoiceFilterForm(django_filters.FilterSet):
         fields = ['supplier', 'product', 'category', 'farm', ]
 
 
-class DailyReportFilterForm(django_filters.FilterSet):
-    date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12'}))
+class NewDailyForm(forms.ModelForm):
+    text = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'placeholder': 'البيان',
+                   'class': 'form-control',
+                   }
+        )
+    )
+
+    maden_from_type = forms.ModelChoiceField(required=False, queryset=Type.objects.all(),
+                                             widget=forms.Select(
+                                             )
+                                             )
+    da2en_from_type = forms.ModelChoiceField(required=False, queryset=Type.objects.all(),
+                                             widget=forms.Select(
+                                             )
+                                             )
+    maden_from_cat = forms.ModelChoiceField(required=False, queryset=Category.objects.all(),
+                                            widget=forms.Select(
+
+                                            ))
+    da2en_from_cat = forms.ModelChoiceField(required=False, queryset=Category.objects.all(),
+                                            widget=forms.Select(
+
+                                            ))
 
     class Meta:
         model = Daily
-        fields = ['category', 'farm']
+        fields = ['text', 'maden', 'maden_from_type', 'maden_from_cat', 'da2en', 'da2en_from_type', 'da2en_from_cat',
+                  'farm']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['maden_from_cat'].queryset = Category.objects.none()
+        self.fields['da2en_from_cat'].queryset = Category.objects.none()
+
+        if 'maden_from_type' in self.data:
+            try:
+                country_id = int(self.data.get('maden_from_type'))
+                self.fields['maden_from_cat'].queryset = Category.objects.filter(type=country_id)
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['maden_from_cat'].queryset = self.instance.type.city_set
+        if 'da2en_from_type' in self.data:
+            try:
+                country_id = int(self.data.get('da2en_from_type'))
+                self.fields['da2en_from_cat'].queryset = Category.objects.filter(type=country_id)
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['da2en_from_cat'].queryset = self.instance.type.city_set

@@ -123,12 +123,13 @@ class Category(models.Model):
 class Daily(models.Model):
     date = models.DateTimeField(auto_now=True)
     text = models.CharField(max_length=80)  #
-    total_da2en = models.IntegerField(default=0)  #
-    total_maden = models.IntegerField(default=0)  #
-    type = models.ForeignKey(Type, on_delete=CASCADE)  #
-    category = models.ForeignKey(Category, on_delete=CASCADE)  #
     maden = models.IntegerField(default=0)  #
+    maden_from_type = models.ForeignKey(Type, on_delete=CASCADE, blank=True, null=True)
+    maden_from_cat = models.ForeignKey(Category, on_delete=CASCADE, blank=True, null=True)
     da2en = models.IntegerField(default=0)  #
+    da2en_from_type = models.ForeignKey(Type, on_delete=CASCADE, related_name='da2en_from_type', blank=True, null=True)
+    da2en_from_cat = models.ForeignKey(Category, on_delete=CASCADE, related_name='da2en_from_cat', blank=True,
+                                       null=True)
     farm = models.ForeignKey(Farm, on_delete=CASCADE)  #
     is_invoice = models.BooleanField(default=False)  #
 

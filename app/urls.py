@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.urls import path
+
 from app import views
 from django.conf import settings
 from django.contrib.auth import logout
@@ -60,6 +62,11 @@ urlpatterns = [
                   url(r'add/tawseef/', views.add_tawseef, name="add_tawseef"),
                   url(r'delete/tawseef/(?P<pk>[0-9]+)/$', views.delete_tawseef, name="delete_tawseef"),
                   url(r'^tawseef/update/(?P<pk>[0-9]+)/', views.TawseefUpdate.as_view(), name="tawseef_update"),
+                  url(r'^new/dailu/$', views.new_daily, name="new_daily"),
+    #ajax_refreshes
+                  path('ajax/load-cities/', views.load_cates, name='ajax_load_cates'),  # <-- this one here
+                  path('ajax/load-cities_da2en/', views.load_cates_da2en, name='ajax_load_cates_da2en'),  # <-- this one here
+
                   # safes
                   url(r'^safe/(?P<pk>[0-9]+)/', views.safes, name="safes"),
                   # invoice

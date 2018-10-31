@@ -704,7 +704,7 @@ def create_invoice_buy(request):
                 added_quant = form.quantity
                 new_quant = int(current_quant) + int(added_quant)
                 current_item.item_quantity = new_quant
-                current_item.update()
+                current_item.save()
                 return redirect('finance_daily')
     else:
         add_buy_invoice_form = AddBuyInvoice()

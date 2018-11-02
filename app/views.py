@@ -15,7 +15,7 @@ from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, 
     SellInvoice, BuyInvoice, Talabat
 from datetime import date, datetime
 
-
+@login_required
 def index(request):
     return render(request, 'app/add_farm.html')
 
@@ -28,7 +28,7 @@ def workers(request):
     }
     return render(request, 'app/workers.html', context)
 
-
+@login_required
 def nocomp(request):
     return render(request, 'app/nocomp.html')
 
@@ -371,7 +371,7 @@ def warehouse_out(request, pk):
     }
     return render(request, 'app/item_out.html', context)
 
-
+@login_required
 def finance_daily(request):
     all_daily = Daily.objects.all().order_by('-date')
     context = {
@@ -379,7 +379,7 @@ def finance_daily(request):
     }
     return render(request, 'app/finance_daily.html', context)
 
-
+@login_required
 def ostaz(request):
     pick_ostaz_form = PickOstazForm(request.POST)
     if request.method == 'POST':
@@ -393,7 +393,7 @@ def ostaz(request):
     }
     return render(request, 'ostaz.html', context)
 
-
+@login_required
 def ostaz_details(request, pk):
     current_category = get_object_or_404(Category, pk=pk)
     pick_ostaz_form = PickOstazForm(request.POST)
@@ -555,7 +555,7 @@ def ostaz_details(request, pk):
     }
     return render(request, 'ostaz_details.html', context)
 
-
+@login_required
 def mezan(request):
     all_daily = Daily.objects.values('da2en_from_cat__category_name', 'maden_from_cat__category_name').annotate(
         all_maden=Sum('maden')).annotate(
@@ -565,7 +565,7 @@ def mezan(request):
     }
     return render(request, 'mezan.html', context)
 
-
+@login_required
 def add_tawseef(request):
     all_cats = Category.objects.all()
     add_category_form = AddCategoryForm(request.POST)
@@ -581,7 +581,7 @@ def add_tawseef(request):
     }
     return render(request, 'add_tawseef.html', context)
 
-
+@login_required
 def delete_tawseef(request, pk):
     current_tawseef = get_object_or_404(Category, pk=pk)
     current_tawseef.delete()
@@ -593,7 +593,7 @@ class TawseefUpdate(UpdateView):
     fields = ['category_name', 'type']
     template_name_suffix = '_update_form'
 
-
+@login_required
 def add_new_daily(request, pk):
     current_type = get_object_or_404(Type, pk=pk)
     add_new_daily_form = AddNewDailyForm(request.POST, typz=current_type)
@@ -639,7 +639,7 @@ def add_daily_one(request):
     }
     return render(request, 'add_new_daily_one.html', context)
 
-
+@login_required
 def safes(request, pk):
     current_safe = get_object_or_404(Balance, pk=pk)
     current_farm = Farm.objects.get(farm_name=current_safe.farm.farm_name)
@@ -674,7 +674,7 @@ def safes(request, pk):
     }
     return render(request, 'safes.html', context)
 
-
+@login_required
 def create_invoice_buy(request):
     add_buy_invoice_form = AddBuyInvoice(request.POST)
     if request.method == 'POST':
@@ -714,7 +714,7 @@ def create_invoice_buy(request):
     }
     return render(request, 'create_buy_invoice.html', context)
 
-
+@login_required
 def create_invoice_sell(request):
     add_sell_invoice_form = AddSellInvoice(request.POST)
     if request.method == 'POST':
@@ -743,7 +743,7 @@ def create_invoice_sell(request):
     }
     return render(request, 'create_sell_invoice.html', context)
 
-
+@login_required
 def income_list(request):
     all_invoice = Daily.objects.filter(is_invoice=True)
     all_daily = Daily.objects.filter(is_invoice=False)
@@ -773,7 +773,7 @@ def income_list(request):
 
     return render(request, 'income_list.html', context)
 
-
+@login_required
 def report_all(request):
     all_balance = Balance.objects.all()
     total_bal = []
@@ -813,7 +813,7 @@ def report_all(request):
     }
     return render(request, 'reports/all.html', context)
 
-
+@login_required
 def report_farm(request):
     farm_report_form = FarmReportForm(request.POST)
     if request.method == 'POST':
@@ -827,7 +827,7 @@ def report_farm(request):
     }
     return render(request, 'reports/farm.html', context)
 
-
+@login_required
 def report_farm_details(request, pk):
     current_farm = get_object_or_404(Farm, pk=pk)
     current_balance = Balance.objects.get(farm=current_farm).balance
@@ -863,7 +863,7 @@ def report_farm_details(request, pk):
     }
     return render(request, 'reports/farm_details.html', context)
 
-
+@login_required
 def report_sales(request):
     form = SellInvoiceFilterForm(request.GET, queryset=SellInvoice.objects.filter().order_by('-date'))
     context = {
@@ -872,7 +872,7 @@ def report_sales(request):
     }
     return render(request, 'reports/sales.html', context)
 
-
+@login_required
 def report_buys(request):
     form = BuyInvoiceFilterForm(request.GET, queryset=BuyInvoice.objects.filter().order_by('-date'))
     context = {
@@ -881,7 +881,7 @@ def report_buys(request):
     }
     return render(request, 'reports/buys.html', context)
 
-
+@login_required
 def report_daily(request):
     form = DailyReportFilterForm(request.GET, queryset=Daily.objects.filter().order_by('-date'))
     context = {
@@ -890,7 +890,7 @@ def report_daily(request):
     }
     return render(request, 'reports/daily.html', context)
 
-
+@login_required
 def new_daily(request):
     new_daily_form = NewDailyForm(request.POST)
     if request.method == 'POST':
@@ -917,6 +917,7 @@ def new_daily(request):
     }
     return render(request, 'new_daily.html', context)
 
+@login_required
 def warehouse_details(request, pk):
     current_warehouse = get_object_or_404(Farm, pk=pk)
     all_items = Warehouse.objects.filter(farm=current_warehouse)
@@ -926,7 +927,7 @@ def warehouse_details(request, pk):
     }
     return render(request, 'warehouse_details.html', context)
 
-
+@login_required
 def talab_sarf(request, pk):
     current_warehouse = get_object_or_404(Farm, pk=pk)
     create_talab_form = CreateTalabForm(request.POST)
@@ -944,6 +945,7 @@ def talab_sarf(request, pk):
     }
     return render(request, 'talab_sarf.html', context)
 
+@login_required
 def talab_sarf_list(request):
     all_talab = Talabat.objects.all().order_by('-date')
     context = {
@@ -951,11 +953,13 @@ def talab_sarf_list(request):
     }
     return render(request, 'talabat_sarf_list.html', context)
 
+@login_required
 def talabat_delete(request, pk):
     current_talabat = get_object_or_404(Talabat, pk=pk)
     current_talabat.delete()
     return redirect('talab_sarf_list')
 
+@login_required
 def talabat_do(request, pk):
     current_talabat = get_object_or_404(Talabat, pk=pk)
     talabat_do_form = TalabatDoForm(request.POST)
@@ -996,6 +1000,7 @@ def talabat_do(request, pk):
     'talabat_do_form':talabat_do_form,
     }
     return render(request, 'talabat_do.html', context )
+
 
 def load_cates(request):
     current_maden_type = request.GET.get('maden_from_type')

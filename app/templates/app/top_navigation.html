@@ -3,7 +3,13 @@
     <div class="nav toggle">
       <a id="menu_toggle"><i class="fa fa-bars"></i></a>
     </div>
-
+    {% if user.is_superuser %}
+    {% if all_talabat.count != 0 %}
+    <a href="{% url 'talab_sarf_list' %}">
+<span style="color:red;">يوجد طلبات صرف بإنتظار التنفيذ</span>
+</a>
+{% endif %}
+{% endif %}
     <ul class="nav navbar-nav navbar-right">
       <li class="">
         <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

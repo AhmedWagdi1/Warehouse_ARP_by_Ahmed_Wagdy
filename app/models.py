@@ -92,6 +92,7 @@ class Product(models.Model):
 class Warehouse(models.Model):
     item_name = models.ForeignKey(Product, on_delete=CASCADE)
     item_quantity = models.IntegerField()
+    farm = models.ForeignKey(Farm, on_delete=CASCADE)
 
     def __str__(self):
         return self.item_name.product_name
@@ -154,3 +155,11 @@ class SellInvoice(models.Model):
     total_price = models.IntegerField()
     category = models.ForeignKey(Category, on_delete=CASCADE)
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
+
+
+class Talabat(models.Model):
+    date = models.DateField(auto_now=True)
+    farm = models.ForeignKey(Farm, on_delete=CASCADE)
+    product = models.ForeignKey(Product, on_delete=CASCADE)
+    quantity = models.IntegerField()
+    OK = models.BooleanField(default=False)

@@ -4,7 +4,7 @@ import django_filters
 from django_filters.widgets import RangeWidget
 
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Product, Warehouse, Daily, Type, Category, \
-    BuyInvoice, SellInvoice
+    BuyInvoice, SellInvoice, Talabat
 
 
 class AddCompanyForm(forms.ModelForm):
@@ -210,3 +210,21 @@ class NewDailyForm(forms.ModelForm):
                 pass  # invalid input from the client; ignore and fallback to empty City queryset
         elif self.instance.pk:
             self.fields['da2en_from_cat'].queryset = self.instance.type.city_set
+
+class CreateTalabForm(forms.ModelForm):
+    class Meta:
+        model = Talabat
+        fields = ['product', 'quantity']
+
+class TalabatDoForm(forms.Form):
+    farm_from = forms.ModelChoiceField(queryset=Farm.objects.all(),
+    widget = forms.Select())
+
+    quantity = forms.IntegerField(
+    widget= forms.NumberInput()
+    )
+
+    product = forms.ModelChoiceField(queryset=Product.objects.all(),
+    widget = forms.Select(
+    )
+    )

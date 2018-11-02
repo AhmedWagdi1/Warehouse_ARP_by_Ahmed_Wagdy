@@ -81,5 +81,11 @@ urlpatterns = [
                   url(r'^report/sales/', views.report_sales, name="report_sales"),
                   url(r'^report/buys/', views.report_buys, name="report_buys"),
                   url(r'^report/daily/', views.report_daily, name="report_daily"),
+                  #Warehouses
+                  path('warehouse/<int:pk>/', views.warehouse_details, name="warehouse_details"),
+                  path('talab/sarf/<int:pk>/',views.talab_sarf, name="talab_sarf"),
+                  path('talabat/sarf/list/', views.talab_sarf_list, name="talab_sarf_list"),
+                  path('talabat/delete/<int:pk>', views.talabat_delete, name="talabat_delete"),
+                  path('talabat/do/<int:pk>/', views.talabat_do, name="talabat_do"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

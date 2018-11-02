@@ -1,6 +1,6 @@
 import datetime
 
-from app.models import Company, Farm, Job, Balance
+from app.models import Company, Farm, Job, Balance, Talabat
 
 
 def include_company(request):
@@ -52,5 +52,12 @@ def include_balances(request):
     all_balance = Balance.objects.all()
     context = {
         'all_balance': all_balance,
+    }
+    return (context)
+
+def include_talabat(request):
+    all_talabat = Talabat.objects.filter(OK=False)
+    context = {
+    'all_talabat':all_talabat,
     }
     return (context)

@@ -1,0 +1,97 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Table Dynamic {% endblock title %}
+
+{% block stylesheets %}
+{{ block.super }}
+<link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_right" align="right" dir="rtl">
+        <h3>مخزن {{current_warehouse.farm_name}} </h3>
+        <Br>
+          <h2>إنشاء طلب صرف </h2>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div align="right">
+      <form method= 'post'>
+        {% csrf_token %}
+        {{create_talab_form.product}} الصنف
+        <br><br>
+        {{create_talab_form.quantity}}الكمية
+        <br><br>
+      <button type="submit" class="btn btn-primary">موافق</button>
+      </form>
+      </div>
+      <br><Br>
+      </div>
+
+    </div>
+    <script>
+      function totals() {
+        var da2en1 = document.getElementById('da2en_1').innerHTML;
+        var da2en2 = document.getElementById('da2en_2').innerHTML;
+        var da2en3 = document.getElementById('da2en_3').innerHTML;
+        var da2en4 = document.getElementById('da2en_4').innerHTML;
+        var da2en5 = document.getElementById('da2en_5').innerHTML;
+        var da2en6 = document.getElementById('da2en_6').innerHTML;
+        var da2en7 = document.getElementById('da2en_7').innerHTML;
+        var da2en8 = document.getElementById('da2en_8').innerHTML;
+        var da2en9 = document.getElementById('da2en_9').innerHTML;
+        var da2en10 = document.getElementById('da2en_10').innerHTML;
+        var da2en11 = document.getElementById('da2en_11').innerHTML;
+        var da2en12 = document.getElementById('da2en_12').innerHTML;
+        var total_da2en = document.getElementById('total_da2en');
+        var all_da2en = parseInt(da2en1) + parseInt(da2en2) + parseInt(da2en3) + parseInt(da2en4) + parseInt(da2en5) + parseInt(da2en6) + parseInt(da2en7) + parseInt(da2en8) + parseInt(da2en9) + parseInt(da2en10) + parseInt(da2en11) + parseInt(da2en12);
+        total_da2en.innerHTML = all_da2en;
+        var maden1 = document.getElementById('maden_1').innerHTML;
+        var maden2 = document.getElementById('maden_2').innerHTML;
+        var maden3 = document.getElementById('maden_3').innerHTML;
+        var maden4 = document.getElementById('maden_4').innerHTML;
+        var maden5 = document.getElementById('maden_5').innerHTML;
+        var maden6 = document.getElementById('maden_6').innerHTML;
+        var maden7 = document.getElementById('maden_7').innerHTML;
+        var maden8 = document.getElementById('maden_8').innerHTML;
+        var maden9 = document.getElementById('maden_9').innerHTML;
+        var maden10 = document.getElementById('maden_10').innerHTML;
+        var maden11 = document.getElementById('maden_11').innerHTML;
+        var maden12 = document.getElementById('maden_12').innerHTML;
+        var total_maden = document.getElementById('total_maden');
+        var all_maden = parseInt(maden1) + parseInt(maden2) + parseInt(maden3) + parseInt(maden4) + parseInt(maden5) + parseInt(maden6) + parseInt(maden7) + parseInt(maden8) + parseInt(maden9) + parseInt(maden10) + parseInt(maden11) + parseInt(maden12);
+        total_maden.innerHTML = all_maden;
+      }
+    </script>
+    <script>
+      window.onload = totals();
+    </script>
+    {% endblock content %}
+
+    {% block javascripts %}
+    {{ block.super }}
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+    {% endblock javascripts %}

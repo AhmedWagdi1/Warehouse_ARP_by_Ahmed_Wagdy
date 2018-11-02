@@ -10,9 +10,9 @@ from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, \
     AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, \
-    BuyInvoiceFilterForm, NewDailyForm
+    BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm,TalabatDoForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
-    SellInvoice, BuyInvoice
+    SellInvoice, BuyInvoice, Talabat
 from datetime import date, datetime
 
 
@@ -691,20 +691,21 @@ def create_invoice_buy(request):
             new_balance = int(current_balance.balance) - int(form.total_price)
             current_balance.balance = new_balance
             current_balance.save()
-            current_item = Warehouse.objects.get(item_name=form.product)
-            if not current_item:
-                current_quant = 0
-                added_quant = form.quantity
-                new_quant = int(current_quant) + int(added_quant)
-                new_item = Warehouse(item_name=form.product, item_quantity=new_quant)
-                new_item.save()
+            current_item = Warehouse.objects.filter(farm=form.farm ,item_name=form.product)
+            if current_item.count() != 0:
+                current_item = Warehouse.objects.filter(farm=form.farm ,item_name=form.product)[0]
+                current_quantity = current_item.item_quantity
+                added_quantity = form.quantity
+                new_quantity = int(current_quantity) + int(added_quantity)
+                current_item.item_quantity = new_quantity
+                current_item.save()
                 return redirect('finance_daily')
             else:
-                current_quant = current_item.item_quantity
-                added_quant = form.quantity
-                new_quant = int(current_quant) + int(added_quant)
-                current_item.item_quantity = new_quant
-                current_item.save()
+                current_quantity = 0
+                added_quantity = form.quantity
+                new_quantity = int(current_quantity) + int(added_quantity)
+                new_adding = Warehouse(item_name=form.product, item_quantity=new_quantity, farm=form.farm)
+                new_adding.save()
                 return redirect('finance_daily')
     else:
         add_buy_invoice_form = AddBuyInvoice()
@@ -730,7 +731,7 @@ def create_invoice_sell(request):
             new_balance = int(current_balance.balance) + int(form.total_price)
             current_balance.balance = new_balance
             current_balance.save()
-            current_item = Warehouse.objects.get(item_name=form.product)
+            current_item = Warehouse.objects.get(item_name=form.product, farm=form.farm)
             added_quant = int(current_item.item_quantity) - int(form.quantity)
             current_item.item_quantity = added_quant
             current_item.save()
@@ -916,6 +917,85 @@ def new_daily(request):
     }
     return render(request, 'new_daily.html', context)
 
+def warehouse_details(request, pk):
+    current_warehouse = get_object_or_404(Farm, pk=pk)
+    all_items = Warehouse.objects.filter(farm=current_warehouse)
+    context = {
+    'current_warehouse':current_warehouse,
+    'all_items':all_items,
+    }
+    return render(request, 'warehouse_details.html', context)
+
+
+def talab_sarf(request, pk):
+    current_warehouse = get_object_or_404(Farm, pk=pk)
+    create_talab_form = CreateTalabForm(request.POST)
+    if request.method == 'POST':
+        if create_talab_form.is_valid():
+            form = create_talab_form.save(commit=False)
+            form.farm = current_warehouse
+            form.save()
+            return redirect('/warehouse/' + str(pk) )
+    else:
+        create_talab_form = CreateTalabForm()
+    context = {
+    'current_warehouse':current_warehouse,
+    'create_talab_form':create_talab_form,
+    }
+    return render(request, 'talab_sarf.html', context)
+
+def talab_sarf_list(request):
+    all_talab = Talabat.objects.all().order_by('-date')
+    context = {
+    'all_talab':all_talab,
+    }
+    return render(request, 'talabat_sarf_list.html', context)
+
+def talabat_delete(request, pk):
+    current_talabat = get_object_or_404(Talabat, pk=pk)
+    current_talabat.delete()
+    return redirect('talab_sarf_list')
+
+def talabat_do(request, pk):
+    current_talabat = get_object_or_404(Talabat, pk=pk)
+    talabat_do_form = TalabatDoForm(request.POST)
+    if request.method == 'POST':
+        if talabat_do_form.is_valid():
+            quantity = talabat_do_form.cleaned_data['quantity']
+            product = talabat_do_form.cleaned_data['product']
+            farm_from = talabat_do_form.cleaned_data['farm_from']
+            farm_to = current_talabat.farm
+            farm_from_obj = Warehouse.objects.get(farm=farm_from)
+            current_quant = farm_from_obj.item_quantity
+            removed_quant = quantity
+            new_from_quant = int(current_quant) - int(removed_quant)
+            farm_from_obj.item_quantity = new_from_quant
+            farm_from_obj.save()
+            farm_to_obj = Warehouse.objects.filter(farm=farm_to, item_name=product)
+            if farm_to_obj.count() !=0 :
+                farm_to_obj = Warehouse.objects.filter(farm=farm_to, item_name=product)[0]
+                current_to_quant = farm_to_obj.item_quantity
+                added_to_quant = quantity
+                new_to_quant = int(current_to_quant) + int(added_to_quant)
+                farm_to_obj.item_quantity = new_to_quant
+                farm_to_obj.save()
+                current_talabat.OK=True
+                current_talabat.save()
+                return redirect('talab_sarf_list')
+            else:
+                new_to_added = Warehouse(item_name=product, item_quantity=quantity, farm=farm_to )
+                new_to_added.save()
+                current_talabat.OK=True
+                current_talabat.save()
+                return redirect('talab_sarf_list')
+
+    else:
+        talabat_do_form = TalabatDoForm()
+    context = {
+    'current_talabat':current_talabat,
+    'talabat_do_form':talabat_do_form,
+    }
+    return render(request, 'talabat_do.html', context )
 
 def load_cates(request):
     current_maden_type = request.GET.get('maden_from_type')

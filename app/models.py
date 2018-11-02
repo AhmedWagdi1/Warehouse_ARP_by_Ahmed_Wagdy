@@ -57,8 +57,8 @@ class Worker(models.Model):
 
 class Supplier(models.Model):
     supplier_name = models.CharField(max_length=85)
-    supplier_mob_number = models.IntegerField()
-    supplier_ID_number = models.IntegerField()
+    supplier_mob_number = models.CharField(max_length=12)
+    supplier_ID_number = models.CharField(max_length=20)
 
     def __str__(self):
         return self.supplier_name

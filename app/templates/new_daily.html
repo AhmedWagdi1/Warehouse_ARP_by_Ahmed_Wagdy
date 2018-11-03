@@ -24,9 +24,10 @@
 
             <div class="clearfix"></div>
 
-<div align="right" dir="rtl">
+<div align="right" dir="rtl" >
               <form method="post" id="dailyform" data-cities-url="{% url 'ajax_load_cates' %}" data-citire-url-da2en ="{% url 'ajax_load_cates_da2en' %}" novalidate>
     {% csrf_token %}
+    <div id="write">
         {{ new_daily_form.text }}
         <hr>
 <h3>مدين</h3>
@@ -40,9 +41,119 @@
         فئة&nbsp;{{ new_daily_form.da2en_from_cat }}&nbsp;&nbsp;
         <hr>
         <h3>المزرعة &nbsp;{{ new_daily_form.farm }}&nbsp;&nbsp;</h3>
+<button type="button" class="btn btn-primary" onclick="view()">موافق</button>
+</div>
+<div id="confirm" style="display: none;">
+  <div id="areaToPrint">
+        <table id="" class="table table-striped table-bordered" dir="rtl" border="1">
+            <thead dir="rtl" align="right">
+            <tr>
+                <th></th>
+                <th colspan="3">مدين</th>
+                <th colspan="3">دائن</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>البيان</th>
+                <th>الحساب</th>
+                <th>الفئة</th>
+                <th>القيمة</th>
+                <th>الحساب</th>
+                <th>الفئة</th>
+                <th>القيمة</th>
+                <th>المزرعة</th>
+            </tr>
+            </thead>
 
-    <button type="submit" class="btn btn-primary" >إضافة</button>
+
+            <tbody>
+                <tr>
+                    <td id="bayan_out"></td>
+                    <td id="maden_from_type_out"></td>
+                    <td id="maden_from_cat_out"></td>
+                    <td id="maden_value_out"></td>
+                    <td id="da2en_from_type_out"></td>
+                    <td id="da2en_from_cat_out"></td>
+                    <td id="da2en_value_out"></td>
+                    <td id="farm_out"></td>
+                </tr>
+
+            </tbody>
+        </table>
+</div>
+    <button type="submit" class="btn btn-primary" >تأكيد إضافة القيد</button>
+    <button type="button" class="btn btn-warning" onclick="edit()">تعديل</button>
+    <button type="button" class="btn btn-default" onclick="printDiv()">طباعة <span class="fa fa-print"></span></button>
+    </div>
   </form>
+  <script>
+    function view(){
+      //part of hiding elements
+      var confirm = document.getElementById('confirm'),
+          write = document.getElementById('write');
+
+      //confirm.setAttribute('style','display: block;')
+      $("#confirm").fadeIn(3000);
+      //write.setAttribute('style','display: none;')
+      $("#write").fadeOut(500);
+      //all variables here
+      var bayan_in = document.getElementById('id_text'),
+          bayan_out = document.getElementById('bayan_out'),
+          maden_value_in =document.getElementById('id_maden'),
+          maden_value_out = document.getElementById('maden_value_out'),
+          da2en_value_in = document.getElementById('id_da2en'),
+          da2en_value_out = document.getElementById('da2en_value_out'),
+          // drop down menu value maden
+          maden_from_type_in_1 = document.getElementById('id_maden_from_type'),
+          maden_from_type_in = maden_from_type_in_1.options[maden_from_type_in_1.selectedIndex].text,
+          maden_from_type_out = document.getElementById('maden_from_type_out'),
+          maden_from_cat_in_1 = document.getElementById('id_maden_from_cat'),
+          maden_from_cat_in = maden_from_cat_in_1.options[maden_from_cat_in_1.selectedIndex].text,
+          maden_from_cat_out = document.getElementById('maden_from_cat_out'),
+          //drop down menu value da2en
+          da2en_from_type_in_1 = document.getElementById('id_da2en_from_type'),
+          da2en_from_type_in = da2en_from_type_in_1.options[da2en_from_type_in_1.selectedIndex].text,
+          da2en_from_type_out = document.getElementById('da2en_from_type_out'),
+          da2en_from_cat_in_1 = document.getElementById('id_da2en_from_cat'),
+          da2en_from_cat_in = da2en_from_cat_in_1.options[da2en_from_cat_in_1.selectedIndex].text,
+          da2en_from_cat_out = document.getElementById('da2en_from_cat_out'),
+          // farm part
+          farm_in1  = document.getElementById('id_farm'),
+          farm_in = farm_in1.options[farm_in1.selectedIndex].text,
+          farm_out = document.getElementById('farm_out');
+
+      bayan_out.innerHTML = bayan_in.value;
+      maden_value_out.innerHTML = maden_value_in.value;
+      maden_from_type_out.innerHTML = maden_from_type_in;
+      maden_from_cat_out.innerHTML = maden_from_cat_in;
+      da2en_value_out.innerHTML = da2en_value_in.value;
+      da2en_from_type_out.innerHTML = da2en_from_type_in;
+      da2en_from_cat_out.innerHTML = da2en_from_cat_in;
+      farm_out.innerHTML = farm_in;
+
+    }
+    </script>
+    <script>
+      function edit(){
+        var write = document.getElementById('write'),
+            confirm = document.getElementById('confirm');
+        //write.setAttribute('style','display: block;')
+        $("#write").fadeIn(3000);
+        //confirm.setAttribute('style', 'display: none;')
+        $("#confirm").fadeOut(500);
+
+      }
+      </script>
+      <script>
+    function printDiv() {
+        var divToPrint = document.getElementById('areaToPrint');
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+   }
+</script>
+
 </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
@@ -108,7 +219,3 @@
     <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
 {% endblock javascripts %}
-
-
-
-

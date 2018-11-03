@@ -177,12 +177,22 @@ class NewDailyForm(forms.ModelForm):
                                              )
     maden_from_cat = forms.ModelChoiceField(required=False, queryset=Category.objects.all(),
                                             widget=forms.Select(
-
                                             ))
     da2en_from_cat = forms.ModelChoiceField(required=False, queryset=Category.objects.all(),
                                             widget=forms.Select(
 
                                             ))
+
+    maden = forms.IntegerField(
+    widget=forms.NumberInput(
+    attrs={
+    }))
+
+    da2en = forms.IntegerField(
+    widget=forms.NumberInput(
+    attrs={
+    }))
+
 
     class Meta:
         model = Daily

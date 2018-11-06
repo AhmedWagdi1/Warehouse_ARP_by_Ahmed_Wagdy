@@ -10,7 +10,7 @@ from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
     AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, \
     AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, \
-    BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm,TalabatDoForm
+    BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm,TalabatDoForm,IncomeListFilterForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
     SellInvoice, BuyInvoice, Talabat
 from datetime import date, datetime
@@ -745,11 +745,13 @@ def create_invoice_sell(request):
 
 @login_required
 def income_list(request):
-    all_invoice = Daily.objects.filter(is_invoice=True)
-    all_daily = Daily.objects.filter(is_invoice=False)
+    form1 = IncomeListFilterForm(request.GET, queryset=Daily.objects.filter(is_invoice=False))
+    #all_daily = Daily.objects.filter(is_invoice=False)
+    form2 = IncomeListFilterForm(request.GET, queryset=Daily.objects.filter(is_invoice=True))
+    #all_invoice = Daily.objects.filter(is_invoice=True)
     all_sells = []
     all_buys = []
-    for item in all_invoice:
+    for item in form2.qs:
         if item.da2en != 0:
             all_sells.append(item.da2en)
         if item.maden != 0:
@@ -758,7 +760,7 @@ def income_list(request):
     final_buys = sum(all_buys)
     st_profit = final_sells - final_buys
     all_costs = []
-    for item in all_daily:
+    for item in form1.qs:
         if item.maden != 0:
             all_costs.append(item.maden)
     final_costs = sum(all_costs)
@@ -769,6 +771,8 @@ def income_list(request):
         'st_profit': st_profit,
         'final_costs': final_costs,
         'net': net,
+        'filter1':form1,
+        'filter2':form2,
     }
 
     return render(request, 'income_list.html', context)

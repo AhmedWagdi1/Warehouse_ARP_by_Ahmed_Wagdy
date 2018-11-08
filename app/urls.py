@@ -35,8 +35,7 @@ urlpatterns = [
                   url(r'^supplier/delete/(?P<pk>[0-9]+)/', views.supplier_delete, name="supplier_delete"),
                   url(r'^supplier/update/(?P<pk>[0-9]+)/', views.SupplierUpdate.as_view(), name="supplier_update"),
                   url(r'^supplier/details/(?P<pk>[0-9]+)/$', views.supplier_details, name="supplier_details"),
-
-                  #                 clients
+                  #clients
                   url(r'^clients/$', views.clients, name="clients"),
                   url(r'^clients/add/$', views.clients_add, name="clients_add"),
                   url(r'^clients/details/(?P<pk>[0-9]+)/$', views.client_details, name="client_details"),
@@ -63,7 +62,8 @@ urlpatterns = [
                   url(r'delete/tawseef/(?P<pk>[0-9]+)/$', views.delete_tawseef, name="delete_tawseef"),
                   url(r'^tawseef/update/(?P<pk>[0-9]+)/', views.TawseefUpdate.as_view(), name="tawseef_update"),
                   url(r'^new/dailu/$', views.new_daily, name="new_daily"),
-    #ajax_refreshes
+                  path('finance/mezania/', views.mezania, name="mezania"),
+                  #ajax_refreshes
                   path('ajax/load-cities/', views.load_cates, name='ajax_load_cates'),  # <-- this one here
                   path('ajax/load-cities_da2en/', views.load_cates_da2en, name='ajax_load_cates_da2en'),  # <-- this one here
 

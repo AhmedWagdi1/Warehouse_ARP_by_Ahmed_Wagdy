@@ -14,6 +14,7 @@
 {% block content %}
     <div class="right_col" role="main">
         <div class="">
+          <div id="areaToPrint">
             <div class="page-title">
                 <div class="title_right" align="right">
                     <h3> تقارير إجمالى حركة الشركة <span class="fa fa-list"></span></h3>
@@ -41,7 +42,10 @@
 <h1 align="right" dir="rtl" id="net_title"><span class="fa fa-dollar  "></span> الأرباح </h1>
            <h2 align="right" dir="rtl" id="net_title2">   صافى الارباح  <b id="number">{{ final_net }}</b></h2>
     <hr>
+    </div>
+
         </div>
+
 <script>
 function net_color(){
     var net = document.getElementById('net_title'),
@@ -62,6 +66,15 @@ function net_color(){
         <script>
     window.onload(net_color())
     </script>
+    <script>
+  function printDiv() {
+      var divToPrint = document.getElementById('areaToPrint');
+      newWin = window.open("");
+      newWin.document.write(divToPrint.outerHTML);
+      newWin.print();
+      newWin.close();
+ }
+</script>
 
 {% endblock content %}
 

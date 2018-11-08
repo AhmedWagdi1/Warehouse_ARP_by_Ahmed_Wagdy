@@ -1,0 +1,297 @@
+{% extends "app/base_site.html" %}
+
+{% block title %} Table Dynamic {% endblock title %}
+
+{% block stylesheets %}
+{{ block.super }}
+<link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+{% load custom_tags %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_right" align="right">
+        <h3> <span class="fa fa-balance-scale"></span>
+          الميزانية العمومية
+        </h3>
+        <Br>
+        </div>
+
+      </div>
+
+      <div class="clearfix"></div>
+
+      <table id="tbl-1" class="table table-striped table-bordered">
+        <thead align="right">
+          <tr class="titlerow2">
+            <th>البيان</th>
+            <th>فرعى</th>
+            <th>جزئى</th>
+            <th>كلى</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr style="background-color: #daf3d8;">
+            <td align="right"><b>الاصول المتداولة</b></td>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">النقدية</td>
+            <th id="naqdya">{{final_naqdya}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">البنوك</td>
+            <th id="banks">{{final_bank}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">جارى شركات شقيقة</td>
+            <th id="gary">{{final_gary}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">العملاء</td>
+            <th id="clients">{{final_clients}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">مصروف مقدم</td>
+            <th id="masrof">{{final_masrof}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">الخزنة الرئيسية</td>
+            <th id="khazna">{{final_khazna}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">العهد</td>
+            <th id="el3ohad">{{final_al3ohad}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">السلف</td>
+            <th id="solaf">{{final_solaf}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr style="background-color: yellow;">
+            <td align="right" style="background-color: yellow;">إجمالى الاصول المتداولة</td>
+            <th></th>
+            <th id="osol2_total" style="background-color: yellow;"></th>
+            <th></th>
+          </tr>
+          <tr style="background-color: #daf3d8;">
+            <td align="right" ><b>الاصول الثابتة</b></td>
+            <th id="solaf"></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">صافى الأصول الثابتة - تكلفة</td>
+            <th id="safy_sabta">{{final_sabta}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">جارى الفروع المدينة</td>
+            <th id="gary_fero3">{{final_gary_fero3}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr style="background-color: yellow;">
+            <td align="right" style="background-color: yellow;"> إجمالى الاصول الثابتة</td>
+            <th></th>
+            <th id="total_sabta_obj" style="background-color: yellow;"></th>
+            <th id="total_osol" style="background-color: yellow;"></th>
+          </tr>
+          <tr style="background-color: #daf3d8;">
+            <td align="right" ><b>الخصوم المتداولة</b></td>
+            <th id=""></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">الموردون</td>
+            <th id="mowardon">{{final_mowrdon}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">اوراق دفع</td>
+            <th id="awraq">{{final_awra2}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">مصروفات مستحقة</td>
+            <th id="mosta7aqa">{{final_mosta7aqa}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">تأمينات وأمانات للغير</td>
+            <th id="ta2menat">{{final_ta2menat}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr style="background-color: yellow;">
+            <td align="right" style="background-color: yellow;">إجمالى الخصوم المتداولة</td>
+            <th></th>
+            <th id="khosom_total" style="background-color: yellow;"></th>
+            <th></th>
+          </tr>
+          <tr style="background-color: #daf3d8;">
+            <td align="right" ><b>الخصوم غير المتداولة</b></td>
+            <th id=""></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">مخصص مستحقات العاملين</td>
+            <th id="mosta7aqat2">{{final_mokhasas}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+
+          <tr>
+            <td align="right">جارى الفروع الدائنة</td>
+            <th id="gary_fero3_da2en2">{{final_gary_fero3_da2en}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr style="background-color: yellow;">
+            <td align="right" style="background-color: yellow;">إجمالى الخصوم غير المتداولة</td>
+            <th></th>
+            <th id="total_khosom">0</th>
+            <th id ="final_total_khosom" ></th>
+          </tr>
+          <tr style="background-color: yellow;">
+            <td align="right" style="background-color: yellow;">صافى الأصول</td>
+            <th></th>
+            <th id="total_sabta_obj"></th>
+            <th id="net_osol"></th>
+          </tr>
+          <tr style="background-color: #daf3d8;">
+            <td align="right" ><b>حقوق الملكية</b></td>
+            <th id=""></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">رأس المال</td>
+            <th id="capital">{{final_ra2s_mal}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td align="right">جارى صاحب المؤسسة</td>
+            <th id="owner">{{final_owner}}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr style="background-color: yellow;">
+            <td align="right" style="background-color: yellow;">إجمالى حقوق الملكية</td>
+            <th></th>
+            <th id="total_egmaly_7e2o2"></th>
+            <th id ="total_egmaly_7e2o2_2"></th>
+          </tr>
+        </tbody>
+      </table>
+      <br><Br><Br>
+      </div>
+    </div>
+    <script>
+      function totals(){
+        var osol2_total = document.getElementById('osol2_total'),
+        naqdya = document.getElementById('naqdya').innerHTML,
+        banks = document.getElementById('banks').innerHTML,
+        gary = document.getElementById('gary').innerHTML,
+        clients = document.getElementById('clients').innerHTML,
+        masrof = document.getElementById('masrof').innerHTML,
+        khazna = document.getElementById('khazna').innerHTML,
+        el3ohad = document.getElementById('el3ohad').innerHTML,
+        solaf = document.getElementById('solaf').innerHTML,
+        safy_sabta = document.getElementById('safy_sabta').innerHTML,
+        gary_fero3 = document.getElementById('gary_fero3').innerHTML,
+        total_sabta_obj = document.getElementById('total_sabta_obj'),
+        total_osol = document.getElementById('total_osol'),
+        mowardon = document.getElementById('mowardon').innerHTML,
+        awraq = document.getElementById('awraq').innerHTML,
+        mosta7aqa = document.getElementById('mosta7aqa').innerHTML,
+        ta2menat = document.getElementById('ta2menat').innerHTML,
+        khosom_total = document.getElementById('khosom_total'),
+        mosta7aqat2 = document.getElementById('mosta7aqat2').innerHTML,
+        gary_fero3_da2en2 = document.getElementById('gary_fero3_da2en2').innerHTML,
+        total_khosom = document.getElementById('total_khosom'),
+        final_total_khosom = document.getElementById('final_total_khosom'),
+        net_osol = document.getElementById('net_osol'),
+        capital = document.getElementById('capital').innerHTML,
+        owner = document.getElementById('owner').innerHTML,
+        total_egmaly_7e2o2 = document.getElementById('total_egmaly_7e2o2'),
+        total_egmaly_7e2o2_2 = document.getElementById('total_egmaly_7e2o2_2');
+
+        total = parseFloat(naqdya) + parseFloat(banks) + parseFloat(gary) + parseFloat(clients) + parseFloat(masrof) + parseFloat(khazna) + parseFloat(el3ohad) + parseFloat(solaf);
+        osol2_total.innerHTML = total;
+        total_sabta = parseFloat(safy_sabta) + parseFloat(gary_fero3)
+        total_sabta_obj.innerHTML = total_sabta;
+        total_osol.innerHTML = total_sabta + total;
+
+        total2 = parseFloat(mowardon) + parseFloat(awraq) + parseFloat(mosta7aqa) + parseFloat(ta2menat);
+        khosom_total.innerHTML = total2;
+
+        total3 = parseFloat(mosta7aqat2) + parseFloat(gary_fero3_da2en2);
+        total_khosom.innerHTML = total3;
+
+        total_all_khosom = parseFloat(khosom_total.innerHTML) +  parseFloat(total_khosom.innerHTML);
+        final_total_khosom.innerHTML = total_all_khosom;
+
+        total6 = parseFloat(total_osol.innerHTML) - parseFloat(final_total_khosom.innerHTML);
+        net_osol.innerHTML = total6;
+
+        total7 = parseFloat(capital) + parseFloat(owner);
+        total_egmaly_7e2o2.innerHTML = total7;
+        total_egmaly_7e2o2_2.innerHTML = total7;
+      }
+    </script>
+    <script>
+      window.onload = totals();
+    </script>
+    {% endblock content %}
+
+    {% block javascripts %}
+    {{ block.super }}
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+    {% endblock javascripts %}

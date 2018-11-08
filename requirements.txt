@@ -6,3 +6,4 @@ dj-database-url
 whitenoise
 django-filter
 psycopg2
+django-mathfilters

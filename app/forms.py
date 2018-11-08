@@ -78,8 +78,7 @@ class AddDailyForm(forms.ModelForm):
                                widget=forms.NumberInput(
                                    attrs={
                                        'style': 'max-width: 75px;',
-                                       'placeholder': 'دائن',
-                                       'value': 0,
+                                       'value': '0',
 
                                    }
                                )
@@ -88,8 +87,7 @@ class AddDailyForm(forms.ModelForm):
                                widget=forms.NumberInput(
                                    attrs={
                                        'style': 'max-width: 75px;',
-                                       'placeholder': 'مدين',
-                                       'value': 0,
+                                       'value': '0',
                                    }
                                )
                                )
@@ -186,11 +184,13 @@ class NewDailyForm(forms.ModelForm):
     maden = forms.IntegerField(
     widget=forms.NumberInput(
     attrs={
+    'value':'0',
     }))
 
     da2en = forms.IntegerField(
     widget=forms.NumberInput(
     attrs={
+    'value':'0',
     }))
 
 
@@ -243,6 +243,12 @@ class TalabatDoForm(forms.Form):
 class IncomeListFilterForm(django_filters.FilterSet):
     # date__range = django_filters.DateFromToRangeFilter(field_name='date', lookup_expr='month__gt')
     #date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12'}))
+    class Meta:
+        model = Daily
+        fields = ['farm']
+
+
+class DailyReportFilterForm(django_filters.FilterSet):
     class Meta:
         model = Daily
         fields = ['farm']

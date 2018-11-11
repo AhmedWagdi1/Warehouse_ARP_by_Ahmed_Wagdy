@@ -1113,259 +1113,137 @@ def load_cates_da2en(request):
     return render(request, 'aj/da2en_from_cate_dropdown_list_options.html', {'cates_da2en': cates_da2en})
 
 def mezania(request):
+    osol_mota_obj = Type.objects.get(type_name='الاصول المتداولة ')
+    all_daily_osol_mota_da2en = Daily.objects.filter(da2en_from_type=osol_mota_obj).values('da2en_from_cat__category_name').annotate(
+            all_da2en=Sum('da2en'))
+    all_daily_osol_mota_maden= Daily.objects.filter(maden_from_type=osol_mota_obj).values('maden_from_cat__category_name').annotate(
+            all_maden=Sum('maden'))
+    all_daily_osol_mota_total_maden = Daily.objects.filter(maden_from_type=osol_mota_obj).annotate(all_maden=Sum('maden'))
+    all_daily_osol_mota_total_da2en = Daily.objects.filter(da2en_from_type=osol_mota_obj).annotate(all_da2en=Sum('da2en'))
+    osol_mota_maden_list = []
+    osol_mota_da2en_list = []
+    for item in all_daily_osol_mota_total_maden:
+        osol_mota_maden_list.append(item.all_maden)
+    final_osol_mota_maden_total = sum(osol_mota_maden_list)
+    for item in all_daily_osol_mota_total_da2en:
+        osol_mota_da2en_list.append(item.all_da2en)
+    final_osol_mota_da2en_total = sum(osol_mota_da2en_list)
+    osol_mota_total_net = int(final_osol_mota_da2en_total) - int(final_osol_mota_maden_total)
     #############################################################
-    naqdya_obj = Category.objects.get(category_name='النقدية')
-    naqdya_daily_da2en = Daily.objects.filter(da2en_from_cat=naqdya_obj)
-    naqdya_daily_maden = Daily.objects.filter(maden_from_cat=naqdya_obj)
-    naqdya_da2en = []
-    naqdya_maden = []
-    for item in naqdya_daily_da2en:
-        naqdya_da2en.append(item.da2en)
-    all_naqdya_da2en = sum(naqdya_da2en)
-    for item in naqdya_daily_maden:
-        naqdya_maden.append(item.maden)
-    all_naqdya_maden = sum(naqdya_maden)
-    final_naqdya = all_naqdya_da2en - all_naqdya_maden
-    ############################################################
-    bank_obj = Category.objects.get(category_name='البنوك')
-    bank_daily_da2en = Daily.objects.filter(da2en_from_cat=bank_obj)
-    bank_daily_maden = Daily.objects.filter(maden_from_cat=bank_obj)
-    bank_da2en = []
-    bank_maden = []
-    for item in bank_daily_da2en:
-        bank_da2en.append(item.da2en)
-    all_bank_da2en = sum(bank_da2en)
-    for item in bank_daily_maden:
-        bank_maden.append(item.maden)
-    all_bank_maden = sum(bank_maden)
-    final_bank = all_bank_da2en - all_bank_maden
-    ############################################################
-    gary_obj = Category.objects.get(category_name='جارى شركات شقيقة')
-    gary_daily_da2en = Daily.objects.filter(da2en_from_cat=gary_obj)
-    gary_daily_maden = Daily.objects.filter(maden_from_cat=gary_obj)
-    gary_da2en = []
-    gary_maden = []
-    for item in gary_daily_da2en:
-        gary_da2en.append(item.da2en)
-    all_gary_da2en = sum(gary_da2en)
-    for item in gary_daily_maden:
-        gary_maden.append(item.maden)
-    all_gary_maden = sum(gary_maden)
-    final_gary = all_gary_da2en - all_gary_maden
-    ############################################################
-    clients_obj = Category.objects.get(category_name='العملاء')
-    clients_daily_da2en = Daily.objects.filter(da2en_from_cat=clients_obj)
-    clients_daily_maden = Daily.objects.filter(maden_from_cat=clients_obj)
-    clients_da2en = []
-    clients_maden = []
-    for item in clients_daily_da2en:
-        clients_da2en.append(item.da2en)
-    all_clients_da2en = sum(clients_da2en)
-    for item in clients_daily_maden:
-        clients_maden.append(item.maden)
-    all_clients_maden = sum(clients_maden)
-    final_clients = all_clients_da2en - all_clients_maden
-    ############################################################
-    masrof_obj = Category.objects.get(category_name='مصروف مقدم')
-    masrof_daily_da2en = Daily.objects.filter(da2en_from_cat=masrof_obj)
-    masrof_daily_maden = Daily.objects.filter(maden_from_cat=masrof_obj)
-    masrof_da2en = []
-    masrof_maden = []
-    for item in masrof_daily_da2en:
-        masrof_da2en.append(item.da2en)
-    all_masrof_da2en = sum(masrof_da2en)
-    for item in masrof_daily_maden:
-        masrof_maden.append(item.maden)
-    all_masrof_maden = sum(masrof_maden)
-    final_masrof = all_masrof_da2en - all_masrof_maden
-    ############################################################
-    khazna_obj = Category.objects.get(category_name='الخزنه الرئيسيه')
-    khazna_daily_da2en = Daily.objects.filter(da2en_from_cat=khazna_obj)
-    khazna_daily_maden = Daily.objects.filter(maden_from_cat=khazna_obj)
-    khazna_da2en = []
-    khazna_maden = []
-    for item in khazna_daily_da2en:
-        khazna_da2en.append(item.da2en)
-    all_khazna_da2en = sum(khazna_da2en)
-    for item in khazna_daily_maden:
-        khazna_maden.append(item.maden)
-    all_khazna_maden = sum(khazna_maden)
-    final_khazna = all_khazna_da2en - all_khazna_maden
-    ############################################################
-    al3ohad_obj = Category.objects.get(category_name='العهد')
-    al3ohan_daily_da2en = Daily.objects.filter(da2en_from_cat=al3ohad_obj)
-    al3ohad_daily_maden = Daily.objects.filter(maden_from_cat=al3ohad_obj)
-    al3ohad_da2en = []
-    al3ohad_maden = []
-    for item in al3ohan_daily_da2en:
-        al3ohad_da2en.append(item.da2en)
-    all_al3ohad_da2en = sum(al3ohad_da2en)
-    for item in al3ohad_daily_maden:
-        al3ohad_maden.append(item.maden)
-    all_al3ohad_maden = sum(al3ohad_maden)
-    final_al3ohad = all_al3ohad_da2en - all_al3ohad_maden
-    ############################################################
-    solaf_obj = Category.objects.get(category_name='السلف')
-    solaf_daily_da2en = Daily.objects.filter(da2en_from_cat=solaf_obj)
-    solaf_daily_maden = Daily.objects.filter(maden_from_cat=solaf_obj)
-    solaf_da2en = []
-    solaf_maden = []
-    for item in solaf_daily_da2en:
-        solaf_da2en.append(item.da2en)
-    all_solaf_da2en = sum(solaf_da2en)
-    for item in solaf_daily_maden:
-        solaf_maden.append(item.maden)
-    all_solaf_maden = sum(solaf_maden)
-    final_solaf = all_solaf_da2en - all_solaf_maden
-    ############################################################
-    sabta_obj = Category.objects.get(category_name='صافى الأصول الثابتة - تكلفة')
-    sabta_daily_da2en = Daily.objects.filter(da2en_from_cat=sabta_obj)
-    sabta_daily_maden = Daily.objects.filter(maden_from_cat=sabta_obj)
-    sabta_da2en = []
-    sabta_maden = []
-    for item in sabta_daily_da2en:
-        sabta_da2en.append(item.da2en)
-    all_sabta_da2en = sum(sabta_da2en)
-    for item in sabta_daily_maden:
-        sabta_maden.append(item.maden)
-    all_sabta_maden = sum(sabta_maden)
-    final_sabta = all_sabta_da2en - all_sabta_maden
-    ############################################################
-    gary_fero3_obj = Category.objects.get(category_name='جارى الفروع المدينة')
-    gary_fero3_daily_da2en = Daily.objects.filter(da2en_from_cat=gary_fero3_obj)
-    gary_fero3_daily_maden = Daily.objects.filter(maden_from_cat=gary_fero3_obj)
-    gary_fero3_da2en = []
-    gary_fero3_maden = []
-    for item in gary_fero3_daily_da2en:
-        gary_fero3_da2en.append(item.da2en)
-    all_gary_fero3_da2en = sum(gary_fero3_da2en)
-    for item in gary_fero3_daily_maden:
-        gary_fero3_maden.append(item.maden)
-    all_gaery_fero3_maden = sum(gary_fero3_maden)
-    final_gary_fero3 = all_gary_fero3_da2en - all_gaery_fero3_maden
-    ############################################################
-    mowrdon_obj = Category.objects.get(category_name='الموردون')
-    mowrdon_daily_da2en = Daily.objects.filter(da2en_from_cat=mowrdon_obj)
-    mowrdon_daily_maden = Daily.objects.filter(maden_from_cat=mowrdon_obj)
-    mowrdon_da2en = []
-    mowrdon_maden = []
-    for item in mowrdon_daily_da2en:
-        mowrdon_da2en.append(item.da2en)
-    all_mowrdon_da2en = sum(mowrdon_da2en)
-    for item in mowrdon_daily_maden:
-        mowrdon_maden.append(item.maden)
-    all_mowrdon_maden = sum(mowrdon_maden)
-    final_mowrdon = all_mowrdon_da2en - all_mowrdon_maden
-    ############################################################
-    awraw2_obj = Category.objects.get(category_name='اوراق دفع')
-    awraw2_daily_da2en = Daily.objects.filter(da2en_from_cat=awraw2_obj)
-    awraw2_daily_maden = Daily.objects.filter(maden_from_cat=awraw2_obj)
-    awraw2_da2en = []
-    awraw2_maden = []
-    for item in awraw2_daily_da2en:
-        awraw2_da2en.append(item.da2en)
-    all_awraw2_da2en = sum(awraw2_da2en)
-    for item in awraw2_daily_maden:
-        awraw2_maden.append(item.maden)
-    all_awra2_maden = sum(awraw2_maden)
-    final_awra2 = all_awraw2_da2en - all_awra2_maden
-    ############################################################
-    mosta7aqa_obj = Category.objects.get(category_name='مصروفات مستحقة')
-    mosta7aqa_daily_da2en = Daily.objects.filter(da2en_from_cat=mosta7aqa_obj)
-    mosta7aqa_daily_maden = Daily.objects.filter(maden_from_cat=mosta7aqa_obj)
-    mosta7aqa_da2en = []
-    mosta7aqa_maden = []
-    for item in mosta7aqa_daily_da2en:
-        mosta7aqa_da2en.append(item.da2en)
-    all_mosta7aqa_da2en = sum(mosta7aqa_da2en)
-    for item in mosta7aqa_daily_maden:
-        mosta7aqa_maden.append(item.maden)
-    all_mosta7aqa_maden = sum(mosta7aqa_maden)
-    final_mosta7aqa = all_mosta7aqa_da2en - all_mosta7aqa_maden
-    ############################################################
-    ta2menat_obj = Category.objects.get(category_name='تأمينات وأمانات للغير')
-    ta2menat_daily_da2en = Daily.objects.filter(da2en_from_cat=ta2menat_obj)
-    ta2menat_daily_maden = Daily.objects.filter(maden_from_cat=ta2menat_obj)
-    ta2menat_da2en = []
-    ta2menat_maden = []
-    for item in ta2menat_daily_da2en:
-        ta2menat_da2en.append(item.da2en)
-    all_ta2menat_da2en = sum(ta2menat_da2en)
-    for item in ta2menat_daily_maden:
-        ta2menat_maden.append(item.maden)
-    all_ta2menat_maden = sum(ta2menat_maden)
-    final_ta2menat = all_ta2menat_da2en - all_ta2menat_maden
-    ############################################################
-    mokhasas_obj = Category.objects.get(category_name='مخصص مستحقات العاملين')
-    mokhasas_daily_da2en = Daily.objects.filter(da2en_from_cat=mokhasas_obj)
-    mokhasas_daily_maden = Daily.objects.filter(maden_from_cat=mokhasas_obj)
-    mokhasas_da2en = []
-    mokhasas_maden = []
-    for item in mokhasas_daily_da2en:
-        mokhasas_da2en.append(item.da2en)
-    all_mokhasas_da2en = sum(mokhasas_da2en)
-    for item in mokhasas_daily_maden:
-        mokhasas_maden.append(item.maden)
-    all_mokhasas_maden = sum(mokhasas_maden)
-    final_mokhasas = all_mokhasas_da2en - all_mokhasas_maden
-    ############################################################
-    gary_fero3_da2en_obj = Category.objects.get(category_name='جارى الفروع الدائنة')
-    gary_fero3_da2en_daily_da2en = Daily.objects.filter(da2en_from_cat=gary_fero3_da2en_obj)
-    gary_fero3_da2en_daily_maden = Daily.objects.filter(maden_from_cat=gary_fero3_da2en_obj)
-    gary_fero3_da2en_da2en = []
-    gary_fero3_da2en_maden = []
-    for item in gary_fero3_da2en_daily_da2en:
-        gary_fero3_da2en_da2en.append(item.da2en)
-    all_gary_fero3_da2en_da2en = sum(gary_fero3_da2en_da2en)
-    for item in gary_fero3_da2en_daily_maden:
-        gary_fero3_da2en_maden.append(item.maden)
-    all_gary_fero3_da2en_maden = sum(gary_fero3_da2en_maden)
-    final_gary_fero3_da2en = all_gary_fero3_da2en_da2en - all_gary_fero3_da2en_maden
-    ############################################################
-    ra2s_mal_da2en_obj = Category.objects.get(category_name='رأس المال')
-    ra2s_mal_daily_da2en = Daily.objects.filter(da2en_from_cat=ra2s_mal_da2en_obj)
-    ra2s_mal_daily_maden = Daily.objects.filter(maden_from_cat=ra2s_mal_da2en_obj)
-    ra2s_mal_da2en = []
-    ra2s_mal_maden = []
-    for item in ra2s_mal_daily_da2en:
-        ra2s_mal_da2en.append(item.da2en)
-    all_ra2s_mal_da2en = sum(ra2s_mal_da2en)
-    for item in ra2s_mal_daily_maden:
-        ra2s_mal_maden.append(item.maden)
-    all_ra2s_mal_maden = sum(ra2s_mal_maden)
-    final_ra2s_mal = all_ra2s_mal_da2en - all_ra2s_mal_maden
-    ############################################################
-    owner_obj = Category.objects.get(category_name='جارى صاحب المؤسسة')
-    owner_da2en = Daily.objects.filter(da2en_from_cat=owner_obj)
-    owner_maden = Daily.objects.filter(maden_from_cat=owner_obj)
-    owner_da2en = []
-    owner_maden = []
-    for item in owner_da2en:
-        owner_da2en.append(item.da2en)
-    all_owner_da2en = sum(owner_da2en)
-    for item in owner_maden:
-        owner_maden.append(item.maden)
-    all_owner_maden = sum(owner_maden)
-    final_owner = all_owner_da2en - all_owner_maden
-    ############################################################
+    osol_sabta_obj = Type.objects.get(type_name='الاصول الثابتة')
+    all_daily_osol_sabta_da2en = Daily.objects.filter(da2en_from_type=osol_sabta_obj).values('da2en_from_cat__category_name').annotate(
+            all_da2en_osol_sabta=Sum('da2en'))
+    all_daily_osol_sabta_maden= Daily.objects.filter(maden_from_type=osol_sabta_obj).values('maden_from_cat__category_name').annotate(
+            all_maden_osol_sabta=Sum('maden'))
+    all_daily_osol_sabta_total_maden = Daily.objects.filter(maden_from_type=osol_sabta_obj).annotate(all_maden=Sum('maden'))
+    all_daily_osol_sabta_total_da2en = Daily.objects.filter(da2en_from_type=osol_sabta_obj).annotate(all_da2en=Sum('da2en'))
+    osol_sabta_maden_list = []
+    osol_sabta_da2en_list = []
+    for item in all_daily_osol_sabta_total_maden:
+        osol_sabta_maden_list.append(item.all_maden)
+    final_osol_sabta_maden_total = sum(osol_sabta_maden_list)
+    for item in all_daily_osol_sabta_total_da2en:
+        osol_sabta_da2en_list.append(item.all_da2en)
+    final_osol_sabta_da2en_total = sum(osol_sabta_da2en_list)
+    osol_sabta_total_net = int(final_osol_sabta_da2en_total) - int(final_osol_sabta_maden_total)
+    #final total for osol
+    net_osol = int(osol_mota_total_net)  + int(osol_sabta_total_net)
+    #############################################################################3
+    #############################################################################3
+    #############################################################################3
+    khosom_mota_obj = Type.objects.get(type_name='الخصوم المتدوالة')
+    all_daily_khosom_mota_da2en = Daily.objects.filter(da2en_from_type=khosom_mota_obj).values('da2en_from_cat__category_name').annotate(
+            all_da2en=Sum('da2en'))
+    all_daily_khosom_mota_maden= Daily.objects.filter(maden_from_type=khosom_mota_obj).values('maden_from_cat__category_name').annotate(
+            all_maden=Sum('maden'))
+    all_daily_khosom_mota_total_maden = Daily.objects.filter(maden_from_type=khosom_mota_obj).annotate(all_maden=Sum('maden'))
+    all_daily_khosom_mota_total_da2en = Daily.objects.filter(da2en_from_type=khosom_mota_obj).annotate(all_da2en=Sum('da2en'))
+    khosom_mota_maden_list = []
+    khosom_mota_da2en_list = []
+    for item in all_daily_khosom_mota_total_maden:
+        khosom_mota_maden_list.append(item.all_maden)
+    final_khosom_mota_maden_total = sum(khosom_mota_maden_list)
+    for item in all_daily_khosom_mota_total_da2en:
+        khosom_mota_da2en_list.append(item.all_da2en)
+    final_khosom_mota_da2en_total = sum(khosom_mota_da2en_list)
+    khosom_mota_total_net = int(final_khosom_mota_da2en_total) - int(final_khosom_mota_maden_total)
+    #################################################################################################
+    khosom_sabta_obj = Type.objects.get(type_name='الخصوم غير المتداولة')
+    all_daily_khosom_sabta_da2en = Daily.objects.filter(da2en_from_type=khosom_sabta_obj).values('da2en_from_cat__category_name').annotate(
+            all_da2en=Sum('da2en'))
+    all_daily_khosom_sabta_maden= Daily.objects.filter(maden_from_type=khosom_sabta_obj).values('maden_from_cat__category_name').annotate(
+            all_maden=Sum('maden'))
+    all_daily_khosom_sabta_total_maden = Daily.objects.filter(maden_from_type=khosom_sabta_obj).annotate(all_maden=Sum('maden'))
+    all_daily_khosom_sabta_total_da2en = Daily.objects.filter(da2en_from_type=khosom_sabta_obj).annotate(all_da2en=Sum('da2en'))
+    khosom_sabta_maden_list = []
+    khosom_sabta_da2en_list = []
+    for item in all_daily_khosom_sabta_total_maden:
+        khosom_sabta_maden_list.append(item.all_maden)
+    final_khosom_sabta_maden_total = sum(khosom_sabta_maden_list)
+    for item in all_daily_khosom_sabta_total_da2en:
+        khosom_sabta_da2en_list.append(item.all_da2en)
+    final_khosom_sabta_da2en_total = sum(khosom_sabta_da2en_list)
+    khosom_sabta_total_net = int(final_khosom_sabta_da2en_total) - int(final_khosom_sabta_maden_total)
+    net_khosom = int(khosom_sabta_total_net)  + int(khosom_mota_total_net)
+    ##################################################################################################
+    ##################################################################################################
+    ##################################################################################################
+    rights_obj = Type.objects.get(type_name='حقوق الملكية')
+    all_daily_rights_da2en = Daily.objects.filter(da2en_from_type=rights_obj).values('da2en_from_cat__category_name').annotate(
+            all_da2en=Sum('da2en'))
+    all_daily_rights_maden= Daily.objects.filter(maden_from_type=rights_obj).values('maden_from_cat__category_name').annotate(
+            all_maden=Sum('maden'))
+    all_daily_rights_total_maden = Daily.objects.filter(maden_from_type=rights_obj).annotate(all_maden=Sum('maden'))
+    all_daily_rights_total_da2en = Daily.objects.filter(da2en_from_type=rights_obj).annotate(all_da2en=Sum('da2en'))
+    rights_maden_list = []
+    rights_da2en_list = []
+    for item in all_daily_rights_total_maden:
+        rights_maden_list.append(item.all_maden)
+    final_rights_maden_total = sum(rights_maden_list)
+    for item in all_daily_rights_total_da2en:
+        rights_da2en_list.append(item.all_da2en)
+    final_rights_da2en_total = sum(rights_da2en_list)
+    rights_total_net = int(final_rights_da2en_total) - int(final_rights_maden_total)
+
     context = {
-    'final_naqdya':final_naqdya,
-    'final_bank':final_bank,
-    'final_gary':final_gary,
-    'final_clients':final_clients,
-    'final_masrof':final_masrof,
-    'final_khazna':final_khazna,
-    'final_al3ohad':final_al3ohad,
-    'final_solaf':final_solaf,
-    'final_sabta':final_sabta,
-    'final_gary_fero3':final_gary_fero3,
-    'final_mowrdon':final_mowrdon,
-    'final_awra2':final_awra2,
-    'final_mosta7aqa':final_mosta7aqa,
-    'final_ta2menat':final_ta2menat,
-    'final_mokhasas':final_mokhasas,
-    'final_gary_fero3_da2en':final_gary_fero3_da2en,
-    'final_ra2s_mal':final_ra2s_mal,
-    'final_owner':final_owner,
+    # osoool
+    'all_daily_osol_mota_maden':all_daily_osol_mota_maden,
+    'all_daily_osol_mota_da2en':all_daily_osol_mota_da2en,
+    'all_daily_osol_mota_total_maden':all_daily_osol_mota_total_maden,
+    'all_daily_osol_mota_total_da2en':all_daily_osol_mota_total_da2en,
+    'osol_mota_total_net':osol_mota_total_net,
+    #############################################
+    'all_daily_osol_sabta_maden':all_daily_osol_sabta_maden,
+    'all_daily_osol_sabta_da2en':all_daily_osol_sabta_da2en,
+    'all_daily_osol_sabta_total_maden':all_daily_osol_sabta_total_maden,
+    'all_daily_osol_sabta_total_da2en':all_daily_osol_sabta_total_da2en,
+    'osol_sabta_total_net':osol_sabta_total_net,
+    #total osol
+    'net_osol':net_osol,
+    #################################################################
+    #khosom
+    'all_daily_khosom_mota_maden':all_daily_khosom_mota_maden,
+    'all_daily_khosom_mota_da2en':all_daily_khosom_mota_da2en,
+    'all_daily_khosom_mota_total_maden':all_daily_khosom_mota_total_maden,
+    'all_daily_khosom_mota_total_da2en':all_daily_khosom_mota_total_da2en,
+    'khosom_mota_total_net':khosom_mota_total_net,
+    #########################################################################
+    'all_daily_khosom_sabta_maden':all_daily_khosom_sabta_maden,
+    'all_daily_khosom_sabta_da2en':all_daily_khosom_sabta_da2en,
+    'all_daily_khosom_sabta_total_maden':all_daily_khosom_sabta_total_maden,
+    'all_daily_khosom_sabta_total_da2en':all_daily_khosom_sabta_total_da2en,
+    'khosom_sabta_total_net':khosom_sabta_total_net,
+    #total_all_khosom
+    'net_khosom':net_khosom,
+    ###########################################################################
+    #rights
+    'all_daily_rights_maden':all_daily_rights_maden,
+    'all_daily_rights_da2en':all_daily_rights_da2en,
+    'all_daily_rights_total_maden':all_daily_rights_total_maden,
+    'all_daily_rights_total_da2en':all_daily_rights_total_da2en,
+    'rights_total_net':rights_total_net,
+
+
+
     }
     return render(request, 'mezania.html', context)

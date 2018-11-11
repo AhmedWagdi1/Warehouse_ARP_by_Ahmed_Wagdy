@@ -4,12 +4,6 @@ import time
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        i = 10
-        while i != 0:
-            print('Deleting database in ' + str(i) + '  - Ctrl + C to stop.')
-            time.sleep(1)
-            i -=1
-        time.sleep(4)
         models.Company.objects.all().delete()
         models.Farm.objects.all().delete()
         models.Job.objects.all().delete()
@@ -25,4 +19,5 @@ class Command(BaseCommand):
         models.BuyInvoice.objects.all().delete()
         models.SellInvoice.objects.all().delete()
         models.Talabat.objects.all().delete()
+        models.Mezan.objects.all().delete()
         print('Databse is purged, Thank you !!')

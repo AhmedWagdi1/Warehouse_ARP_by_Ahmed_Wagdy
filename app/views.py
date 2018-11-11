@@ -12,7 +12,7 @@ from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, Ad
     AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, \
     BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm,TalabatDoForm,IncomeListFilterForm,DailyReportFilterForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
-    SellInvoice, BuyInvoice, Talabat
+    SellInvoice, BuyInvoice, Talabat, Mezan
 from datetime import date, datetime
 
 @login_required
@@ -37,61 +37,97 @@ def index(request):
             add_type.save()
     else:
         pass
-    if current_category .count() == 0 :
+    if current_category.count() == 0 :
         naqdya_type = Type.objects.get(type_name='الاصول المتداولة ')
         naqdya = Category(category_name="النقدية", type=naqdya_type)
         naqdya.save()
+        naqdya_mezan = Mezan(name=naqdya)
+        naqdya_mezan.save()
         benook_type = Type.objects.get(type_name='الاصول المتداولة ')
         benook = Category(category_name="البنوك", type=naqdya_type)
         benook.save()
+        benook_mezan = Mezan(name=benook)
+        benook_mezan.save()
         gary_type = Type.objects.get(type_name='الاصول المتداولة ')
         gary = Category(category_name="جارى شركات شقيقة", type=naqdya_type)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         gary_type = Type.objects.get(type_name='الاصول المتداولة ')
         gary = Category(category_name="العملاء", type=naqdya_type)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         gary_type = Type.objects.get(type_name='الاصول المتداولة ')
         gary = Category(category_name="مصروف مقدم", type=naqdya_type)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         gary_type = Type.objects.get(type_name='الاصول المتداولة ')
         gary = Category(category_name="الخزنه الرئيسيه", type=naqdya_type)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         gary_type = Type.objects.get(type_name='الاصول المتداولة ')
         gary = Category(category_name="العهد", type=naqdya_type)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         gary_type = Type.objects.get(type_name='الاصول المتداولة ')
         gary = Category(category_name="السلف", type=naqdya_type)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type2 = Type.objects.get(type_name='الاصول الثابتة')
         gary = Category(category_name="صافى الأصول الثابتة - تكلفة", type=type2)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type2 = Type.objects.get(type_name='الاصول الثابتة')
         gary = Category(category_name="جارى الفروع المدينة", type=type2)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type3 = Type.objects.get(type_name='الخصوم المتدوالة')
         gary = Category(category_name='الموردون', type=type3)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type3 = Type.objects.get(type_name='الخصوم المتدوالة')
         gary = Category(category_name='اوراق دفع', type=type3)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type3 = Type.objects.get(type_name='الخصوم المتدوالة')
         gary = Category(category_name='مصروفات مستحقة', type=type3)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type3 = Type.objects.get(type_name='الخصوم المتدوالة')
         gary = Category(category_name='تأمينات وأمانات للغير', type=type3)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type4 = Type.objects.get(type_name='الخصوم غير المتداولة')
         gary = Category(category_name='مخصص مستحقات العاملين', type=type4)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type4 = Type.objects.get(type_name='الخصوم غير المتداولة')
         gary = Category(category_name='جارى الفروع الدائنة', type=type4)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type5 = Type.objects.get(type_name='حقوق الملكية')
         gary = Category(category_name='رأس المال', type=type5)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
         type5 = Type.objects.get(type_name='حقوق الملكية')
         gary = Category(category_name='جارى صاحب المؤسسة', type=type5)
         gary.save()
+        gary_mezan = Mezan(name=gary)
+        gary_mezan.save()
     else:
         pass
     all_farms = Farm.objects.all()
@@ -652,11 +688,9 @@ def ostaz_details(request, pk):
 
 @login_required
 def mezan(request):
-    all_daily = Daily.objects.values('da2en_from_cat__category_name', 'maden_from_cat__category_name').annotate(
-        all_maden=Sum('maden')).annotate(
-        all_da2en=Sum('da2en'))
+    all_mezan = Mezan.objects.all()
     context = {
-        'all_daily': all_daily,
+        'all_mezan': all_mezan,
     }
     return render(request, 'mezan.html', context)
 
@@ -666,7 +700,10 @@ def add_tawseef(request):
     add_category_form = AddCategoryForm(request.POST)
     if request.method == 'POST':
         if add_category_form.is_valid():
-            add_category_form.save()
+            form = add_category_form.save(commit=False)
+            form.save()
+            new_mezan = Mezan(name=form)
+            new_mezan.save()
             return redirect('add_tawseef')
     else:
         add_category_form = AddCategoryForm()
@@ -701,11 +738,15 @@ def add_new_daily(request, pk):
             form.save()
             current_farm = form.farm
             current_balance = Balance.objects.get(farm=current_farm)
+            current_mezan = Mezan.objects.get(name=form.maden_from_cat)
             if form.maden != 0:
                 added_balance = form.maden
                 new_balance = int(current_balance.balance) - int(added_balance)
                 current_balance.balance = new_balance
                 current_balance.save()
+                new_mezan_maden = int(current_mezan.maden) + int(added_balance)
+                current_mezan.maden = new_mezan_maden
+                current_mezan.save()
             if form.da2en != 0:
                 added_balance = form.da2en
                 new_balance = int(current_balance.balance) + int(added_balance)
@@ -1001,12 +1042,25 @@ def new_daily(request):
                 new_balance = int(current_farm_balance.balance) + int(added_balance)
                 current_farm_balance.balance = new_balance
                 current_farm_balance.save()
+                current_mezan = Mezan.objects.get(name=form.da2en_from_cat)
+                old_mezan_da2en = current_mezan.da2en
+                added_mezan_da2en = form.da2en
+                new_mezan_da2en = int(old_mezan_da2en) + int(added_mezan_da2en)
+                current_mezan.da2en = new_mezan_da2en
+                current_mezan.save()
             if form.maden != 0:
                 current_farm_balance = Balance.objects.get(farm=form.farm)
                 added_balance = form.maden
                 new_balance = int(current_farm_balance.balance) - int(added_balance)
                 current_farm_balance.balance = new_balance
                 current_farm_balance.save()
+                current_mezan = Mezan.objects.get(name=form.maden_from_cat)
+                old_mezan_maden = current_mezan.maden
+                added_mezan_maden = form.maden
+                new_mezan_maden = int(old_mezan_maden) + int(added_mezan_maden)
+                current_mezan.maden = new_mezan_maden
+                current_mezan.save()
+
             form.save()
             return redirect('finance_daily')
     else:

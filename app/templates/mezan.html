@@ -40,21 +40,20 @@
                 </thead>
 
                 <tbody>
-                {% for item in all_daily %}
+                {% for item in all_mezan %}
                     <tr>
-                        <td id="da2en_ars_{{ item.da2en_from_cat__category_name }}"></td>
-                        <td id="maden_ars_{{ item.da2en_from_cat__category_name }}"></td>
-                        <td>
-                            {{ item.da2en_from_cat__category_name|default_if_none:"" }}{{ item.maden_from_cat__category_name|default_if_none:"" }}</td>
-                        <td id="da2en_maga_{{ item.da2en_from_cat__category_name }}">{{ item.all_da2en }}</td>
-                        <td id="maden_maga_{{ item.da2en_from_cat__category_name }}">{{ item.all_maden }}</td>
+                        <td id="da2en_ars_{{ item.name}}"></td>
+                        <td id="maden_ars_{{ item.name }}"></td>
+                        <td>{{item.name}}</td>
+                        <td id="da2en_maga_{{ item.name }}">{{ item.da2en }}</td>
+                        <td id="maden_maga_{{ item.name }}">{{ item.maden }}</td>
                     </tr>
                     <script>
                         function totals() {
-                            var maden_maga = document.getElementById('maden_maga_{{ item.da2en_from_cat__category_name }}').innerHTML;
-                            var da2en_maga = document.getElementById('da2en_maga_{{ item.da2en_from_cat__category_name }}').innerHTML;
-                            var maden_ars = document.getElementById('maden_ars_{{ item.da2en_from_cat__category_name }}');
-                            var da2en_ars = document.getElementById('da2en_ars_{{ item.da2en_from_cat__category_name }}');
+                            var maden_maga = document.getElementById('maden_maga_{{ item.name }}').innerHTML;
+                            var da2en_maga = document.getElementById('da2en_maga_{{ item.name }}').innerHTML;
+                            var maden_ars = document.getElementById('maden_ars_{{ item.name }}');
+                            var da2en_ars = document.getElementById('da2en_ars_{{ item.name }}');
                             if (maden_maga > da2en_maga) {
                                 var new_maden_ars = maden_maga - da2en_maga;
                                 maden_ars.innerHTML = new_maden_ars;

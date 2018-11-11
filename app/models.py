@@ -163,3 +163,9 @@ class Talabat(models.Model):
     product = models.ForeignKey(Product, on_delete=CASCADE)
     quantity = models.IntegerField()
     OK = models.BooleanField(default=False)
+
+
+class Mezan(models.Model):
+    name = models.ForeignKey(Category, on_delete=CASCADE)
+    da2en = models.IntegerField(default=0)
+    maden = models.IntegerField(default=0)

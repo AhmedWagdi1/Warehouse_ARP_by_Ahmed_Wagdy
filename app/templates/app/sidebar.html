@@ -14,6 +14,7 @@
     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
         <div class="menu_section">
             <ul class="nav side-menu">
+              {% if current_role == 'المديرين' %}
                 <li><a><i class="fa fa-home"></i> المزارع <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         {% for farm in all_farms %}
@@ -49,16 +50,20 @@
                     </ul>
 
                 </li>
-
+{% endif %}
+{% if current_role == 'المديرين' or current_role == 'المخازن' %}
                 <li><a><i class="fa fa-home"></i> المخازن <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       {% for item in all_farms %}
                         <li><a href="{% url 'warehouse_details' item.pk%}">{{item.farm_name}}</a></li>
                       {% endfor %}
+                      {% if current_role == 'المديرين' %}
                       <li><a href="{% url 'product' %}">الأصناف</a></li>
-
+{% endif %}
                     </ul>
                 </li>
+                {% endif %}
+                {% if current_role == 'المديرين' or current_role == 'المحاسبين' %}
                 <li><a><i class="fa fa-money"></i> الحسابات <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{% url 'finance_daily' %}">القيود اليومية</a></li>
@@ -91,6 +96,15 @@
                         <li><a href="{% url 'report_daily' %}"> تقرير الحركة اليومية</a></li>
                     </ul>
                 </li>
+                {% endif %}
+                {% if current_role == 'المخازن' %}
+                <li><a href="{% url 'create_buy_invoice' %}"> إنشاء فاتورة شراء</a></li>
+{% endif %}
+{% if not activated %}
+<a href="{% url 'activation' %}">
+<button class="btn btn-warning">تفعيل البرنامج</button>
+</a>
+{% endif %}
                 <!--
     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
       <ul class="nav child_menu">

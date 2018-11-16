@@ -6,6 +6,25 @@ from django.db.models import CASCADE, DO_NOTHING
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
+class Activation(models.Model):
+    serial1 = models.CharField(max_length=800)
+    serial2 = models.CharField(max_length=800, null=True, blank=True)
+    company = models.CharField(max_length=160, null=True, blank=True)
+    last_time = models.DateTimeField()
+    is_active = models.BooleanField(default=False)
+
+
+class Account(models.Model):
+    role_admin ='المديرين'
+    role_accountant = 'المحاسبين'
+    role_warehouse = 'المخازن'
+    role_choices = (
+    (role_admin,'المديرين'),
+    (role_accountant,'المحاسبين'),
+    (role_warehouse,'المخازن'),
+    )
+    user = models.ForeignKey(User, on_delete=CASCADE)
+    role = models.CharField(max_length=50,choices=role_choices)
 
 class Company(models.Model):
     company_name = models.CharField(max_length=250)

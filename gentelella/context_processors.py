@@ -1,6 +1,6 @@
 import datetime
-
-from app.models import Company, Farm, Job, Balance, Talabat
+from django.core.management import call_command
+from app.models import Company, Farm, Job, Balance, Talabat, Account,Activation
 
 
 def include_company(request):
@@ -59,5 +59,44 @@ def include_talabat(request):
     all_talabat = Talabat.objects.filter(OK=False)
     context = {
     'all_talabat':all_talabat,
+    }
+    return (context)
+
+
+def get_current_role(request):
+    current_role = 'h'
+    if request.user.is_authenticated:
+        current_user = request.user
+        current_role1 = Account.objects.get(user=current_user)
+        current_role = current_role1.role
+    else:
+        pass
+
+    context = {
+    'current_role':current_role,
+    }
+    return (context)
+
+
+def get_activation_status(request):
+    today = datetime.datetime.now()
+    activated = False
+    check = Activation.objects.filter()
+    if check.count() != 0:
+        if check[0].is_active:
+            activated = True
+        else:
+            activated = False
+            if check[0].last_time.day != today.day:
+                call_command('clear_models')
+                instance = check[0]
+                instance.last_time = today
+                instance.save()
+            else:
+                pass
+    else:
+        pass
+    context = {
+    'activated':activated,
     }
     return (context)

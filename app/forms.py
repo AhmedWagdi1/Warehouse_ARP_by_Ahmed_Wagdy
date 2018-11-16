@@ -252,3 +252,55 @@ class DailyReportFilterForm(django_filters.FilterSet):
     class Meta:
         model = Daily
         fields = ['farm']
+
+
+class CreateUserForm(forms.Form):
+    role_admin ='المديرين'
+    role_accountant = 'المحاسبين'
+    role_warehouse = 'المخازن'
+
+    username = forms.CharField(
+    widget=forms.TextInput(
+    attrs={
+    }
+    )
+    )
+    password = forms.CharField(
+    widget=forms.PasswordInput(
+
+    )
+    )
+    role = forms.ChoiceField(choices={
+    (role_admin,'المديرين'),
+    (role_accountant,'المحاسبين'),
+    (role_warehouse,'المخازن'),
+    },
+    widget = forms.Select(
+    )
+    )
+
+
+class RequestActivationForm(forms.Form):
+    mobile_number = forms.CharField(
+    widget=forms.TextInput(
+    )
+    )
+
+
+class ActivationForm(forms.Form):
+    serial = forms.CharField(
+    widget= forms.TextInput(
+    attrs={
+        'class':'form-control'
+
+    }
+    )
+    )
+
+    company_name = forms.CharField(
+    widget= forms.TextInput(
+    attrs={
+        'class':'form-control'
+    }
+    )
+    )

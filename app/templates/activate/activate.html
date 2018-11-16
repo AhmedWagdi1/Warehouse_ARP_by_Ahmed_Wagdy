@@ -9,37 +9,21 @@
 {% block content %}
   <div class="right_col" role="main">
     <!-- top tiles -->
-    {% if current_role == 'المديرين' %}
-    <div class="row tile_count">
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-list"></i> عدد فواتير البيع </span>
-        <div class="count">{{all_sell_invoices.count}}</div>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-list"></i> عدد فواتير الشراء </span>
-        <div class="count">{{all_buy_invoices.count}}</div>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-money"></i> إجمالى ارصدة الخزن </span>
-        <div class="count">{{final_total_balance}}</div>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> عدد العمال </span>
-        <div class="count">{{all_workers.count}}</div>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-home"></i> عددالفروع </span>
-        <div class="count">{{all_farms.count}}</div>
-      </div>
-    </div>
-    <!-- /top tiles -->
-{% endif %}
+    <div align="right">
+      <form method="post">
+        {% csrf_token %}
+<b>كود التفعيل</b><br>
+      {{activation_form.serial}}<br><Br>
+        <b>إسم الشركة </b><br>
+        {{activation_form.company_name}}
+        <br><br>
+        <button type="submit" class="btn btn-primary">تفعيل البرنامج</button>
+      </form>
 
+
+</div>
     <br />
 
-    <div class="row" align="center">
-<h1>{{ company.company_name}}</h1>
-  </div>
 {% endblock content %}
 
 {% block javascripts %}

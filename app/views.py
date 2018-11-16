@@ -8,16 +8,111 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
-    AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, \
-    AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, \
+    AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, ActivationForm, \
+    AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm,CreateUserForm,RequestActivationForm, \
     BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm,TalabatDoForm,IncomeListFilterForm,DailyReportFilterForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
-    SellInvoice, BuyInvoice, Talabat, Mezan
+    SellInvoice, BuyInvoice, Talabat, Mezan, Account, Activation
 from datetime import date, datetime
+from django.core.management import call_command
+import random
+import datetime
+from django.core.mail import send_mail, EmailMessage
+
+def activation_request(request):
+    request_activation_form = RequestActivationForm(request.POST)
+    if request.method == 'POST':
+        if request_activation_form.is_valid():
+            serial_obj = Activation.objects.filter()[0]
+            serial = serial_obj.serial1
+            mobile = request_activation_form.cleaned_data['mobile_number']
+            email_msg = 'serial : "' + serial + '" - mobile: ' + mobile
+            email = EmailMessage('serial request ', email_msg,to=['ahmed.w.amin@gmail.com'])
+            email.send()
+            return redirect('serial_request_done')
+    else:
+        request_activation_form = RequestActivationForm(request.POST)
+    context = {
+    'request_activation_form':request_activation_form,
+    }
+    return render(request, 'activate/request.html', context)
+
+
+def activation(request):
+    activation_form = ActivationForm(request.POST)
+    if request.method == 'POST':
+        if activation_form.is_valid():
+            current_seial_obj = Activation.objects.filter()[0]
+            current_seial = current_seial_obj.serial1
+            new_serial = activation_form.cleaned_data['serial']
+            new_company = activation_form.cleaned_data['company_name']
+            if current_seial == new_serial:
+                call_command('clear_models')
+                current_seial_obj.is_active = True
+                current_seial_obj.company = new_company
+                current_seial_obj.save()
+                company_obj = Company.objects.filter()[0]
+                company_obj.company_name = new_company
+                company_obj.save()
+                new_farm = Farm(farm_name=company_obj)
+                new_farm.save()
+                new_balance = Balance(farm=new_farm, balance=0)
+                new_balance.save()
+                return redirect('index')
+            else:
+                pass
+    else:
+        activation_form = ActivationForm(request.POST)
+    context = {
+    'activation_form':activation_form,
+    }
+    return render(request, 'activate/activate.html', context)
+
+
+def serial_request_done(request):
+    return render(request, 'activate/request_done.html')
+
+def user_create(request):
+    all_users = Account.objects.all()
+    create_user_form = CreateUserForm(request.POST)
+    if request.method == 'POST':
+        if create_user_form.is_valid():
+            username = create_user_form.cleaned_data['username']
+            password = create_user_form.cleaned_data['password']
+            role = create_user_form.cleaned_data['role']
+            new_user = User(username=username)
+            new_user.set_password(password)
+            new_user.save()
+            new_account = Account(user=new_user, role=role)
+            new_account.save()
+            return redirect('user_create')
+    else:
+        create_user_form = CreateUserForm(request.POST)
+    context = {
+    'create_user_form':create_user_form,
+    'all_users':all_users,
+    }
+    return render(request, 'users/create.html', context )
+
+def user_delete(request, pk):
+    current_user = get_object_or_404(User, pk=pk)
+    current_account = Account.objects.get(user=current_user)
+    current_account.delete()
+    current_user.delete()
+    return redirect('user_create')
 
 @login_required
 def index(request):
-    my_company = 'Eagle Trade'
+    check_activation = Activation.objects.filter()
+    if check_activation.count() == 0:
+        serial = random.randint(111111111111111111,99999999999999999999999999999999999999)
+        company = 'Demo company'
+        today = datetime.datetime.now()
+        add = Activation(serial1=serial, company=company, last_time=today)
+        add.save()
+    else:
+        pass
+    my_company = check_activation[0].company
     type_list = ['الاصول الثابتة', 'الاصول المتداولة ', 'الخصوم المتدوالة','الخصوم غير المتداولة', 'حقوق الملكية', 'المصروفات', 'الإيرادات']
     current_company = Company.objects.filter()
     current_types = Type.objects.filter()
@@ -1121,8 +1216,10 @@ def talabat_do(request, pk):
             quantity = talabat_do_form.cleaned_data['quantity']
             product = talabat_do_form.cleaned_data['product']
             farm_from = talabat_do_form.cleaned_data['farm_from']
+            print(farm_from)
             farm_to = current_talabat.farm
-            farm_from_obj = Warehouse.objects.get(farm=farm_from)
+            farm_from_obj1 = Farm.objects.get(farm_name=str(farm_from))
+            farm_from_obj = Warehouse.objects.get(farm=farm_from_obj1)
             current_quant = farm_from_obj.item_quantity
             removed_quant = quantity
             new_from_quant = int(current_quant) - int(removed_quant)

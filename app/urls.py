@@ -87,5 +87,12 @@ urlpatterns = [
                   path('talabat/sarf/list/', views.talab_sarf_list, name="talab_sarf_list"),
                   path('talabat/delete/<int:pk>', views.talabat_delete, name="talabat_delete"),
                   path('talabat/do/<int:pk>/', views.talabat_do, name="talabat_do"),
+                  #Users
+                  path('users/create/', views.user_create, name="user_create"),
+                  path('users/<int:pk>/delete/', views.user_delete, name="user_delete"),
+                  #Activation
+                  path('activation/request', views.activation_request, name="activation_request"),
+                  path('serial/request/done/',views.serial_request_done, name="serial_request_done"),
+                  path('activation/', views.activation, name="activation"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

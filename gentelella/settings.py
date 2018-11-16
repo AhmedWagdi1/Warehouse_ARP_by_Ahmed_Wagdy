@@ -74,6 +74,10 @@ TEMPLATES = [
                 'gentelella.context_processors.include_farm_no_company',
                 'gentelella.context_processors.include_balances',
                 'gentelella.context_processors.include_talabat',
+                'gentelella.context_processors.get_current_role',
+                'gentelella.context_processors.get_activation_status',
+
+
             ],
         },
     },
@@ -144,6 +148,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'townoftechno@gmail.com'
+EMAIL_HOST_PASSWORD = 'buii3tf0ky001'
+EMAIL_PORT = 587
+
 
 try:
     from .local_settings import *

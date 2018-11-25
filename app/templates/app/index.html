@@ -1,5 +1,5 @@
 {% extends "app/base_site.html" %}
-
+{%  load static %}
 {% block title %} Dashboard 1 {% endblock title %}
 
 {% block stylesheets %}
@@ -38,7 +38,9 @@
     <br />
 
     <div class="row" align="center">
-<h1>{{ company.company_name}}</h1>
+<h1>{{ company.company_name}}<br>
+<img src="{%  static 'images/icon.jpeg' %}" style="width:250px;height: 250px;">
+</h1>
   </div>
 {% endblock content %}
 

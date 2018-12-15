@@ -100,11 +100,13 @@
                 {% if current_role == 'المخازن' %}
                 <li><a href="{% url 'create_buy_invoice' %}"> إنشاء فاتورة شراء</a></li>
 {% endif %}
+            <!-- demo
 {% if not activated %}
 <a href="{% url 'activation' %}">
 <button class="btn btn-warning">تفعيل البرنامج</button>
 </a>
 {% endif %}
+<!-- end of demo -->
                 <!--
     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
       <ul class="nav child_menu">

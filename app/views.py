@@ -8,9 +8,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.views.generic.edit import UpdateView
 from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, AddSupplierForm, AddClientForm, \
-    AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, ActivationForm, \
-    AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm,CreateUserForm,RequestActivationForm, \
-    BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm,TalabatDoForm,IncomeListFilterForm,DailyReportFilterForm
+    AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, \
+    ActivationForm, \
+    AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, CreateUserForm, RequestActivationForm, \
+    BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm, TalabatDoForm, IncomeListFilterForm, DailyReportFilterForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
     SellInvoice, BuyInvoice, Talabat, Mezan, Account, Activation
 from datetime import date, datetime
@@ -18,6 +19,7 @@ from django.core.management import call_command
 import random
 import datetime
 from django.core.mail import send_mail, EmailMessage
+
 
 def activation_request(request):
     request_activation_form = RequestActivationForm(request.POST)
@@ -27,13 +29,13 @@ def activation_request(request):
             serial = serial_obj.serial1
             mobile = request_activation_form.cleaned_data['mobile_number']
             email_msg = 'serial : "' + serial + '" - mobile: ' + mobile
-            email = EmailMessage('serial request ', email_msg,to=['ahmed.w.amin@gmail.com'])
+            email = EmailMessage('serial request ', email_msg, to=['ahmed.w.amin@gmail.com'])
             email.send()
             return redirect('serial_request_done')
     else:
         request_activation_form = RequestActivationForm(request.POST)
     context = {
-    'request_activation_form':request_activation_form,
+        'request_activation_form': request_activation_form,
     }
     return render(request, 'activate/request.html', context)
 
@@ -64,13 +66,14 @@ def activation(request):
     else:
         activation_form = ActivationForm(request.POST)
     context = {
-    'activation_form':activation_form,
+        'activation_form': activation_form,
     }
     return render(request, 'activate/activate.html', context)
 
 
 def serial_request_done(request):
     return render(request, 'activate/request_done.html')
+
 
 def user_create(request):
     all_users = Account.objects.all()
@@ -89,10 +92,11 @@ def user_create(request):
     else:
         create_user_form = CreateUserForm(request.POST)
     context = {
-    'create_user_form':create_user_form,
-    'all_users':all_users,
+        'create_user_form': create_user_form,
+        'all_users': all_users,
     }
-    return render(request, 'users/create.html', context )
+    return render(request, 'users/create.html', context)
+
 
 def user_delete(request, pk):
     current_user = get_object_or_404(User, pk=pk)
@@ -101,18 +105,20 @@ def user_delete(request, pk):
     current_user.delete()
     return redirect('user_create')
 
+
 @login_required
 def index(request):
     check_activation = Activation.objects.filter()
     if check_activation.count() == 0:
-        serial = random.randint(111111111111111111,99999999999999999999999999999999999999)
+        serial = random.randint(111111111111111111, 99999999999999999999999999999999999999)
         company = 'Demo company'
         today = datetime.datetime.now()
         add = Activation(serial1=serial, company=company, last_time=today)
         add.save()
     else:
         my_company = check_activation[0].company
-        type_list = ['الاصول الثابتة', 'الاصول المتداولة ', 'الخصوم المتدوالة','الخصوم غير المتداولة', 'حقوق الملكية', 'المصروفات', 'الإيرادات']
+        type_list = ['الاصول الثابتة', 'الاصول المتداولة ', 'الخصوم المتدوالة', 'الخصوم غير المتداولة', 'حقوق الملكية',
+                     'المصروفات', 'الإيرادات']
         current_company = Company.objects.filter()
         current_types = Type.objects.filter()
         current_category = Category.objects.filter()
@@ -131,7 +137,7 @@ def index(request):
                 add_type.save()
         else:
             pass
-        if current_category.count() == 0 :
+        if current_category.count() == 0:
             naqdya_type = Type.objects.get(type_name='الاصول المتداولة ')
             naqdya = Category(category_name="النقدية", type=naqdya_type)
             naqdya.save()
@@ -224,23 +230,23 @@ def index(request):
             gary_mezan.save()
         else:
             pass
-        all_farms = Farm.objects.all()
-        all_workers = Worker.objects.all()
-        all_balance = Balance.objects.all()
-        total_balance = []
-        for item in all_balance:
-            total_balance.append(item.balance)
-        final_total_balance = sum(total_balance)
-        all_buy_invoices = BuyInvoice.objects.all()
-        all_sell_invoices = SellInvoice.objects.all()
-        company = Company.objects.filter()[0]
+    all_farms = Farm.objects.all()
+    all_workers = Worker.objects.all()
+    all_balance = Balance.objects.all()
+    total_balance = []
+    for item in all_balance:
+        total_balance.append(item.balance)
+    final_total_balance = sum(total_balance)
+    all_buy_invoices = BuyInvoice.objects.all()
+    all_sell_invoices = SellInvoice.objects.all()
+    company = Company.objects.filter()[0]
     context = {
-    'all_farms':all_farms,
-    'all_workers':all_workers,
-    'final_total_balance':final_total_balance,
-    'all_buy_invoices':all_buy_invoices,
-    'all_sell_invoices':all_sell_invoices,
-    'company':company,
+        'all_farms': all_farms,
+        'all_workers': all_workers,
+        'final_total_balance': final_total_balance,
+        'all_buy_invoices': all_buy_invoices,
+        'all_sell_invoices': all_sell_invoices,
+        'company': company,
     }
     return render(request, 'app/index.html', context)
 
@@ -252,6 +258,7 @@ def workers(request):
         'all_workers': all_workers,
     }
     return render(request, 'app/workers.html', context)
+
 
 @login_required
 def nocomp(request):
@@ -596,6 +603,7 @@ def warehouse_out(request, pk):
     }
     return render(request, 'app/item_out.html', context)
 
+
 @login_required
 def finance_daily(request):
     all_daily = Daily.objects.all().order_by('-date')
@@ -603,6 +611,7 @@ def finance_daily(request):
         'all_daily': all_daily,
     }
     return render(request, 'app/finance_daily.html', context)
+
 
 @login_required
 def ostaz(request):
@@ -617,6 +626,7 @@ def ostaz(request):
         'pick_ostaz_form': pick_ostaz_form,
     }
     return render(request, 'ostaz.html', context)
+
 
 @login_required
 def ostaz_details(request, pk):
@@ -780,6 +790,7 @@ def ostaz_details(request, pk):
     }
     return render(request, 'ostaz_details.html', context)
 
+
 @login_required
 def mezan(request):
     all_mezan = Mezan.objects.all()
@@ -787,6 +798,7 @@ def mezan(request):
         'all_mezan': all_mezan,
     }
     return render(request, 'mezan.html', context)
+
 
 @login_required
 def add_tawseef(request):
@@ -807,6 +819,7 @@ def add_tawseef(request):
     }
     return render(request, 'add_tawseef.html', context)
 
+
 @login_required
 def delete_tawseef(request, pk):
     current_tawseef = get_object_or_404(Category, pk=pk)
@@ -818,6 +831,7 @@ class TawseefUpdate(UpdateView):
     model = Category
     fields = ['category_name', 'type']
     template_name_suffix = '_update_form'
+
 
 @login_required
 def add_new_daily(request, pk):
@@ -869,6 +883,7 @@ def add_daily_one(request):
     }
     return render(request, 'add_new_daily_one.html', context)
 
+
 @login_required
 def safes(request, pk):
     current_safe = get_object_or_404(Balance, pk=pk)
@@ -904,6 +919,7 @@ def safes(request, pk):
     }
     return render(request, 'safes.html', context)
 
+
 @login_required
 def create_invoice_buy(request):
     add_buy_invoice_form = AddBuyInvoice(request.POST)
@@ -921,9 +937,9 @@ def create_invoice_buy(request):
             new_balance = int(current_balance.balance) - int(form.total_price)
             current_balance.balance = new_balance
             current_balance.save()
-            current_item = Warehouse.objects.filter(farm=form.farm ,item_name=form.product)
+            current_item = Warehouse.objects.filter(farm=form.farm, item_name=form.product)
             if current_item.count() != 0:
-                current_item = Warehouse.objects.filter(farm=form.farm ,item_name=form.product)[0]
+                current_item = Warehouse.objects.filter(farm=form.farm, item_name=form.product)[0]
                 current_quantity = current_item.item_quantity
                 added_quantity = form.quantity
                 new_quantity = int(current_quantity) + int(added_quantity)
@@ -943,6 +959,7 @@ def create_invoice_buy(request):
         'add_buy_invoice_form': add_buy_invoice_form,
     }
     return render(request, 'create_buy_invoice.html', context)
+
 
 @login_required
 def create_invoice_sell(request):
@@ -973,12 +990,13 @@ def create_invoice_sell(request):
     }
     return render(request, 'create_sell_invoice.html', context)
 
+
 @login_required
 def income_list(request):
     form1 = IncomeListFilterForm(request.GET, queryset=Daily.objects.filter(is_invoice=False))
-    #all_daily = Daily.objects.filter(is_invoice=False)
+    # all_daily = Daily.objects.filter(is_invoice=False)
     form2 = IncomeListFilterForm(request.GET, queryset=Daily.objects.filter(is_invoice=True))
-    #all_invoice = Daily.objects.filter(is_invoice=True)
+    # all_invoice = Daily.objects.filter(is_invoice=True)
     all_sells = []
     all_buys = []
     for item in form2.qs:
@@ -1001,11 +1019,12 @@ def income_list(request):
         'st_profit': st_profit,
         'final_costs': final_costs,
         'net': net,
-        'filter1':form1,
-        'filter2':form2,
+        'filter1': form1,
+        'filter2': form2,
     }
 
     return render(request, 'income_list.html', context)
+
 
 @login_required
 def report_all(request):
@@ -1047,6 +1066,7 @@ def report_all(request):
     }
     return render(request, 'reports/all.html', context)
 
+
 @login_required
 def report_farm(request):
     farm_report_form = FarmReportForm(request.POST)
@@ -1060,6 +1080,7 @@ def report_farm(request):
         'farm_report_form': farm_report_form,
     }
     return render(request, 'reports/farm.html', context)
+
 
 @login_required
 def report_farm_details(request, pk):
@@ -1097,6 +1118,7 @@ def report_farm_details(request, pk):
     }
     return render(request, 'reports/farm_details.html', context)
 
+
 @login_required
 def report_sales(request):
     form = SellInvoiceFilterForm(request.GET, queryset=SellInvoice.objects.filter().order_by('-date'))
@@ -1105,6 +1127,7 @@ def report_sales(request):
         'filter': form,
     }
     return render(request, 'reports/sales.html', context)
+
 
 @login_required
 def report_buys(request):
@@ -1115,6 +1138,7 @@ def report_buys(request):
     }
     return render(request, 'reports/buys.html', context)
 
+
 @login_required
 def report_daily(request):
     form = DailyReportFilterForm(request.GET, queryset=Daily.objects.filter().order_by('-date'))
@@ -1123,6 +1147,7 @@ def report_daily(request):
         'filter': form,
     }
     return render(request, 'reports/daily.html', context)
+
 
 @login_required
 def new_daily(request):
@@ -1164,15 +1189,17 @@ def new_daily(request):
     }
     return render(request, 'new_daily.html', context)
 
+
 @login_required
 def warehouse_details(request, pk):
     current_warehouse = get_object_or_404(Farm, pk=pk)
     all_items = Warehouse.objects.filter(farm=current_warehouse)
     context = {
-    'current_warehouse':current_warehouse,
-    'all_items':all_items,
+        'current_warehouse': current_warehouse,
+        'all_items': all_items,
     }
     return render(request, 'warehouse_details.html', context)
+
 
 @login_required
 def talab_sarf(request, pk):
@@ -1183,28 +1210,31 @@ def talab_sarf(request, pk):
             form = create_talab_form.save(commit=False)
             form.farm = current_warehouse
             form.save()
-            return redirect('/warehouse/' + str(pk) )
+            return redirect('/warehouse/' + str(pk))
     else:
         create_talab_form = CreateTalabForm()
     context = {
-    'current_warehouse':current_warehouse,
-    'create_talab_form':create_talab_form,
+        'current_warehouse': current_warehouse,
+        'create_talab_form': create_talab_form,
     }
     return render(request, 'talab_sarf.html', context)
+
 
 @login_required
 def talab_sarf_list(request):
     all_talab = Talabat.objects.all().order_by('-date')
     context = {
-    'all_talab':all_talab,
+        'all_talab': all_talab,
     }
     return render(request, 'talabat_sarf_list.html', context)
+
 
 @login_required
 def talabat_delete(request, pk):
     current_talabat = get_object_or_404(Talabat, pk=pk)
     current_talabat.delete()
     return redirect('talab_sarf_list')
+
 
 @login_required
 def talabat_do(request, pk):
@@ -1225,30 +1255,30 @@ def talabat_do(request, pk):
             farm_from_obj.item_quantity = new_from_quant
             farm_from_obj.save()
             farm_to_obj = Warehouse.objects.filter(farm=farm_to, item_name=product)
-            if farm_to_obj.count() !=0 :
+            if farm_to_obj.count() != 0:
                 farm_to_obj = Warehouse.objects.filter(farm=farm_to, item_name=product)[0]
                 current_to_quant = farm_to_obj.item_quantity
                 added_to_quant = quantity
                 new_to_quant = int(current_to_quant) + int(added_to_quant)
                 farm_to_obj.item_quantity = new_to_quant
                 farm_to_obj.save()
-                current_talabat.OK=True
+                current_talabat.OK = True
                 current_talabat.save()
                 return redirect('talab_sarf_list')
             else:
-                new_to_added = Warehouse(item_name=product, item_quantity=quantity, farm=farm_to )
+                new_to_added = Warehouse(item_name=product, item_quantity=quantity, farm=farm_to)
                 new_to_added.save()
-                current_talabat.OK=True
+                current_talabat.OK = True
                 current_talabat.save()
                 return redirect('talab_sarf_list')
 
     else:
         talabat_do_form = TalabatDoForm()
     context = {
-    'current_talabat':current_talabat,
-    'talabat_do_form':talabat_do_form,
+        'current_talabat': current_talabat,
+        'talabat_do_form': talabat_do_form,
     }
-    return render(request, 'talabat_do.html', context )
+    return render(request, 'talabat_do.html', context)
 
 
 def load_cates(request):
@@ -1262,14 +1292,19 @@ def load_cates_da2en(request):
     cates_da2en = Category.objects.filter(type=current_da2en_type)
     return render(request, 'aj/da2en_from_cate_dropdown_list_options.html', {'cates_da2en': cates_da2en})
 
+
 def mezania(request):
     osol_mota_obj = Type.objects.get(type_name='الاصول المتداولة ')
-    all_daily_osol_mota_da2en = Daily.objects.filter(da2en_from_type=osol_mota_obj).values('da2en_from_cat__category_name').annotate(
-            all_da2en=Sum('da2en'))
-    all_daily_osol_mota_maden= Daily.objects.filter(maden_from_type=osol_mota_obj).values('maden_from_cat__category_name').annotate(
-            all_maden=Sum('maden'))
-    all_daily_osol_mota_total_maden = Daily.objects.filter(maden_from_type=osol_mota_obj).annotate(all_maden=Sum('maden'))
-    all_daily_osol_mota_total_da2en = Daily.objects.filter(da2en_from_type=osol_mota_obj).annotate(all_da2en=Sum('da2en'))
+    all_daily_osol_mota_da2en = Daily.objects.filter(da2en_from_type=osol_mota_obj).values(
+        'da2en_from_cat__category_name').annotate(
+        all_da2en=Sum('da2en'))
+    all_daily_osol_mota_maden = Daily.objects.filter(maden_from_type=osol_mota_obj).values(
+        'maden_from_cat__category_name').annotate(
+        all_maden=Sum('maden'))
+    all_daily_osol_mota_total_maden = Daily.objects.filter(maden_from_type=osol_mota_obj).annotate(
+        all_maden=Sum('maden'))
+    all_daily_osol_mota_total_da2en = Daily.objects.filter(da2en_from_type=osol_mota_obj).annotate(
+        all_da2en=Sum('da2en'))
     osol_mota_maden_list = []
     osol_mota_da2en_list = []
     for item in all_daily_osol_mota_total_maden:
@@ -1281,12 +1316,16 @@ def mezania(request):
     osol_mota_total_net = int(final_osol_mota_da2en_total) - int(final_osol_mota_maden_total)
     #############################################################
     osol_sabta_obj = Type.objects.get(type_name='الاصول الثابتة')
-    all_daily_osol_sabta_da2en = Daily.objects.filter(da2en_from_type=osol_sabta_obj).values('da2en_from_cat__category_name').annotate(
-            all_da2en_osol_sabta=Sum('da2en'))
-    all_daily_osol_sabta_maden= Daily.objects.filter(maden_from_type=osol_sabta_obj).values('maden_from_cat__category_name').annotate(
-            all_maden_osol_sabta=Sum('maden'))
-    all_daily_osol_sabta_total_maden = Daily.objects.filter(maden_from_type=osol_sabta_obj).annotate(all_maden=Sum('maden'))
-    all_daily_osol_sabta_total_da2en = Daily.objects.filter(da2en_from_type=osol_sabta_obj).annotate(all_da2en=Sum('da2en'))
+    all_daily_osol_sabta_da2en = Daily.objects.filter(da2en_from_type=osol_sabta_obj).values(
+        'da2en_from_cat__category_name').annotate(
+        all_da2en_osol_sabta=Sum('da2en'))
+    all_daily_osol_sabta_maden = Daily.objects.filter(maden_from_type=osol_sabta_obj).values(
+        'maden_from_cat__category_name').annotate(
+        all_maden_osol_sabta=Sum('maden'))
+    all_daily_osol_sabta_total_maden = Daily.objects.filter(maden_from_type=osol_sabta_obj).annotate(
+        all_maden=Sum('maden'))
+    all_daily_osol_sabta_total_da2en = Daily.objects.filter(da2en_from_type=osol_sabta_obj).annotate(
+        all_da2en=Sum('da2en'))
     osol_sabta_maden_list = []
     osol_sabta_da2en_list = []
     for item in all_daily_osol_sabta_total_maden:
@@ -1296,18 +1335,22 @@ def mezania(request):
         osol_sabta_da2en_list.append(item.all_da2en)
     final_osol_sabta_da2en_total = sum(osol_sabta_da2en_list)
     osol_sabta_total_net = int(final_osol_sabta_da2en_total) - int(final_osol_sabta_maden_total)
-    #final total for osol
-    net_osol = int(osol_mota_total_net)  + int(osol_sabta_total_net)
+    # final total for osol
+    net_osol = int(osol_mota_total_net) + int(osol_sabta_total_net)
     #############################################################################3
     #############################################################################3
     #############################################################################3
     khosom_mota_obj = Type.objects.get(type_name='الخصوم المتدوالة')
-    all_daily_khosom_mota_da2en = Daily.objects.filter(da2en_from_type=khosom_mota_obj).values('da2en_from_cat__category_name').annotate(
-            all_da2en=Sum('da2en'))
-    all_daily_khosom_mota_maden= Daily.objects.filter(maden_from_type=khosom_mota_obj).values('maden_from_cat__category_name').annotate(
-            all_maden=Sum('maden'))
-    all_daily_khosom_mota_total_maden = Daily.objects.filter(maden_from_type=khosom_mota_obj).annotate(all_maden=Sum('maden'))
-    all_daily_khosom_mota_total_da2en = Daily.objects.filter(da2en_from_type=khosom_mota_obj).annotate(all_da2en=Sum('da2en'))
+    all_daily_khosom_mota_da2en = Daily.objects.filter(da2en_from_type=khosom_mota_obj).values(
+        'da2en_from_cat__category_name').annotate(
+        all_da2en=Sum('da2en'))
+    all_daily_khosom_mota_maden = Daily.objects.filter(maden_from_type=khosom_mota_obj).values(
+        'maden_from_cat__category_name').annotate(
+        all_maden=Sum('maden'))
+    all_daily_khosom_mota_total_maden = Daily.objects.filter(maden_from_type=khosom_mota_obj).annotate(
+        all_maden=Sum('maden'))
+    all_daily_khosom_mota_total_da2en = Daily.objects.filter(da2en_from_type=khosom_mota_obj).annotate(
+        all_da2en=Sum('da2en'))
     khosom_mota_maden_list = []
     khosom_mota_da2en_list = []
     for item in all_daily_khosom_mota_total_maden:
@@ -1319,12 +1362,16 @@ def mezania(request):
     khosom_mota_total_net = int(final_khosom_mota_da2en_total) - int(final_khosom_mota_maden_total)
     #################################################################################################
     khosom_sabta_obj = Type.objects.get(type_name='الخصوم غير المتداولة')
-    all_daily_khosom_sabta_da2en = Daily.objects.filter(da2en_from_type=khosom_sabta_obj).values('da2en_from_cat__category_name').annotate(
-            all_da2en=Sum('da2en'))
-    all_daily_khosom_sabta_maden= Daily.objects.filter(maden_from_type=khosom_sabta_obj).values('maden_from_cat__category_name').annotate(
-            all_maden=Sum('maden'))
-    all_daily_khosom_sabta_total_maden = Daily.objects.filter(maden_from_type=khosom_sabta_obj).annotate(all_maden=Sum('maden'))
-    all_daily_khosom_sabta_total_da2en = Daily.objects.filter(da2en_from_type=khosom_sabta_obj).annotate(all_da2en=Sum('da2en'))
+    all_daily_khosom_sabta_da2en = Daily.objects.filter(da2en_from_type=khosom_sabta_obj).values(
+        'da2en_from_cat__category_name').annotate(
+        all_da2en=Sum('da2en'))
+    all_daily_khosom_sabta_maden = Daily.objects.filter(maden_from_type=khosom_sabta_obj).values(
+        'maden_from_cat__category_name').annotate(
+        all_maden=Sum('maden'))
+    all_daily_khosom_sabta_total_maden = Daily.objects.filter(maden_from_type=khosom_sabta_obj).annotate(
+        all_maden=Sum('maden'))
+    all_daily_khosom_sabta_total_da2en = Daily.objects.filter(da2en_from_type=khosom_sabta_obj).annotate(
+        all_da2en=Sum('da2en'))
     khosom_sabta_maden_list = []
     khosom_sabta_da2en_list = []
     for item in all_daily_khosom_sabta_total_maden:
@@ -1334,15 +1381,17 @@ def mezania(request):
         khosom_sabta_da2en_list.append(item.all_da2en)
     final_khosom_sabta_da2en_total = sum(khosom_sabta_da2en_list)
     khosom_sabta_total_net = int(final_khosom_sabta_da2en_total) - int(final_khosom_sabta_maden_total)
-    net_khosom = int(khosom_sabta_total_net)  + int(khosom_mota_total_net)
+    net_khosom = int(khosom_sabta_total_net) + int(khosom_mota_total_net)
     ##################################################################################################
     ##################################################################################################
     ##################################################################################################
     rights_obj = Type.objects.get(type_name='حقوق الملكية')
-    all_daily_rights_da2en = Daily.objects.filter(da2en_from_type=rights_obj).values('da2en_from_cat__category_name').annotate(
-            all_da2en=Sum('da2en'))
-    all_daily_rights_maden= Daily.objects.filter(maden_from_type=rights_obj).values('maden_from_cat__category_name').annotate(
-            all_maden=Sum('maden'))
+    all_daily_rights_da2en = Daily.objects.filter(da2en_from_type=rights_obj).values(
+        'da2en_from_cat__category_name').annotate(
+        all_da2en=Sum('da2en'))
+    all_daily_rights_maden = Daily.objects.filter(maden_from_type=rights_obj).values(
+        'maden_from_cat__category_name').annotate(
+        all_maden=Sum('maden'))
     all_daily_rights_total_maden = Daily.objects.filter(maden_from_type=rights_obj).annotate(all_maden=Sum('maden'))
     all_daily_rights_total_da2en = Daily.objects.filter(da2en_from_type=rights_obj).annotate(all_da2en=Sum('da2en'))
     rights_maden_list = []
@@ -1356,44 +1405,42 @@ def mezania(request):
     rights_total_net = int(final_rights_da2en_total) - int(final_rights_maden_total)
 
     context = {
-    # osoool
-    'all_daily_osol_mota_maden':all_daily_osol_mota_maden,
-    'all_daily_osol_mota_da2en':all_daily_osol_mota_da2en,
-    'all_daily_osol_mota_total_maden':all_daily_osol_mota_total_maden,
-    'all_daily_osol_mota_total_da2en':all_daily_osol_mota_total_da2en,
-    'osol_mota_total_net':osol_mota_total_net,
-    #############################################
-    'all_daily_osol_sabta_maden':all_daily_osol_sabta_maden,
-    'all_daily_osol_sabta_da2en':all_daily_osol_sabta_da2en,
-    'all_daily_osol_sabta_total_maden':all_daily_osol_sabta_total_maden,
-    'all_daily_osol_sabta_total_da2en':all_daily_osol_sabta_total_da2en,
-    'osol_sabta_total_net':osol_sabta_total_net,
-    #total osol
-    'net_osol':net_osol,
-    #################################################################
-    #khosom
-    'all_daily_khosom_mota_maden':all_daily_khosom_mota_maden,
-    'all_daily_khosom_mota_da2en':all_daily_khosom_mota_da2en,
-    'all_daily_khosom_mota_total_maden':all_daily_khosom_mota_total_maden,
-    'all_daily_khosom_mota_total_da2en':all_daily_khosom_mota_total_da2en,
-    'khosom_mota_total_net':khosom_mota_total_net,
-    #########################################################################
-    'all_daily_khosom_sabta_maden':all_daily_khosom_sabta_maden,
-    'all_daily_khosom_sabta_da2en':all_daily_khosom_sabta_da2en,
-    'all_daily_khosom_sabta_total_maden':all_daily_khosom_sabta_total_maden,
-    'all_daily_khosom_sabta_total_da2en':all_daily_khosom_sabta_total_da2en,
-    'khosom_sabta_total_net':khosom_sabta_total_net,
-    #total_all_khosom
-    'net_khosom':net_khosom,
-    ###########################################################################
-    #rights
-    'all_daily_rights_maden':all_daily_rights_maden,
-    'all_daily_rights_da2en':all_daily_rights_da2en,
-    'all_daily_rights_total_maden':all_daily_rights_total_maden,
-    'all_daily_rights_total_da2en':all_daily_rights_total_da2en,
-    'rights_total_net':rights_total_net,
-
-
+        # osoool
+        'all_daily_osol_mota_maden': all_daily_osol_mota_maden,
+        'all_daily_osol_mota_da2en': all_daily_osol_mota_da2en,
+        'all_daily_osol_mota_total_maden': all_daily_osol_mota_total_maden,
+        'all_daily_osol_mota_total_da2en': all_daily_osol_mota_total_da2en,
+        'osol_mota_total_net': osol_mota_total_net,
+        #############################################
+        'all_daily_osol_sabta_maden': all_daily_osol_sabta_maden,
+        'all_daily_osol_sabta_da2en': all_daily_osol_sabta_da2en,
+        'all_daily_osol_sabta_total_maden': all_daily_osol_sabta_total_maden,
+        'all_daily_osol_sabta_total_da2en': all_daily_osol_sabta_total_da2en,
+        'osol_sabta_total_net': osol_sabta_total_net,
+        # total osol
+        'net_osol': net_osol,
+        #################################################################
+        # khosom
+        'all_daily_khosom_mota_maden': all_daily_khosom_mota_maden,
+        'all_daily_khosom_mota_da2en': all_daily_khosom_mota_da2en,
+        'all_daily_khosom_mota_total_maden': all_daily_khosom_mota_total_maden,
+        'all_daily_khosom_mota_total_da2en': all_daily_khosom_mota_total_da2en,
+        'khosom_mota_total_net': khosom_mota_total_net,
+        #########################################################################
+        'all_daily_khosom_sabta_maden': all_daily_khosom_sabta_maden,
+        'all_daily_khosom_sabta_da2en': all_daily_khosom_sabta_da2en,
+        'all_daily_khosom_sabta_total_maden': all_daily_khosom_sabta_total_maden,
+        'all_daily_khosom_sabta_total_da2en': all_daily_khosom_sabta_total_da2en,
+        'khosom_sabta_total_net': khosom_sabta_total_net,
+        # total_all_khosom
+        'net_khosom': net_khosom,
+        ###########################################################################
+        # rights
+        'all_daily_rights_maden': all_daily_rights_maden,
+        'all_daily_rights_da2en': all_daily_rights_da2en,
+        'all_daily_rights_total_maden': all_daily_rights_total_maden,
+        'all_daily_rights_total_da2en': all_daily_rights_total_da2en,
+        'rights_total_net': rights_total_net,
 
     }
     return render(request, 'mezania.html', context)

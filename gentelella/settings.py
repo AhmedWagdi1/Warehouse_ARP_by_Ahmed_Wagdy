@@ -75,7 +75,7 @@ TEMPLATES = [
                 'gentelella.context_processors.include_balances',
                 'gentelella.context_processors.include_talabat',
                 'gentelella.context_processors.get_current_role',
-                'gentelella.context_processors.get_activation_status',
+                #'gentelella.context_processors.get_activation_status',
 
 
             ],

@@ -77,7 +77,7 @@ def get_current_role(request):
     }
     return (context)
 
-
+'''
 def get_activation_status(request):
     today = datetime.datetime.now()
     activated = False
@@ -100,3 +100,4 @@ def get_activation_status(request):
     'activated':activated,
     }
     return (context)
+'''

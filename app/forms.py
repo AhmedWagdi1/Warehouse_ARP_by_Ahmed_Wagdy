@@ -182,17 +182,16 @@ class NewDailyForm(forms.ModelForm):
                                             ))
 
     maden = forms.IntegerField(
-    widget=forms.NumberInput(
-    attrs={
-    'value':'0',
-    }))
+        widget=forms.NumberInput(
+            attrs={
+                'value': '0',
+            }))
 
     da2en = forms.IntegerField(
-    widget=forms.NumberInput(
-    attrs={
-    'value':'0',
-    }))
-
+        widget=forms.NumberInput(
+            attrs={
+                'value': '0',
+            }))
 
     class Meta:
         model = Daily
@@ -221,28 +220,30 @@ class NewDailyForm(forms.ModelForm):
         elif self.instance.pk:
             self.fields['da2en_from_cat'].queryset = self.instance.type.city_set
 
+
 class CreateTalabForm(forms.ModelForm):
     class Meta:
         model = Talabat
         fields = ['product', 'quantity']
 
+
 class TalabatDoForm(forms.Form):
     farm_from = forms.ModelChoiceField(queryset=Farm.objects.all(),
-    widget = forms.Select())
+                                       widget=forms.Select())
 
     quantity = forms.IntegerField(
-    widget= forms.NumberInput()
+        widget=forms.NumberInput()
     )
 
     product = forms.ModelChoiceField(queryset=Product.objects.all(),
-    widget = forms.Select(
-    )
-    )
+                                     widget=forms.Select(
+                                     )
+                                     )
 
 
 class IncomeListFilterForm(django_filters.FilterSet):
     # date__range = django_filters.DateFromToRangeFilter(field_name='date', lookup_expr='month__gt')
-    #date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12'}))
+    # date_range = django_filters.DateFromToRangeFilter(widget=RangeWidget(attrs={'placeholder': '2018/10/12'}))
     class Meta:
         model = Daily
         fields = ['farm']
@@ -255,52 +256,57 @@ class DailyReportFilterForm(django_filters.FilterSet):
 
 
 class CreateUserForm(forms.Form):
-    role_admin ='المديرين'
+    role_admin = 'المديرين'
     role_accountant = 'المحاسبين'
     role_warehouse = 'المخازن'
 
     username = forms.CharField(
-    widget=forms.TextInput(
-    attrs={
-    }
-    )
+        widget=forms.TextInput(
+            attrs={
+            }
+        )
     )
     password = forms.CharField(
-    widget=forms.PasswordInput(
+        widget=forms.PasswordInput(
 
-    )
+        )
     )
     role = forms.ChoiceField(choices={
-    (role_admin,'المديرين'),
-    (role_accountant,'المحاسبين'),
-    (role_warehouse,'المخازن'),
+        (role_admin, 'المديرين'),
+        (role_accountant, 'المحاسبين'),
+        (role_warehouse, 'المخازن'),
     },
-    widget = forms.Select(
-    )
+        widget=forms.Select(
+        )
     )
 
 
 class RequestActivationForm(forms.Form):
     mobile_number = forms.CharField(
-    widget=forms.TextInput(
-    )
+        widget=forms.TextInput(
+        )
     )
 
 
 class ActivationForm(forms.Form):
     serial = forms.CharField(
-    widget= forms.TextInput(
-    attrs={
-        'class':'form-control'
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
 
-    }
-    )
+            }
+        )
     )
 
     company_name = forms.CharField(
-    widget= forms.TextInput(
-    attrs={
-        'class':'form-control'
-    }
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
     )
-    )
+
+
+class SafeDepositForm(forms.Form):
+    amount = forms.IntegerField(widget=forms.NumberInput())
+

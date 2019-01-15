@@ -35,7 +35,7 @@ urlpatterns = [
                   url(r'^supplier/delete/(?P<pk>[0-9]+)/', views.supplier_delete, name="supplier_delete"),
                   url(r'^supplier/update/(?P<pk>[0-9]+)/', views.SupplierUpdate.as_view(), name="supplier_update"),
                   url(r'^supplier/details/(?P<pk>[0-9]+)/$', views.supplier_details, name="supplier_details"),
-                  #clients
+                  # clients
                   url(r'^clients/$', views.clients, name="clients"),
                   url(r'^clients/add/$', views.clients_add, name="clients_add"),
                   url(r'^clients/details/(?P<pk>[0-9]+)/$', views.client_details, name="client_details"),
@@ -63,9 +63,11 @@ urlpatterns = [
                   url(r'^tawseef/update/(?P<pk>[0-9]+)/', views.TawseefUpdate.as_view(), name="tawseef_update"),
                   url(r'^new/dailu/$', views.new_daily, name="new_daily"),
                   path('finance/mezania/', views.mezania, name="mezania"),
-                  #ajax_refreshes
+                  path('safe/depost/<int:pk>/', views.safe_deposit, name="safe_deposit"),
+                  # ajax_refreshes
                   path('ajax/load-cities/', views.load_cates, name='ajax_load_cates'),  # <-- this one here
-                  path('ajax/load-cities_da2en/', views.load_cates_da2en, name='ajax_load_cates_da2en'),  # <-- this one here
+                  path('ajax/load-cities_da2en/', views.load_cates_da2en, name='ajax_load_cates_da2en'),
+                  # <-- this one here
 
                   # safes
                   url(r'^safe/(?P<pk>[0-9]+)/', views.safes, name="safes"),
@@ -81,18 +83,18 @@ urlpatterns = [
                   url(r'^report/sales/', views.report_sales, name="report_sales"),
                   url(r'^report/buys/', views.report_buys, name="report_buys"),
                   url(r'^report/daily/', views.report_daily, name="report_daily"),
-                  #Warehouses
+                  # Warehouses
                   path('warehouse/<int:pk>/', views.warehouse_details, name="warehouse_details"),
-                  path('talab/sarf/<int:pk>/',views.talab_sarf, name="talab_sarf"),
+                  path('talab/sarf/<int:pk>/', views.talab_sarf, name="talab_sarf"),
                   path('talabat/sarf/list/', views.talab_sarf_list, name="talab_sarf_list"),
                   path('talabat/delete/<int:pk>', views.talabat_delete, name="talabat_delete"),
                   path('talabat/do/<int:pk>/', views.talabat_do, name="talabat_do"),
-                  #Users
+                  # Users
                   path('users/create/', views.user_create, name="user_create"),
                   path('users/<int:pk>/delete/', views.user_delete, name="user_delete"),
-                  #Activation
+                  # Activation
                   path('activation/request', views.activation_request, name="activation_request"),
-                  path('serial/request/done/',views.serial_request_done, name="serial_request_done"),
+                  path('serial/request/done/', views.serial_request_done, name="serial_request_done"),
                   path('activation/', views.activation, name="activation"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

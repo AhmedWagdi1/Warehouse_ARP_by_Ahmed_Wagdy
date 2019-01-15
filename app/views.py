@@ -11,7 +11,8 @@ from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, Ad
     AddProductForm, WarehouseEntryForm, FundsTransfaerForm, AddDailyForm, PickOstazForm, AddCategoryForm, \
     ActivationForm, \
     AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, CreateUserForm, RequestActivationForm, \
-    BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm, TalabatDoForm, IncomeListFilterForm, DailyReportFilterForm
+    BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm, TalabatDoForm, IncomeListFilterForm, DailyReportFilterForm, \
+    SafeDepositForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
     SellInvoice, BuyInvoice, Talabat, Mezan, Account, Activation
 from datetime import date, datetime
@@ -907,7 +908,6 @@ def safes(request, pk):
     final_costs = sum(all_costs)
     costs = final_costs + final_buys
     net = final_sells - costs
-
     context = {
         'current_safe': current_safe,
         'balance': balance,
@@ -1444,3 +1444,27 @@ def mezania(request):
 
     }
     return render(request, 'mezania.html', context)
+
+
+def safe_deposit(request, pk):
+    safe_object = get_object_or_404(Balance, pk=pk)
+    farm_object = safe_object.farm
+    type_object = Type.objects.get(type_name='الاصول المتداولة ')
+    cat_object = Category.objects.get(category_name='النقدية')
+    safe_deposit_form = SafeDepositForm(request.POST)
+    if request.method == 'POST':
+        if safe_deposit_form.is_valid():
+            amount = safe_deposit_form.cleaned_data['amount']
+            safe_object.balance += amount
+            safe_object.save()
+            new_daily_object = Daily(text="إيداع فى الخزينة ", da2en=amount, farm=farm_object,
+                                     da2en_from_type=type_object, da2en_from_cat=cat_object)
+            new_daily_object.save()
+            return redirect('safes', pk=pk)
+    else:
+        safe_deposit_form = SafeDepositForm(request.POST)
+    context = {
+        'safe_object': safe_object,
+        'safe_deposit_form': safe_deposit_form,
+    }
+    return render(request, 'safe_deposit.html', context)

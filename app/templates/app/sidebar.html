@@ -66,14 +66,17 @@
                 {% if current_role == 'المديرين' or current_role == 'المحاسبين' %}
                 <li><a><i class="fa fa-money"></i> الحسابات <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                                            <li><a href="{% url 'costs_add' %}">المصاريف</a></li>
+
+                    <!-- 
                         <li><a href="{% url 'finance_daily' %}">القيود اليومية</a></li>
                         <li><a href="{% url 'ostaz' %}">حساب الاستاذ</a></li>
                         <li><a href="{% url 'mezan' %}">ميزان المراجعة</a></li>
                         <li><a href="{% url 'income_list' %}"> قائمة الدخل</a></li>
                         <li><a href="{% url 'mezania' %}">الميزانية</a></li>
-
                         <li><a href="{% url 'add_tawseef' %}">إضافة توصيف<span class="fa fa-plus"> </a></li>
                        <hr>
+                       -->
                         <h2 align="center">الخزن </h2>
                         {% for item in all_balance %}
                             <li><a href="{% url 'safes' item.pk %}">{{ item.farm.farm_name }}</a></li>

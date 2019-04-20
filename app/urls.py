@@ -64,6 +64,7 @@ urlpatterns = [
                   url(r'^new/dailu/$', views.new_daily, name="new_daily"),
                   path('finance/mezania/', views.mezania, name="mezania"),
                   path('safe/depost/<int:pk>/', views.safe_deposit, name="safe_deposit"),
+                  path('costs/add', views.costs_add, name="costs_add"),
                   # ajax_refreshes
                   path('ajax/load-cities/', views.load_cates, name='ajax_load_cates'),  # <-- this one here
                   path('ajax/load-cities_da2en/', views.load_cates_da2en, name='ajax_load_cates_da2en'),
@@ -96,5 +97,7 @@ urlpatterns = [
                   path('activation/request', views.activation_request, name="activation_request"),
                   path('serial/request/done/', views.serial_request_done, name="serial_request_done"),
                   path('activation/', views.activation, name="activation"),
+
+
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

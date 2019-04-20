@@ -310,3 +310,6 @@ class ActivationForm(forms.Form):
 class SafeDepositForm(forms.Form):
     amount = forms.IntegerField(widget=forms.NumberInput())
 
+class SafecostsForm(forms.Form):
+    amount= forms.IntegerField(widget=forms.NumberInput())
+    title = forms.CharField(widget=forms.TextInput())

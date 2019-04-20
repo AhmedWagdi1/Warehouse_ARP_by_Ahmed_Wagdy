@@ -12,7 +12,7 @@ from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, Ad
     ActivationForm, \
     AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, CreateUserForm, RequestActivationForm, \
     BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm, TalabatDoForm, IncomeListFilterForm, DailyReportFilterForm, \
-    SafeDepositForm
+    SafeDepositForm, SafecostsForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
     SellInvoice, BuyInvoice, Talabat, Mezan, Account, Activation
 from datetime import date, datetime
@@ -1468,3 +1468,30 @@ def safe_deposit(request, pk):
         'safe_deposit_form': safe_deposit_form,
     }
     return render(request, 'safe_deposit.html', context)
+
+def costs_add(request):
+    company_obj1 = Company.objects.filter()
+    company_obj = Company.objects.filter()[0]
+    safe_obj1 = Balance.objects.filter()
+    safe_obj = Balance.objects.filter()[0]
+    farm_object = safe_obj.farm
+    cat_object = Category.objects.get(category_name='النقدية')
+    safe_costs_form = SafecostsForm(request.POST)
+    if request.method == 'POST':
+        if safe_costs_form.is_valid():
+            amount = safe_costs_form.cleaned_data['amount']
+            title = safe_costs_form.cleaned_data['title']
+            type_object = Type.objects.get(type_name='الاصول المتداولة ')
+            safe_obj.balance -= amount
+            safe_obj.save()
+            new_daily_object = Daily(text=title, maden=amount, farm=farm_object,
+                                     maden_from_type=type_object, da2en_from_cat=cat_object)
+            new_daily_object.save()
+            return redirect('safes', pk=safe_obj.pk)
+
+    else:
+        safe_costs_form = SafecostsForm(request.POST)
+    context = {
+     'safe_costs_form':safe_costs_form,   
+    }
+    return render(request, 'costs_add.html',context )

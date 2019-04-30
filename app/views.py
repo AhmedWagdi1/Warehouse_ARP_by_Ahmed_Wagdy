@@ -931,7 +931,7 @@ def create_invoice_buy(request):
             form.save()
             new_daily = Daily(text='فاتورة شراء رقم  ' + str(form.id), maden=form.total_price,
                               maden_from_type=form.category.type, maden_from_cat=form.category, da2en=0, farm=form.farm,
-                              is_invoice=True)
+                              is_invoice=True, paid=form.total_price, unpaid=0)
             new_daily.save()
             current_balance = Balance.objects.get(farm=form.farm)
             new_balance = int(current_balance.balance) - int(form.total_price)
@@ -969,10 +969,11 @@ def create_invoice_sell(request):
             form = add_sell_invoice_form.save(commit=False)
             total = form.quantity * form.price
             form.total_price = total
+            form.unpaid = int(total) - int(form.paid)
             form.save()
             new_daily = Daily(text='فاتورة بيع رقم  ' + str(form.id), da2en=form.total_price,
                               da2en_from_type=form.category.type, da2en_from_cat=form.category, maden=0, farm=form.farm,
-                              is_invoice=True)
+                              is_invoice=True, unpaid=form.unpaid ,paid=form.paid)
             new_daily.save()
             current_balance = Balance.objects.get(farm=form.farm)
             new_balance = int(current_balance.balance) + int(form.total_price)

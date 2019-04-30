@@ -150,6 +150,8 @@ class Daily(models.Model):
     da2en_from_type = models.ForeignKey(Type, on_delete=CASCADE, related_name='da2en_from_type', blank=True, null=True)
     da2en_from_cat = models.ForeignKey(Category, on_delete=CASCADE, related_name='da2en_from_cat', blank=True,
                                        null=True)
+    paid = models.IntegerField()
+    unpaid = models.IntegerField()
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
     is_invoice = models.BooleanField(default=False)
 
@@ -172,6 +174,8 @@ class SellInvoice(models.Model):
     quantity = models.IntegerField()
     price = models.IntegerField()
     total_price = models.IntegerField()
+    unpaid = models.IntegerField()
+    paid = models.IntegerField()
     category = models.ForeignKey(Category, on_delete=CASCADE)
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
 

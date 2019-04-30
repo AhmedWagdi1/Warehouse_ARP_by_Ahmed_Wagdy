@@ -128,7 +128,7 @@ class AddBuyInvoice(forms.ModelForm):
 class AddSellInvoice(forms.ModelForm):
     class Meta:
         model = SellInvoice
-        fields = ['client', 'product', 'quantity', 'price', 'category', 'farm']
+        fields = ['client', 'product', 'quantity', 'price', 'category', 'farm', 'paid']
 
 
 class FarmReportForm(forms.Form):

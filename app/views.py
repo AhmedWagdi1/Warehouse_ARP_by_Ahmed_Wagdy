@@ -1459,7 +1459,7 @@ def safe_deposit(request, pk):
             safe_object.balance += amount
             safe_object.save()
             new_daily_object = Daily(text="إيداع فى الخزينة ", da2en=amount, farm=farm_object,
-                                     da2en_from_type=type_object, da2en_from_cat=cat_object)
+                                     da2en_from_type=type_object, da2en_from_cat=cat_object, paid=amount, unpaid=0)
             new_daily_object.save()
             return redirect('safes', pk=pk)
     else:

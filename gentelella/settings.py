@@ -75,8 +75,7 @@ TEMPLATES = [
                 'gentelella.context_processors.include_balances',
                 'gentelella.context_processors.include_talabat',
                 'gentelella.context_processors.get_current_role',
-                #'gentelella.context_processors.get_activation_status',
-
+                # 'gentelella.context_processors.get_activation_status',
 
             ],
         },
@@ -90,15 +89,15 @@ WSGI_APPLICATION = 'gentelella.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-'''
-DATABASES= { 'default': dj_database_url.config() }
+
+# DATABASES = {'default': dj_database_url.config()}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -155,7 +154,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'townoftechno@gmail.com'
 EMAIL_HOST_PASSWORD = 'buii3tf0ky001'
 EMAIL_PORT = 587
-
 
 try:
     from .local_settings import *

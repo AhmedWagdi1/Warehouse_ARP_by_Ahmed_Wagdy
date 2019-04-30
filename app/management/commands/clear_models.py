@@ -4,6 +4,7 @@ import time
 from django.contrib.auth.models import User
 from django.core.management import call_command
 
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         call_command('makemigrations')
@@ -18,6 +19,6 @@ class Command(BaseCommand):
         admin_account = models.Account(user=new_admin, role='المديرين')
         admin_account.save()
         print('created account // username: admin -- password: admin')
-        default_company = models.Company(company_name= 'Demo Version')
+        default_company = models.Company(company_name='Eagle Trade (demo) ')
         default_company.save()
-        print('Compnay named "Demo version " Created.!')
+        print('Company named ' + default_company.company_name + ' Created.!')

@@ -1,0 +1,20 @@
+{% extends 'app/base_site.html' %}{% load static %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="dashboard_graph">
+
+
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+                </div>
+                <form method="post">{% csrf_token %}
+                    <b>المبلغ المحصل من العميل</b><br>
+                    {{ client_pay_form.amount }}<br>
+                    <button type="submit" class="btn btn-success">تحصيل</button>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

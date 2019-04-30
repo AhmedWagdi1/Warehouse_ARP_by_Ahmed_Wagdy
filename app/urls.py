@@ -39,6 +39,7 @@ urlpatterns = [
                   url(r'^clients/$', views.clients, name="clients"),
                   url(r'^clients/add/$', views.clients_add, name="clients_add"),
                   url(r'^clients/details/(?P<pk>[0-9]+)/$', views.client_details, name="client_details"),
+                  url(r'^clients/ta7sel/(?P<pk>[0-9]+)/$', views.client_ta7sel, name="client_ta7sel"),
                   url(r'^client/delete/(?P<pk>[0-9]+)/', views.client_delete, name="client_delete"),
                   url(r'^client/update/(?P<pk>[0-9]+)/', views.ClientUpdate.as_view(), name="client_update"),
                   # storages

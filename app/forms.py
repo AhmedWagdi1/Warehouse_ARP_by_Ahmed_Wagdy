@@ -131,6 +131,10 @@ class AddSellInvoice(forms.ModelForm):
         fields = ['client', 'product', 'quantity', 'price', 'category', 'farm', 'paid']
 
 
+class ClientPayForm(forms.Form):
+    amount = forms.IntegerField(widget=forms.NumberInput())
+
+
 class FarmReportForm(forms.Form):
     farm = forms.ModelChoiceField(queryset=Farm.objects.all(),
                                   widget=forms.Select()
@@ -310,6 +314,7 @@ class ActivationForm(forms.Form):
 class SafeDepositForm(forms.Form):
     amount = forms.IntegerField(widget=forms.NumberInput())
 
+
 class SafecostsForm(forms.Form):
-    amount= forms.IntegerField(widget=forms.NumberInput())
+    amount = forms.IntegerField(widget=forms.NumberInput())
     title = forms.CharField(widget=forms.TextInput())

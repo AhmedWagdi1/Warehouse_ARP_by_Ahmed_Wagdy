@@ -1,50 +1,65 @@
 {% extends 'app/base_site.html' %}{% load static %}
 {% block content %}
     <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="dashboard_graph">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="dashboard_graph">
 
 
-          <div class="col-md-9 col-sm-9 col-xs-12">
-            <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
-          </div>
-<div align="center">
-    <b>{{ current_client.client_name }}</b><br><br>
-    <b>رقم الموبايل </b>
-    <b>{{ current_client.client_mobile_number }}</b><br><br>
-    <b>الرقم القومى</b>
-    <b>{{ current_client.client_ID_number }}</b><br><br>
-       <a href="{% url 'client_update' current_client.pk %}"><button class="btn btn-primary"> تعديل</button></a>
-      <a href="{% url 'client_delete' current_client.pk%}"><button class="btn btn-danger"> مسح</button></font> </a>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div id="chart_plot_01" data-stuff='["a","b","c"]' class="demo-placeholder"></div>
+                </div>
+                <div align="center">
+                    <b>{{ current_client.client_name }}</b><br><br>
+                    <b>رقم الموبايل </b>
+                    <b>{{ current_client.client_mobile_number }}</b><br><br>
+                    <b>الرقم القومى</b>
+                    <b>{{ current_client.client_ID_number }}</b><br><br>
+                    <a href="{% url 'client_update' current_client.pk %}">
+                        <button class="btn btn-primary"> تعديل</button>
+                    </a>
+                    <a href="{% url 'client_delete' current_client.pk %}">
+                        <button class="btn btn-danger"> مسح</button>
+                        </font> </a>
+                    <hr>
+                    <h3>المستحق من العميل</h3>
+                    <h2>{{ current_client.client_balance }}</h2>
+                    {% if current_client.client_balance != 0 %}
+                        <a href="{% url 'client_ta7sel' current_client.pk %}">
+                            <button class="btn btn-warning">تحصيل من العميل</button>
+                        </a>
+                    {% else %}
+                        <button class="btn btn-warning" disabled>تحصيل من العميل</button>
+                    {% endif %}
 
 
-            <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter_{{ current_client.client_name }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">تأكيد المسح</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        هل انت متأكد من مسح المورد <br>
-          {{ current_client.client_name }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
-          <a href="{% url 'client_delete' current_client.pk%}">
-        <button type="button" class="btn btn-danger">تأكيد المسح</button>
-              </a>
-      </div>
-    </div>
-  </div>
-</div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter_{{ current_client.client_name }}" tabindex="-1"
+                         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">تأكيد المسح</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    هل انت متأكد من مسح المورد <br>
+                                    {{ current_client.client_name }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
+                                    <a href="{% url 'client_delete' current_client.pk %}">
+                                        <button type="button" class="btn btn-danger">تأكيد المسح</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    </div>
-          <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
         </div>
-      </div>
     </div>
 {% endblock %}

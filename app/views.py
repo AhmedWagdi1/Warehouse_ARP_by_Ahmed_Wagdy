@@ -12,7 +12,7 @@ from app.forms import AddCompanyForm, AddFarmForm, AddJobForm, AddWorkerForm, Ad
     ActivationForm, \
     AddBuyInvoice, AddSellInvoice, FarmReportForm, SellInvoiceFilterForm, CreateUserForm, RequestActivationForm, \
     BuyInvoiceFilterForm, NewDailyForm, CreateTalabForm, TalabatDoForm, IncomeListFilterForm, DailyReportFilterForm, \
-    SafeDepositForm, SafecostsForm
+    SafeDepositForm, SafecostsForm, ClientPayForm
 from app.models import Company, Farm, Job, Worker, Supplier, Client, Warehouse, Product, Balance, Daily, Type, Category, \
     SellInvoice, BuyInvoice, Talabat, Mezan, Account, Activation
 from datetime import date, datetime
@@ -496,6 +496,38 @@ def client_details(request, pk):
 
 
 @login_required
+def client_ta7sel(request, pk):
+    current_client = get_object_or_404(Client, pk=pk)
+    client_pay_form = ClientPayForm(request.POST)
+    farm_obj = Farm.objects.all()[0]
+    if request.method == 'POST':
+        if client_pay_form.is_valid():
+            amount = client_pay_form.cleaned_data['amount']
+            current_client_balance = current_client.client_balance
+            removed_balance = amount
+            new_balance = int(current_client_balance) - int(removed_balance)
+            current_client.client_balance = new_balance
+            current_client.save()
+            new_daily = Daily(text='تحصيل من العميل ' + current_client.client_name, da2en=amount, paid=amount,
+                              unpaid=0, farm=farm_obj)
+            new_daily.save()
+            balance_obj = Balance.objects.get(farm=farm_obj)
+            old_balance = balance_obj.balance
+            added_balance = amount
+            new_balance = int(old_balance) + int(added_balance)
+            balance_obj.balance = new_balance
+            balance_obj.save()
+            return redirect('client_details', current_client.pk)
+    else:
+        client_pay_form = ClientPayForm(request.POST)
+    context = {
+        'current_client': current_client,
+        'client_pay_form': client_pay_form,
+    }
+    return render(request, 'app/client_ta7sel.html', context)
+
+
+@login_required
 def client_delete(request, pk):
     current_client = get_object_or_404(Client, pk=pk)
     current_client.delete()
@@ -973,10 +1005,16 @@ def create_invoice_sell(request):
             form.save()
             new_daily = Daily(text='فاتورة بيع رقم  ' + str(form.id), da2en=form.total_price,
                               da2en_from_type=form.category.type, da2en_from_cat=form.category, maden=0, farm=form.farm,
-                              is_invoice=True, unpaid=form.unpaid ,paid=form.paid)
+                              is_invoice=True, unpaid=form.unpaid, paid=form.paid)
             new_daily.save()
+            current_client_balance = form.client.client_balance
+            added_client_balance = form.unpaid
+            new_client_balance = int(current_client_balance) + int(added_client_balance)
+            client_obj = form.client
+            client_obj.client_balance = new_client_balance
+            client_obj.save()
             current_balance = Balance.objects.get(farm=form.farm)
-            new_balance = int(current_balance.balance) + int(form.total_price)
+            new_balance = int(current_balance.balance) + int(form.paid)
             current_balance.balance = new_balance
             current_balance.save()
             current_item = Warehouse.objects.get(item_name=form.product, farm=form.farm)
@@ -1470,6 +1508,7 @@ def safe_deposit(request, pk):
     }
     return render(request, 'safe_deposit.html', context)
 
+
 def costs_add(request):
     company_obj1 = Company.objects.filter()
     company_obj = Company.objects.filter()[0]
@@ -1493,6 +1532,6 @@ def costs_add(request):
     else:
         safe_costs_form = SafecostsForm(request.POST)
     context = {
-     'safe_costs_form':safe_costs_form,   
+        'safe_costs_form': safe_costs_form,
     }
-    return render(request, 'costs_add.html',context )
+    return render(request, 'costs_add.html', context)

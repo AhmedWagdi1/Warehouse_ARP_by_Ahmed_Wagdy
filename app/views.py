@@ -112,7 +112,7 @@ def index(request):
     check_activation = Activation.objects.filter()
     if check_activation.count() == 0:
         serial = random.randint(111111111111111111, 99999999999999999999999999999999999999)
-        company = 'Demo company'
+        company = 'Zoom Print'
         today = datetime.datetime.now()
         add = Activation(serial1=serial, company=company, last_time=today)
         add.save()

@@ -1525,7 +1525,7 @@ def costs_add(request):
             safe_obj.balance -= amount
             safe_obj.save()
             new_daily_object = Daily(text=title, maden=amount, farm=farm_object,
-                                     maden_from_type=type_object, da2en_from_cat=cat_object)
+                                     maden_from_type=type_object, da2en_from_cat=cat_object, paid=amount, unpaid=0)
             new_daily_object.save()
             return redirect('safes', pk=safe_obj.pk)
 

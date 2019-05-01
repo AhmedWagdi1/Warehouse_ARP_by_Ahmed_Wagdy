@@ -19,6 +19,6 @@ class Command(BaseCommand):
         admin_account = models.Account(user=new_admin, role='المديرين')
         admin_account.save()
         print('created account // username: admin -- password: admin')
-        default_company = models.Company(company_name='Eagle Trade (demo) ')
+        default_company = models.Company(company_name='Zoom Print')
         default_company.save()
         print('Company named ' + default_company.company_name + ' Created.!')

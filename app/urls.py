@@ -98,7 +98,6 @@ urlpatterns = [
                   path('activation/request', views.activation_request, name="activation_request"),
                   path('serial/request/done/', views.serial_request_done, name="serial_request_done"),
                   path('activation/', views.activation, name="activation"),
-
-
+                  path('invoices/<int:pk>/details', views.invoice_details, name="invoice_details"),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

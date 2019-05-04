@@ -1021,7 +1021,7 @@ def create_invoice_sell(request):
             added_quant = int(current_item.item_quantity) - int(form.quantity)
             current_item.item_quantity = added_quant
             current_item.save()
-            return redirect('finance_daily')
+            return redirect('invoice_details', form.pk)
     else:
         add_sell_invoice_form = AddSellInvoice()
     context = {
@@ -1535,3 +1535,11 @@ def costs_add(request):
         'safe_costs_form': safe_costs_form,
     }
     return render(request, 'costs_add.html', context)
+
+
+def invoice_details(request, pk):
+    current_invoice = get_object_or_404(SellInvoice, pk=pk)
+    context = {
+        'current_invoice': current_invoice,
+    }
+    return render(request, 'invoices_details.html', context)

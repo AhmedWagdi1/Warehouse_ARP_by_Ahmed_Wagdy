@@ -26,22 +26,22 @@
       <div align="center">
         <form method="get">
           {% csrf_token %}
-          برجاء إختيار المزرعة
+          برجاء إختيار الشركة
           <br>
           {{filter1.form.farm}}
           <br><br>
           <button class="btn btn-primary" class="form-control">موافق</button>
           <br>
-          <small>فى حالة عدم إختيار المزرعة سيتم عرض قائمة الدخل لكامل الشركة </small>
+          <small>فى حالة عدم إختيار الشركة سيتم عرض قائمة الدخل لكامل الشركة </small>
         </form>
         <div style="display: none;">
           <form method="get">
             {% csrf_token %}
-            {{filter2.form.farm}}برجاء إختيار المزرعة
+            {{filter2.form.farm}}برجاء إختيار الشركة
             <br><br>
             <button class="btn btn-primary" class="form-control">موافق</button>
             <br>
-            <small>فى حالة عدم إختيار المزرعة سيتم عرض قائمة لدخل لكامل الشركة </small>
+            <small>فى حالة عدم إختيار الشركة سيتم عرض قائمة لدخل لكامل الشركة </small>
           </form>
         </div>
       </div>

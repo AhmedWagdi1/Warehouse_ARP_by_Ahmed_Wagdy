@@ -16,7 +16,7 @@
         <div class="menu_section">
             <ul class="nav side-menu">
               {% if current_role == 'المديرين' %}
-                <li><a><i class="fa fa-home"></i> المزارع <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-home"></i> الشركات <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         {% for farm in all_farms %}
                             <li><a
@@ -93,7 +93,7 @@
                 <li><a><i class="fa fa-bars "></i> التقارير <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{% url 'report_all' %}"> إجمالى حركة الشركة</a></li>
-                        <li><a href="{% url 'report_farm' %}"> حركة المزارع</a></li>
+                        <li><a href="{% url 'report_farm' %}"> حركة الشركات</a></li>
                         <hr>
                         <li><a href="{% url 'report_sales' %}"> تقرير المبيعات</a></li>
                         <li><a href="{% url 'report_buys' %}"> تقرير المشتريات</a></li>

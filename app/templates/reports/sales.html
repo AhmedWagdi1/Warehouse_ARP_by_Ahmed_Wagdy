@@ -29,7 +29,7 @@
                     {% csrf_token %}
                      عن الفترة {{ filter.form.date_range }}
                     <br><br>
-                    المزرعة{{ filter.form.farm }}
+                    الشركة{{ filter.form.farm }}
                     العميل {{ filter.form.client }}
                     الفئة {{ filter.form.category }}
                     المنتج {{ filter.form.product }}
@@ -42,7 +42,7 @@
             <table id="datatable" class="table table-striped table-bordered" border="1">
                 <thead>
                 <tr>
-                    <th>المزرعة</th>
+                    <th>الشركة</th>
                     <th>القيمة</th>
                     <th>المنتج</th>
                     <th>العميل</th>

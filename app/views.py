@@ -977,14 +977,14 @@ def create_invoice_buy(request):
                 new_quantity = int(current_quantity) + int(added_quantity)
                 current_item.item_quantity = new_quantity
                 current_item.save()
-                return redirect('finance_daily')
+                return redirect('report_buys')
             else:
                 current_quantity = 0
                 added_quantity = form.quantity
                 new_quantity = int(current_quantity) + int(added_quantity)
                 new_adding = Warehouse(item_name=form.product, item_quantity=new_quantity, farm=form.farm)
                 new_adding.save()
-                return redirect('finance_daily')
+                return redirect('report_buys')
     else:
         add_buy_invoice_form = AddBuyInvoice()
     context = {
